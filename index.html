@@ -199,6 +199,11 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .seg button{padding:9px 16px;font-size:13.5px;font-weight:500;color:var(--ink-dim);transition:all .14s}
 .seg button.on{background:var(--gold);color:#1a1305;font-weight:600}
 .rev-toggle{cursor:pointer}
+.fhint{font-size:11.5px;color:var(--ink-mut);margin-top:8px;line-height:1.4}
+.fbtog{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.fbtog .fbi{font-size:13px;line-height:1}
+.fbtog.later{border-color:rgba(126,168,224,.4);color:#9dc0ee}
+.fbtog.later:hover{border-color:#9dc0ee}
 
 /* ============ NIVEL / XP ============ */
 .lvlbar{display:flex;align-items:center;gap:14px;margin-top:18px;padding:14px 16px;
@@ -366,6 +371,8 @@ details.howto a{color:var(--gold-soft)}
   .aicfg{padding:16px 14px}
   .aicfg input[type=password],.aicfg input[type=text]{font-size:16px}
   .lk.xp{display:none}
+  .fbtog .fbl{display:none}
+  .fbtog{padding:7px 9px}
 }
 @media(max-width:400px){
   .chip{padding:8px 12px;font-size:13px}
@@ -445,11 +452,12 @@ details.howto a{color:var(--gold-soft)}
       </div>
       <div class="row2">
         <div class="field">
-          <label class="flabel">Modo</label>
+          <label class="flabel">Retroalimentacion</label>
           <div class="seg" id="modeSeg">
-            <button data-mode="practice" class="on">Practica</button>
-            <button data-mode="exam">Examen</button>
+            <button data-mode="practice" class="on">Al instante</button>
+            <button data-mode="exam">Al final</button>
           </div>
+          <div class="fhint" id="modeHint">Te explico cada pregunta apenas la marcas.</div>
         </div>
         <div class="field">
           <label class="flabel">Orden</label>
@@ -457,6 +465,7 @@ details.howto a{color:var(--gold-soft)}
             <button data-order="random" class="on">Aleatorio</button>
             <button data-order="year">Por anio</button>
           </div>
+          <div class="fhint">Puedes cambiar la retroalimentacion durante el simulacro.</div>
         </div>
       </div>
       <button class="start" id="startBtn">Iniciar simulacro &rarr;</button>
@@ -530,7 +539,8 @@ details.howto a{color:var(--gold-soft)}
   </div>
 
   <div class="foot"><div class="wrap">
-    Modo practica: retroalimentacion inmediata. Modo examen: resultados al final.<br>
+    Retroalimentacion al instante: explicacion apenas marcas. Al final: como el examen real.<br>
+    Puedes cambiarla en cualquier momento con el boton de la barra superior.<br>
     Preguntas de examenes CONAREME &middot; las claves provienen del compendio original.
   </div></div>
 </section>
@@ -540,6 +550,9 @@ details.howto a{color:var(--gold-soft)}
     <div class="wrap">
       <button class="xbtn" id="exitBtn">&larr; Salir</button>
       <span class="qpos">Pregunta <b id="qNow">1</b> / <span id="qTot">20</span></span>
+      <button class="xbtn fbtog" id="fbToggle" title="Cambiar cuando ves la retroalimentacion">
+        <span class="fbi">&#128161;</span><span class="fbl">Al instante</span>
+      </button>
       <span class="spacer"></span>
       <div class="livekpi">
         <span class="lk combo" id="lkCombo" title="Combo" style="display:none">&#128293; <b id="lkComboN">0</b></span>
@@ -791,7 +804,37 @@ function renderLifetime(){
   renderLevel();renderBadges();
 }
 
-document.querySelectorAll('#modeSeg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cfg.mode=b.dataset.mode;});
+const MODE_HINT={
+  practice:'Te explico cada pregunta apenas la marcas.',
+  exam:'Como el examen real: todo se explica al terminar.'
+};
+function setMode(m){
+  cfg.mode=m;
+  document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x.dataset.mode===m));
+  document.getElementById('modeHint').textContent=MODE_HINT[m];
+}
+document.querySelectorAll('#modeSeg button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+
+/* Interruptor dentro del simulacro: cambia cuando se ve la retroalimentacion
+   sin perder el avance ni las respuestas ya marcadas. */
+function paintFbToggle(){
+  const b=document.getElementById('fbToggle');
+  const instant=S&&S.mode==='practice';
+  b.classList.toggle('later',!instant);
+  b.querySelector('.fbi').textContent=instant?'\u{1F4A1}':'\u{1F512}';
+  b.querySelector('.fbl').textContent=instant?'Al instante':'Al final';
+  b.title=instant
+    ?'Ahora ves la explicacion al marcar. Toca para guardarla hasta el final.'
+    :'Ahora las explicaciones salen al terminar. Toca para verlas al instante.';
+}
+document.getElementById('fbToggle').onclick=()=>{
+  S.mode=S.mode==='practice'?'exam':'practice';
+  setMode(S.mode);
+  paintFbToggle();
+  renderQ();
+  toast(S.mode==='practice'?'\u{1F4A1}':'\u{1F512}',
+        S.mode==='practice'?'Retroalimentacion al instante':'Retroalimentacion al final');
+};
 document.querySelectorAll('#orderSeg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#orderSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cfg.order=b.dataset.order;});
 document.getElementById('yearSelect').onchange=e=>{cfg.year=e.target.value;updateAvail();};
 document.getElementById('countSelect').onchange=e=>{cfg.count=+e.target.value;};
@@ -951,7 +994,7 @@ function startQuiz(pool){
   else qs.sort((a,b)=>(a.y-b.y)||(a.sp<b.sp?-1:1)||(a.n-b.n));
   if(cfg.count>0)qs=qs.slice(0,cfg.count);
   S={qs,i:0,ans:new Array(qs.length).fill(null),ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,t0:Date.now(),elapsed:0,mode:cfg.mode};
-  show('quiz');document.getElementById('qTot').textContent=qs.length;
+  show('quiz');document.getElementById('qTot').textContent=qs.length;paintFbToggle();
   if(timer)clearInterval(timer);
   timer=setInterval(()=>{S.elapsed=Math.floor((Date.now()-S.t0)/1000);document.getElementById('lkTime').textContent=fmtClock(S.elapsed);},500);
   renderQ();
@@ -1117,7 +1160,7 @@ document.getElementById('filterWrong').onclick=function(){reviewWrongOnly=!revie
 document.getElementById('retryWrong').onclick=()=>{
   const wrong=S.qs.filter((q,i)=>S.ans[i]!==q.c);
   if(!wrong.length){alert('No tienes preguntas falladas para repetir.');return;}
-  cfg.mode='practice';document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x.dataset.mode==='practice'));
+  setMode('practice');
   reviewWrongOnly=false;
   startQuiz(wrong);window.scrollTo(0,0);
 };
