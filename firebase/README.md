@@ -106,6 +106,18 @@ Medido sobre las preguntas reales de este banco (mediana de 429 caracteres de en
 
 Las preguntas más largas del banco (percentil 90) apenas mueven la cifra: el costo lo domina la respuesta, no el enunciado.
 
+### Cuánto gasta cada modo de explicación
+
+En Inicio → Tutor con IA eliges cuándo aparece la explicación. Sobre un simulacro de 20 preguntas con 70 % de aciertos:
+
+| Modo | Peticiones | Costo con Haiku |
+|---|---|---|
+| **Si fallo** (por defecto) | 6 | ≈ 0.011 USD |
+| **Siempre** | 20 | ≈ 0.038 USD |
+| **Al tocar** | las que elijas | — |
+
+Las explicaciones se guardan en memoria durante el simulacro: volver a una pregunta ya explicada no genera una petición nueva.
+
 ### Si publicas la app con el proxy
 
 Recuerda que el saldo lo pagas tú para **todos** los que usen la página. El límite de 20 peticiones por minuto por IP frena los abusos, pero no el uso legítimo: 50 estudiantes pidiendo 10 explicaciones cada uno consumen 500, es decir cerca de un dólar.
