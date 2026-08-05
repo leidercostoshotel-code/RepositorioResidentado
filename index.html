@@ -133,6 +133,8 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .tag.sp{background:rgba(212,175,55,.12);color:var(--gold-soft);border:1px solid rgba(212,175,55,.25)}
 .tag.ar{background:rgba(255,255,255,.04);color:var(--ink-dim);border:1px solid var(--line2)}
 .tag.yr{background:rgba(255,255,255,.04);color:var(--ink-mut);border:1px solid var(--line2)}
+.tag.nuevo{background:rgba(63,184,131,.12);color:#7fe0b4;border:1px solid rgba(63,184,131,.3)}
+.tag.repaso{background:rgba(126,168,224,.12);color:#9dc0ee;border:1px solid rgba(126,168,224,.32)}
 .qtext{font-size:19px;line-height:1.5;font-weight:400;color:#f2f6fb;margin-bottom:24px;letter-spacing:-.003em}
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;
@@ -220,6 +222,24 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .lvltrack>i{display:block;height:100%;width:0;border-radius:4px;
   background:linear-gradient(90deg,var(--gold-deep),var(--gold-soft),#f2e2a8);transition:width .9s cubic-bezier(.2,.8,.2,1)}
 .lvlsub{font-size:11.5px;color:var(--ink-dim);margin-top:6px;font-family:'IBM Plex Mono',monospace}
+
+/* ============ TABLERO DE MEMORIA ============ */
+.memgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:640px){.memgrid{grid-template-columns:repeat(2,1fr)}}
+.memcell{background:rgba(18,37,60,.8);backdrop-filter:blur(12px);border:1px solid var(--line);
+  border-radius:12px;padding:14px 15px;position:relative;overflow:hidden}
+.memcell::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.memcell.due::before{background:var(--gold)} .memcell.lrn::before{background:#7ea8e0}
+.memcell.dom::before{background:var(--ok)}   .memcell.new::before{background:var(--ink-mut)}
+.memcell .ml{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mut);font-weight:600}
+.memcell .mv{font-family:'Fraunces',serif;font-size:27px;font-weight:600;margin-top:6px;line-height:1}
+.memcell.due .mv{color:var(--gold-soft)} .memcell.lrn .mv{color:#9dc0ee}
+.memcell.dom .mv{color:var(--ok)}        .memcell.new .mv{color:var(--ink-dim)}
+.memcell .ms{font-size:11px;color:var(--ink-mut);margin-top:5px}
+.membar{display:flex;height:8px;border-radius:5px;overflow:hidden;margin-top:12px;background:rgba(255,255,255,.05)}
+.membar>i{display:block;height:100%;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.memnote{font-size:12.5px;color:var(--ink-dim);margin-top:10px;line-height:1.5}
+.memnote b{color:var(--gold-soft)}
 
 /* ============ LOGROS ============ */
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
@@ -420,8 +440,28 @@ details.howto a{color:var(--gold-soft)}
       </div>
     </div>
 
-    <div class="shead"><span class="en">01</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">01</span><h2 class="serif">Estado de tu memoria</h2><span class="rule"></span></div>
+    <div class="memgrid">
+      <div class="memcell due"><div class="ml">Por repasar hoy</div><div class="mv mono" id="mDue">0</div><div class="ms">tocan ahora</div></div>
+      <div class="memcell lrn"><div class="ml">Aprendiendo</div><div class="mv mono" id="mLrn">0</div><div class="ms">aun no se afianzan</div></div>
+      <div class="memcell dom"><div class="ml">Dominadas</div><div class="mv mono" id="mDom">0</div><div class="ms">intervalo &gt;= 21 dias</div></div>
+      <div class="memcell new"><div class="ml">Sin ver</div><div class="mv mono" id="mNew">0</div><div class="ms">del banco completo</div></div>
+    </div>
+    <div class="membar" id="memBar"><i></i></div>
+    <div class="memnote" id="mNote">Empieza una sesion inteligente para que el sistema aprenda que te cuesta.</div>
+
+    <div class="shead"><span class="en">02</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
     <div class="panel"><div class="cfg">
+      <div class="field">
+        <label class="flabel">Tipo de sesion</label>
+        <div class="seg" id="kindSeg">
+          <button data-kind="smart" class="on">&#129504; Inteligente</button>
+          <button data-kind="free">Practica libre</button>
+        </div>
+        <div class="fhint" id="kindHint">El sistema elige las preguntas: primero lo vencido, luego tus areas debiles, y 30% nuevas.</div>
+      </div>
+
+      <div id="freeBox" style="display:none">
       <div class="field">
         <label class="flabel">Area</label>
         <div class="chips" id="areaChips"></div>
@@ -442,6 +482,17 @@ details.howto a{color:var(--gold-soft)}
           </select>
         </div>
         <div class="field">
+          <label class="flabel">Orden</label>
+          <div class="seg" id="orderSeg">
+            <button data-order="random" class="on">Aleatorio</button>
+            <button data-order="year">Por anio</button>
+          </div>
+        </div>
+      </div>
+      </div><!-- /freeBox -->
+
+      <div class="row2">
+        <div class="field">
           <label class="flabel">N.o de preguntas</label>
           <select id="countSelect">
             <option value="10">10 preguntas</option>
@@ -451,8 +502,6 @@ details.howto a{color:var(--gold-soft)}
             <option value="0">Todas las disponibles</option>
           </select>
         </div>
-      </div>
-      <div class="row2">
         <div class="field">
           <label class="flabel">Retroalimentacion</label>
           <div class="seg" id="modeSeg">
@@ -461,28 +510,20 @@ details.howto a{color:var(--gold-soft)}
           </div>
           <div class="fhint" id="modeHint">Te explico cada pregunta apenas la marcas.</div>
         </div>
-        <div class="field">
-          <label class="flabel">Orden</label>
-          <div class="seg" id="orderSeg">
-            <button data-order="random" class="on">Aleatorio</button>
-            <button data-order="year">Por anio</button>
-          </div>
-          <div class="fhint">Puedes cambiar la retroalimentacion durante el simulacro.</div>
-        </div>
       </div>
       <button class="start" id="startBtn">Iniciar simulacro &rarr;</button>
       <div class="availnote">Disponibles con esta seleccion: <b id="availNum">&mdash;</b></div>
     </div></div>
 
-    <div class="shead"><span class="en">02</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">03</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
     <div class="agrid" id="areaGrid"></div>
 
-    <div class="shead"><span class="en">03</span><h2 class="serif">Logros</h2><span class="rule"></span>
+    <div class="shead"><span class="en">04</span><h2 class="serif">Logros</h2><span class="rule"></span>
       <span class="mono" style="font-size:12px;color:var(--gold-soft)" id="badgeCount">0/12</span>
     </div>
     <div class="badges" id="badgeGrid"></div>
 
-    <div class="shead"><span class="en">04</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">05</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div class="field">
         <label class="flabel">Modo de conexion</label>
@@ -551,6 +592,7 @@ details.howto a{color:var(--gold-soft)}
   </div>
 
   <div class="foot"><div class="wrap">
+    Sesion inteligente: el sistema elige que preguntarte segun lo que fallaste y cuando lo fallaste.<br>
     Retroalimentacion al instante: explicacion apenas marcas. Al final: como el examen real.<br>
     Puedes cambiarla en cualquier momento con el boton de la barra superior.<br>
     Preguntas de examenes CONAREME &middot; las claves provienen del compendio original.
@@ -581,6 +623,7 @@ details.howto a{color:var(--gold-soft)}
       <span class="tag sp" id="tSp">&mdash;</span>
       <span class="tag ar" id="tAr">&mdash;</span>
       <span class="tag yr" id="tYr">&mdash;</span>
+      <span class="tag nuevo" id="tSrs" style="display:none">&mdash;</span>
     </div>
     <div class="qtext" id="qText">&mdash;</div>
     <div class="opts" id="opts"></div>
@@ -649,11 +692,86 @@ const TOTAL = ALL.length;
 
 const LS='rm_conareme_v1';
 function loadStats(){try{return JSON.parse(localStorage.getItem(LS))||null}catch(e){return null}}
-function blankStats(){return{lifeSeen:0,lifeOk:0,bestStreak:0,bySp:{},xp:0,badges:[],exams:0,perfect:0}}
+function blankStats(){return{lifeSeen:0,lifeOk:0,bestStreak:0,bySp:{},xp:0,badges:[],exams:0,perfect:0,srs:{}}}
 let STATS=Object.assign(blankStats(),loadStats()||{});
 if(!Array.isArray(STATS.badges))STATS.badges=[];
 if(typeof STATS.xp!=='number')STATS.xp=0;
+if(!STATS.srs||typeof STATS.srs!=='object')STATS.srs={};
 function saveStats(){try{localStorage.setItem(LS,JSON.stringify(STATS))}catch(e){}}
+
+/* ===================== REPETICION ESPACIADA =====================
+   Variante comprimida de SM-2: los intervalos se topan en 60 dias porque
+   estudiar para un examen con fecha no gana nada agendando mas alla.
+   Estado por pregunta: n vistas, k aciertos, d proxima revision (ms),
+   i intervalo en dias, e factor de facilidad, t ultima vez vista. */
+const DIA=86400000;
+const IVL_TOPE=60;
+function srsUpdate(id,correcto){
+  const s=STATS.srs[id]||(STATS.srs[id]={n:0,k:0,d:0,i:0,e:2.5,t:0});
+  s.n++;
+  if(correcto){
+    s.k++;
+    s.e=Math.min(2.8,+(s.e+0.1).toFixed(2));
+    s.i = s.i===0 ? 1 : s.i===1 ? 3 : Math.min(IVL_TOPE,Math.round(s.i*s.e));
+  }else{
+    s.e=Math.max(1.3,+(s.e-0.25).toFixed(2));
+    s.i=0;                      /* vuelve a la cola de inmediato */
+  }
+  s.t=Date.now();
+  s.d=s.t+s.i*DIA;
+  return s;
+}
+/* Cuatro estados para el tablero de memoria del inicio. */
+function srsEstado(){
+  const ahora=Date.now();
+  let repasar=0,aprendiendo=0,dominadas=0;
+  for(const id in STATS.srs){
+    const s=STATS.srs[id];
+    if(s.d<=ahora)repasar++;
+    else if(s.i>=21)dominadas++;
+    else aprendiendo++;
+  }
+  return{repasar,aprendiendo,dominadas,sinVer:TOTAL-Object.keys(STATS.srs).length};
+}
+function fmtDias(d){
+  if(d<=0)return'ahora';
+  if(d===1)return'manana';
+  if(d<30)return'en '+d+' dias';
+  const m=Math.round(d/30);return'en '+m+(m===1?' mes':' meses');
+}
+/* Que tan floja esta una especialidad: 1 = nunca acierta, 0 = siempre. */
+function spDebilidad(sp){
+  const st=STATS.bySp[sp];
+  if(!st||st.seen<3)return .55;          /* sin datos: prioridad media-alta */
+  return 1-(st.ok/st.seen);
+}
+/* Arma la seleccion de la sesion inteligente. Reserva un 30% para preguntas
+   nuevas para que una mochila grande de repasos no congele el avance. */
+function adaptivePool(n){
+  const ahora=Date.now();
+  const vencidas=[],debiles=[],nuevas=[],futuras=[];
+  for(const q of ALL){
+    const s=STATS.srs[q.id];
+    if(!s){nuevas.push(q);continue;}
+    if(s.d<=ahora)vencidas.push(q);
+    else if(s.n>=2&&s.k/s.n<0.5)debiles.push(q);
+    else futuras.push(q);
+  }
+  vencidas.sort((a,b)=>STATS.srs[a.id].d-STATS.srs[b.id].d);      /* la mas atrasada primero */
+  debiles.sort((a,b)=>STATS.srs[a.id].k/STATS.srs[a.id].n-STATS.srs[b.id].k/STATS.srs[b.id].n);
+  /* las nuevas se ordenan por debilidad de la especialidad, con ruido para
+     que dos sesiones seguidas no traigan exactamente las mismas */
+  nuevas.forEach(q=>q._w=spDebilidad(q.sp)+Math.random()*0.35);
+  nuevas.sort((a,b)=>b._w-a._w);
+  futuras.sort((a,b)=>STATS.srs[a.id].d-STATS.srs[b.id].d);
+
+  const cupoNuevas=Math.min(nuevas.length,Math.round(n*0.3));
+  let sel=vencidas.slice(0,n-cupoNuevas);
+  if(sel.length<n-cupoNuevas)sel=sel.concat(debiles.slice(0,n-cupoNuevas-sel.length));
+  sel=sel.concat(nuevas.slice(0,n-sel.length));
+  if(sel.length<n)sel=sel.concat(futuras.slice(0,n-sel.length));
+  return shuffle(sel);
+}
 
 /* ===================== NIVELES ===================== */
 const LEVELS=[
@@ -745,7 +863,7 @@ function burst(n){
   }
 }
 
-let cfg={area:'all',sp:'all',year:'all',count:20,mode:'practice',order:'random'};
+let cfg={area:'all',sp:'all',year:'all',count:20,mode:'practice',order:'random',kind:'smart'};
 
 const nf=n=>n.toLocaleString('es-PE');
 const fmtTime=s=>{const m=Math.floor(s/60),ss=s%60;return m+':'+String(ss).padStart(2,'0');};
@@ -786,7 +904,32 @@ function poolFor(){
   }
   return pool;
 }
-function updateAvail(){document.getElementById('availNum').textContent=nf(poolFor().length)+' preguntas';}
+const KIND_HINT={
+  smart:'El sistema elige las preguntas: primero lo vencido, luego tus areas debiles, y 30% nuevas.',
+  free:'Tu eliges area, especialidad, anios y orden. No alimenta la agenda de repasos con prioridad.'
+};
+function setKind(k){
+  cfg.kind=k;
+  document.querySelectorAll('#kindSeg button').forEach(x=>x.classList.toggle('on',x.dataset.kind===k));
+  document.getElementById('kindHint').textContent=KIND_HINT[k];
+  document.getElementById('freeBox').style.display=k==='free'?'':'none';
+  updateAvail();
+}
+document.querySelectorAll('#kindSeg button').forEach(b=>b.onclick=()=>setKind(b.dataset.kind));
+
+function updateAvail(){
+  const el=document.getElementById('availNum');
+  if(cfg.kind==='smart'){
+    const e=srsEstado();
+    const n=cfg.count>0?cfg.count:20;
+    const rep=Math.min(e.repasar,Math.max(0,n-Math.round(n*0.3)));
+    el.innerHTML=rep
+      ? nf(rep)+' de repaso + '+nf(n-rep)+' nuevas'
+      : nf(n)+' preguntas nuevas de tus areas mas flojas';
+  }else{
+    el.textContent=nf(poolFor().length)+' preguntas';
+  }
+}
 
 function renderAreaGrid(){
   const g=document.getElementById('areaGrid');g.innerHTML='';
@@ -813,7 +956,34 @@ function renderLifetime(){
   let best=null;for(const sp in STATS.bySp){const s=STATS.bySp[sp];if(s.seen>=5){const p=s.ok/s.seen;if(!best||p>best.p)best={sp,p,seen:s.seen};}}
   document.getElementById('lfBest').textContent=best?best.sp:'—';
   document.getElementById('lfBestSub').textContent=best?Math.round(best.p*100)+'% en '+best.seen+' preguntas':'resuelve >=5 para ver';
-  renderLevel();renderBadges();
+  renderLevel();renderBadges();renderMemoria();updateAvail();
+}
+
+/* Tablero de memoria: cuantas preguntas tocan hoy, cuantas se estan afianzando,
+   cuantas ya estan dominadas y cuantas no has visto nunca. */
+function renderMemoria(){
+  const e=srsEstado();
+  document.getElementById('mDue').textContent=nf(e.repasar);
+  document.getElementById('mLrn').textContent=nf(e.aprendiendo);
+  document.getElementById('mDom').textContent=nf(e.dominadas);
+  document.getElementById('mNew').textContent=nf(e.sinVer);
+  const bar=document.getElementById('memBar');
+  const pct=v=>(v/TOTAL*100).toFixed(2)+'%';
+  bar.innerHTML=
+    '<i style="width:'+pct(e.dominadas)+';background:var(--ok)" title="Dominadas"></i>'+
+    '<i style="width:'+pct(e.aprendiendo)+';background:#7ea8e0" title="Aprendiendo"></i>'+
+    '<i style="width:'+pct(e.repasar)+';background:var(--gold)" title="Por repasar"></i>';
+  const vistas=TOTAL-e.sinVer;
+  const n=document.getElementById('mNote');
+  if(!vistas){
+    n.textContent='Empieza una sesion inteligente para que el sistema aprenda que te cuesta.';
+  }else if(e.repasar){
+    n.innerHTML='Tienes <b>'+nf(e.repasar)+'</b> '+(e.repasar===1?'pregunta':'preguntas')+
+      ' esperando repaso. La sesion inteligente empieza por ahi.';
+  }else{
+    n.innerHTML='Repaso al dia. La proxima sesion traera preguntas nuevas de tus areas mas flojas. '+
+      'Llevas <b>'+nf(vistas)+'</b> de '+nf(TOTAL)+' preguntas trabajadas.';
+  }
 }
 
 const MODE_HINT={
@@ -849,7 +1019,7 @@ document.getElementById('fbToggle').onclick=()=>{
 };
 document.querySelectorAll('#orderSeg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#orderSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cfg.order=b.dataset.order;});
 document.getElementById('yearSelect').onchange=e=>{cfg.year=e.target.value;updateAvail();};
-document.getElementById('countSelect').onchange=e=>{cfg.count=+e.target.value;};
+document.getElementById('countSelect').onchange=e=>{cfg.count=+e.target.value;updateAvail();};
 
 /* ===================== MOTOR DE RETROALIMENTACION ===================== */
 const OK_MSG=[
@@ -991,6 +1161,16 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
                    :'Esta es una de tus areas debiles: vale la pena dedicarle un simulacro completo.')+'</p></div>';
   }
 
+  const sr=S&&S.srs&&S.srs[S.i];
+  if(sr){
+    h+='<div class="fbk-block"><h4>\u{1F501} Proxima revision</h4><p>'+
+       (sr.i===0
+         ? 'Esta pregunta vuelve <b>en tu proxima sesion</b>: mientras falles, insiste.'
+         : 'La vuelves a ver <b>'+fmtDias(sr.i)+'</b>. Si aciertas otra vez, el intervalo se alarga solo.')+
+       ' <span style="color:var(--ink-mut)">La has visto '+sr.n+' '+(sr.n===1?'vez':'veces')+
+       ', con '+sr.k+' '+(sr.k===1?'acierto':'aciertos')+'.</span></p></div>';
+  }
+
   document.getElementById('fbkBody').innerHTML=h;
   document.getElementById('fbkNext').textContent=(S&&S.i===S.qs.length-1)?'Finalizar ✓':'Siguiente →';
 
@@ -1014,12 +1194,20 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
 let S=null;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function startQuiz(pool){
+/* yaOrdenado: la sesion inteligente entrega el pool ya seleccionado y barajado,
+   no debe reordenarse ni recortarse otra vez. */
+function startQuiz(pool,yaOrdenado){
   let qs=pool.slice();
-  if(cfg.order==='random')qs=shuffle(qs);
-  else qs.sort((a,b)=>(a.y-b.y)||(a.sp<b.sp?-1:1)||(a.n-b.n));
-  if(cfg.count>0)qs=qs.slice(0,cfg.count);
-  S={qs,i:0,ans:new Array(qs.length).fill(null),ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,t0:Date.now(),elapsed:0,mode:cfg.mode};
+  if(!yaOrdenado){
+    if(cfg.order==='random')qs=shuffle(qs);
+    else qs.sort((a,b)=>(a.y-b.y)||(a.sp<b.sp?-1:1)||(a.n-b.n));
+    if(cfg.count>0)qs=qs.slice(0,cfg.count);
+  }
+  /* historial previo de cada pregunta, para poder rotularla como nueva o repaso */
+  const prev={};
+  qs.forEach((q,i)=>{const s=STATS.srs[q.id];prev[i]=s?{n:s.n,k:s.k}:null;});
+  S={qs,i:0,ans:new Array(qs.length).fill(null),ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,
+     t0:Date.now(),elapsed:0,mode:cfg.mode,prev,smart:!!yaOrdenado};
   show('quiz');document.getElementById('qTot').textContent=qs.length;paintFbToggle();
   if(timer)clearInterval(timer);
   timer=setInterval(()=>{S.elapsed=Math.floor((Date.now()-S.t0)/1000);document.getElementById('lkTime').textContent=fmtClock(S.elapsed);},500);
@@ -1033,6 +1221,13 @@ function renderQ(){
   document.getElementById('tSp').textContent=q.sp;
   document.getElementById('tAr').textContent=q.area;
   document.getElementById('tYr').textContent=q.y?('RM '+q.y):'RM s/f';
+  const pv=S.prev&&S.prev[S.i],tag=document.getElementById('tSrs');
+  if(!S.smart){tag.style.display='none';}
+  else{
+    tag.style.display='';
+    if(!pv){tag.className='tag nuevo';tag.textContent='✦ Nueva';}
+    else{tag.className='tag repaso';tag.textContent='↻ Repaso '+pv.n+'ª · '+pv.k+'/'+pv.n;}
+  }
   document.getElementById('qText').textContent=q.q;
   const box=document.getElementById('opts');box.innerHTML='';
   const answered=a!==null;
@@ -1084,6 +1279,7 @@ function answer(lt){
 
   const st=STATS.bySp[q.sp]||(STATS.bySp[q.sp]={seen:0,ok:0});
   st.seen++;if(correct)st.ok++;STATS.lifeSeen++;if(correct)STATS.lifeOk++;
+  S.srs=S.srs||{};S.srs[S.i]=srsUpdate(q.id,correct);
   STATS.xp+=xp;
   STATS.bestStreak=Math.max(STATS.bestStreak,S.maxStreak);saveStats();
   checkBadges();
@@ -1197,9 +1393,17 @@ document.getElementById('newQuiz').onclick=()=>{renderLifetime();renderAreaGrid(
 document.getElementById('homeBtn').onclick=()=>{renderLifetime();renderAreaGrid();show('home');window.scrollTo(0,0);};
 
 document.getElementById('startBtn').onclick=()=>{
-  const pool=poolFor();
-  if(pool.length<1){alert('No hay preguntas con esa seleccion. Ajusta los filtros.');return;}
-  startQuiz(pool);window.scrollTo(0,0);
+  if(cfg.kind==='smart'){
+    const n=cfg.count>0?cfg.count:40;
+    const pool=adaptivePool(n);
+    if(!pool.length){alert('No quedan preguntas disponibles.');return;}
+    startQuiz(pool,true);
+  }else{
+    const pool=poolFor();
+    if(pool.length<1){alert('No hay preguntas con esa seleccion. Ajusta los filtros.');return;}
+    startQuiz(pool);
+  }
+  window.scrollTo(0,0);
 };
 
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
@@ -1464,7 +1668,7 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowLeft'){if(S.i>0){S.i--;renderQ();}}
 });
 
-renderAreaChips();renderSpSelect();updateAvail();renderAreaGrid();renderLifetime();aiPaintCfg();
+renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);
 </script>
 </body>
 </html>
