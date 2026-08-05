@@ -118,6 +118,18 @@ En Inicio → Tutor con IA eliges cuándo aparece la explicación. Sobre un simu
 
 Las explicaciones se guardan en memoria durante el simulacro: volver a una pregunta ya explicada no genera una petición nueva.
 
+### Qué pasa cuando se acaba el saldo
+
+La app **no se rompe ni se queda cargando**. Al primer error de saldo agotado, clave inválida o permiso denegado:
+
+1. Apaga la IA para el resto de la sesión, así no gasta una petición condenada al error en cada pregunta.
+2. Muestra un aviso de **Modo local** explicando qué pasó y cómo solucionarlo.
+3. El simulacro continúa normal con la retroalimentación del banco local: clave, opciones descartadas, dato de repaso e historial por especialidad.
+
+Los errores pasajeros (429 por ráfaga de peticiones, 5xx por sobrecarga) **no** apagan nada: el botón queda disponible para reintentar.
+
+Para reactivarla después de recargar saldo, basta con recargar la página o tocar **Guardar y probar** en Inicio → Tutor con IA.
+
 ### Si publicas la app con el proxy
 
 Recuerda que el saldo lo pagas tú para **todos** los que usen la página. El límite de 20 peticiones por minuto por IP frena los abusos, pero no el uso legítimo: 50 estudiantes pidiendo 10 explicaciones cada uno consumen 500, es decir cerca de un dólar.

@@ -284,6 +284,8 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .aiout{margin:0 17px 16px;border:1px solid rgba(126,168,224,.28);border-radius:12px;padding:14px 15px;display:none;
   background:linear-gradient(160deg,rgba(126,168,224,.09),rgba(18,37,60,.5))}
 .aiout.show{display:block;animation:fbkin .3s ease}
+.aiout.local{border-color:rgba(212,175,55,.3);background:linear-gradient(160deg,rgba(212,175,55,.08),rgba(18,37,60,.5))}
+.aiout.local .aihead{color:var(--gold-soft)}
 .aiout .aihead{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9dc0ee;font-weight:600;margin-bottom:9px;
   display:flex;align-items:center;gap:7px}
 .aiout .aibody{font-size:13.8px;line-height:1.62;color:var(--ink)}
@@ -1001,6 +1003,9 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
   if(cache){
     paintAi(ao,cache);
     ab.disabled=true;ab.innerHTML='✅ Explicado';
+  }else if(aiApagado&&aiReady()){
+    /* la IA quedo en pausa: se avisa una vez por pregunta sin pedir nada */
+    paintLocal(ao,aiApagado,ab);
   }else if(autoExplica(correcto)){
     runAi(q,marcada,ab,ao,S.i);
   }
@@ -1222,9 +1227,14 @@ function aiPaintCfg(){
   document.getElementById('aiDirectBox').style.display=AI.mode==='direct'?'':'none';
   const auto=AI.auto==='always'?'automatica en todas'
             :AI.auto==='wrong'?'automatica al fallar':'manual';
-  aiStat(aiReady()?'ok':'',aiReady()
-    ? 'Tutor IA activo · '+(AI.mode==='proxy'?'via servidor propio':'clave personal')+' · '+AI.model+' · '+auto
-    : 'Sin configurar — el modo local sigue funcionando.');
+  if(aiApagado){
+    const info=AI_FALLO[aiApagado]||AI_FALLO.otro;
+    aiStat('err',info.t+'. Trabajando en modo local; toca "Guardar y probar" para reintentar.');
+  }else{
+    aiStat(aiReady()?'ok':'',aiReady()
+      ? 'Tutor IA activo · '+(AI.mode==='proxy'?'via servidor propio':'clave personal')+' · '+AI.model+' · '+auto
+      : 'Sin configurar — el modo local sigue funcionando.');
+  }
 }
 function aiStat(cls,txt){
   const el=document.getElementById('aiStat');
@@ -1256,8 +1266,45 @@ function aiPrompt(q,marcada){
     'Explica siguiendo el formato indicado.';
 }
 
+/* Clasifica el fallo para decidir si se apaga la IA o solo se salta esta pregunta.
+   'saldo', 'clave' y 'permiso' son permanentes: no tiene sentido reintentar
+   pregunta tras pregunta. 'limite' y 'caida' son pasajeros. */
+function aiError(status,msg,forzar){
+  let code=forzar||'otro';
+  const m=(msg||'').toLowerCase();
+  if(!forzar){
+    if(/credit|balance|billing|insufficient|saldo|fondos/.test(m))code='saldo';
+    else if(status===400&&/credit|balance/.test(m))code='saldo';
+    else if(status===401)code='clave';
+    else if(status===403)code='permiso';
+    else if(status===429)code='limite';
+    else if(status>=500)code='caida';
+  }
+  const e=new Error(msg||('HTTP '+status));
+  e.code=code;e.status=status;
+  return e;
+}
+const AI_FALLO={
+  saldo:{t:'Se agoto el saldo de la API',
+         d:'Recarga en platform.claude.com para volver a tener explicaciones con IA.'},
+  clave:{t:'La clave no es valida',
+         d:'Revisala en Inicio, seccion Tutor con IA.'},
+  permiso:{t:'La clave no tiene permiso',
+         d:'Verifica el estado de tu cuenta en platform.claude.com.'},
+  limite:{t:'Demasiadas consultas seguidas',
+         d:'Espera un momento y vuelve a tocar el boton.'},
+  caida:{t:'El servicio no responde',
+         d:'Es temporal. Intenta de nuevo en un rato.'},
+  refusal:{t:'El modelo no respondio esta pregunta',
+         d:'Ocurre en temas que sus filtros restringen.'},
+  otro:{t:'No se pudo obtener la explicacion',d:''}
+};
+/* Se apaga sola para el resto de la sesion cuando el error es permanente.
+   Se limpia al recargar la pagina o al probar la conexion de nuevo. */
+let aiApagado=null;
+
 async function aiExplain(q,marcada){
-  if(!aiReady())throw new Error('NOCFG');
+  if(!aiReady())throw aiError(0,'Tutor no configurado','otro');
   const body={model:AI.model,max_tokens:900,system:AI_SYSTEM,
     messages:[{role:'user',content:aiPrompt(q,marcada)}]};
   if(AI.model!=='claude-haiku-4-5')body.output_config={effort:'low'};
@@ -1275,10 +1322,10 @@ async function aiExplain(q,marcada){
   }
   if(!res.ok){
     let d='';try{d=(await res.json()).error?.message||'';}catch(e){}
-    throw new Error('HTTP '+res.status+(d?' — '+d:''));
+    throw aiError(res.status,d);
   }
   const data=await res.json();
-  if(data.stop_reason==='refusal')throw new Error('El modelo declino responder esta pregunta.');
+  if(data.stop_reason==='refusal')throw aiError(0,'El modelo declino responder esta pregunta.','refusal');
   const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
   if(!txt)throw new Error('Respuesta vacia del modelo.');
   return txt;
@@ -1302,6 +1349,18 @@ function mdLite(s){
   return out||'<p></p>';
 }
 
+/* Aviso de que la IA quedo en pausa y el simulacro sigue con el banco local. */
+function paintLocal(out,code,btn,pie){
+  const info=AI_FALLO[code]||AI_FALLO.otro;
+  out.className='aiout show local';
+  out.innerHTML='<div class="aihead">\u{1F4D6} Modo local</div>'+
+    '<div class="aibody"><p><b>'+esc(info.t)+'.</b> '+esc(info.d)+'</p>'+
+    '<p style="color:var(--ink-dim)">El analisis de arriba sigue completo: la clave, las opciones '+
+    'descartadas y el dato de repaso salen del banco local y no dependen de internet.</p></div>'+
+    (pie?'<div class="aifoot">'+esc(pie)+'</div>':'');
+  if(btn){btn.disabled=true;btn.innerHTML='\u{1F4D6} Modo local';}
+}
+
 function paintAi(out,txt){
   out.className='aiout show';
   out.innerHTML='<div class="aihead">✨ Tutor IA · '+esc(AI.model)+'</div>'+
@@ -1323,6 +1382,8 @@ async function runAi(q,marcada,btn,out,clave){
     if(btn){btn.disabled=true;btn.innerHTML='✅ Explicado';}
     return;
   }
+  /* ya sabemos que la IA no va a responder: no gastamos otra peticion */
+  if(aiApagado){paintLocal(out,aiApagado,btn);return;}
   const old=btn?btn.innerHTML:'';
   if(btn){btn.disabled=true;btn.innerHTML='<span class="dots"><i></i><i></i><i></i></span> Pensando';}
   out.className='aiout show';
@@ -1334,15 +1395,22 @@ async function runAi(q,marcada,btn,out,clave){
     paintAi(out,txt);
     if(btn){btn.innerHTML='✅ Explicado';}
   }catch(err){
-    out.innerHTML='<div class="aihead">Tutor IA</div><div class="aierr">No se pudo obtener la explicacion.<br>'+
-      esc(err.message||String(err))+'</div>';
-    if(btn){btn.disabled=false;btn.innerHTML=old;}
+    const code=err.code||'otro';
+    const info=AI_FALLO[code]||AI_FALLO.otro;
+    const permanente=code==='saldo'||code==='clave'||code==='permiso';
+    if(permanente){
+      aiApagado=code;aiPaintCfg();
+      paintLocal(out,code,btn,'La IA queda en pausa hasta que recargues la pagina o vuelvas a probar la conexion en Inicio.');
+    }else{
+      paintLocal(out,code,null);
+      if(btn){btn.disabled=false;btn.innerHTML=old;}
+    }
   }
 }
 
 /* Decide si la explicacion sale sola, sin que el usuario toque el boton. */
 function autoExplica(correcto){
-  if(!aiReady())return false;
+  if(!aiReady()||aiApagado)return false;
   if(AI.auto==='always')return true;
   if(AI.auto==='wrong')return !correcto;
   return false;
@@ -1356,14 +1424,19 @@ document.querySelectorAll('#aiAutoSeg button').forEach(b=>b.onclick=()=>{
 });
 document.getElementById('aiSave').onclick=async function(){
   aiSaveCfg();
+  aiApagado=null;   /* reintento limpio: quiza ya recargaron saldo */
   if(!aiReady()){aiStat('err',AI.mode==='proxy'?'Falta la URL de la funcion.':'Falta la API key.');return;}
   aiStat('','Probando conexion…');
   this.disabled=true;
   try{
     await aiExplain({q:'Prueba de conexion.',o:[['A','Opcion A'],['B','Opcion B']],c:'A',sp:'General',area:'General',y:2024},'A');
+    aiPaintCfg();
     aiStat('ok','Conexion correcta. Tutor IA activo con '+AI.model+'.');
   }catch(e){
-    aiStat('err','Fallo: '+(e.message||e));
+    const code=e.code||'otro';
+    if(code==='saldo'||code==='clave'||code==='permiso')aiApagado=code;
+    const info=AI_FALLO[code]||AI_FALLO.otro;
+    aiStat('err',info.t+'. '+info.d+' El modo local sigue funcionando.');
   }
   this.disabled=false;
 };
