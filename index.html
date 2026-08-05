@@ -133,6 +133,8 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .tag.sp{background:rgba(212,175,55,.12);color:var(--gold-soft);border:1px solid rgba(212,175,55,.25)}
 .tag.ar{background:rgba(255,255,255,.04);color:var(--ink-dim);border:1px solid var(--line2)}
 .tag.yr{background:rgba(255,255,255,.04);color:var(--ink-mut);border:1px solid var(--line2)}
+.tag.nuevo{background:rgba(63,184,131,.12);color:#7fe0b4;border:1px solid rgba(63,184,131,.3)}
+.tag.repaso{background:rgba(126,168,224,.12);color:#9dc0ee;border:1px solid rgba(126,168,224,.32)}
 .qtext{font-size:19px;line-height:1.5;font-weight:400;color:#f2f6fb;margin-bottom:24px;letter-spacing:-.003em}
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;
@@ -220,6 +222,66 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .lvltrack>i{display:block;height:100%;width:0;border-radius:4px;
   background:linear-gradient(90deg,var(--gold-deep),var(--gold-soft),#f2e2a8);transition:width .9s cubic-bezier(.2,.8,.2,1)}
 .lvlsub{font-size:11.5px;color:var(--ink-dim);margin-top:6px;font-family:'IBM Plex Mono',monospace}
+
+/* ============ META DIARIA Y RACHA ============ */
+.dayrow{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+  background:linear-gradient(115deg,rgba(255,157,92,.10),rgba(18,37,60,.86));
+  border:1px solid var(--line2);border-radius:14px;padding:16px 18px;backdrop-filter:blur(12px)}
+@media(max-width:640px){.dayrow{grid-template-columns:auto 1fr;gap:13px;padding:14px}}
+.ring{position:relative;width:74px;height:74px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg);width:74px;height:74px}
+.ring circle{fill:none;stroke-width:7;stroke-linecap:round}
+.ring .bg{stroke:rgba(255,255,255,.07)}
+.ring .fg{stroke:url(#gmeta);transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ring .num b{font-family:'Fraunces',serif;font-size:19px;font-weight:600}
+.ring .num s{text-decoration:none;font-size:9.5px;color:var(--ink-mut);margin-top:2px;font-family:'IBM Plex Mono',monospace}
+.ring.done .num b{color:var(--ok)}
+.daytxt{min-width:0}
+.dayt{font-family:'Fraunces',serif;font-size:16px;font-weight:600;line-height:1.25}
+.days{font-size:12.5px;color:var(--ink-dim);margin-top:5px;line-height:1.45}
+.days b{color:var(--gold-soft)}
+.dayfire{text-align:center;flex-shrink:0}
+@media(max-width:640px){.dayfire{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;
+  border-top:1px solid var(--line);padding-top:12px;margin-top:2px}}
+.dayfire .fn{font-family:'Fraunces',serif;font-size:31px;font-weight:600;color:#ff9d5c;line-height:1}
+.dayfire .fl{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mut);font-weight:600;margin-top:4px}
+@media(max-width:640px){.dayfire .fl{margin-top:0}}
+.dayfire.off .fn{color:var(--ink-mut)}
+
+.metasel{display:flex;align-items:center;gap:9px;margin-top:12px;flex-wrap:wrap}
+.metasel span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mut);font-weight:600}
+.metasel button{border:1px solid var(--line2);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-dim);font-weight:500}
+.metasel button:hover{border-color:var(--gold-deep);color:var(--ink)}
+.metasel button.on{background:var(--gold);color:#1a1305;border-color:var(--gold);font-weight:600}
+
+/* ============ CALENDARIO DE ACTIVIDAD ============ */
+.heat{display:flex;gap:3px;margin-top:14px;overflow-x:auto;padding-bottom:3px}
+.heatcol{display:flex;flex-direction:column;gap:3px}
+.heatd{width:12px;height:12px;border-radius:3px;background:rgba(255,255,255,.05);flex-shrink:0}
+.heatd.l1{background:rgba(212,175,55,.28)} .heatd.l2{background:rgba(212,175,55,.5)}
+.heatd.l3{background:rgba(212,175,55,.75)} .heatd.l4{background:var(--gold);box-shadow:0 0 6px rgba(212,175,55,.5)}
+.heatd.hoy{outline:1.5px solid var(--gold-soft);outline-offset:1px}
+.heatleg{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11px;color:var(--ink-mut)}
+.heatleg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+/* ============ TABLERO DE MEMORIA ============ */
+.memgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:640px){.memgrid{grid-template-columns:repeat(2,1fr)}}
+.memcell{background:rgba(18,37,60,.8);backdrop-filter:blur(12px);border:1px solid var(--line);
+  border-radius:12px;padding:14px 15px;position:relative;overflow:hidden}
+.memcell::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.memcell.due::before{background:var(--gold)} .memcell.lrn::before{background:#7ea8e0}
+.memcell.dom::before{background:var(--ok)}   .memcell.new::before{background:var(--ink-mut)}
+.memcell .ml{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mut);font-weight:600}
+.memcell .mv{font-family:'Fraunces',serif;font-size:27px;font-weight:600;margin-top:6px;line-height:1}
+.memcell.due .mv{color:var(--gold-soft)} .memcell.lrn .mv{color:#9dc0ee}
+.memcell.dom .mv{color:var(--ok)}        .memcell.new .mv{color:var(--ink-dim)}
+.memcell .ms{font-size:11px;color:var(--ink-mut);margin-top:5px}
+.membar{display:flex;height:8px;border-radius:5px;overflow:hidden;margin-top:12px;background:rgba(255,255,255,.05)}
+.membar>i{display:block;height:100%;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.memnote{font-size:12.5px;color:var(--ink-dim);margin-top:10px;line-height:1.5}
+.memnote b{color:var(--gold-soft)}
 
 /* ============ LOGROS ============ */
 .badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
@@ -420,8 +482,56 @@ details.howto a{color:var(--gold-soft)}
       </div>
     </div>
 
-    <div class="shead"><span class="en">01</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">01</span><h2 class="serif">Tu dia</h2><span class="rule"></span></div>
+    <div class="dayrow">
+      <div class="ring" id="metaRing">
+        <svg viewBox="0 0 74 74" aria-hidden="true">
+          <defs><linearGradient id="gmeta" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#b8942a"/><stop offset="100%" stop-color="#f2e2a8"/>
+          </linearGradient></defs>
+          <circle class="bg" cx="37" cy="37" r="32"></circle>
+          <circle class="fg" cx="37" cy="37" r="32" id="metaArc" stroke-dasharray="201" stroke-dashoffset="201"></circle>
+        </svg>
+        <div class="num"><b id="metaNum">0</b><s id="metaOf">/20</s></div>
+      </div>
+      <div class="daytxt">
+        <div class="dayt" id="dayTitle">Empieza tu meta de hoy</div>
+        <div class="days" id="daySub">Resuelve preguntas para encender tu racha.</div>
+        <div class="metasel" id="metaSel"><span>Meta</span></div>
+      </div>
+      <div class="dayfire off" id="fireBox">
+        <div class="fn" id="fireN">0</div>
+        <div class="fl">dias seguidos</div>
+      </div>
+    </div>
+    <div class="heat" id="heatGrid"></div>
+    <div class="heatleg">
+      <span id="heatNote">Ultimas 13 semanas</span><span class="spacer" style="flex:1"></span>
+      <span>menos</span><i class="heatd"></i><i class="heatd l1"></i><i class="heatd l2"></i><i class="heatd l3"></i><i class="heatd l4"></i><span>mas</span>
+    </div>
+
+    <div class="shead"><span class="en">02</span><h2 class="serif">Estado de tu memoria</h2><span class="rule"></span></div>
+    <div class="memgrid">
+      <div class="memcell due"><div class="ml">Por repasar hoy</div><div class="mv mono" id="mDue">0</div><div class="ms">tocan ahora</div></div>
+      <div class="memcell lrn"><div class="ml">Aprendiendo</div><div class="mv mono" id="mLrn">0</div><div class="ms">aun no se afianzan</div></div>
+      <div class="memcell dom"><div class="ml">Dominadas</div><div class="mv mono" id="mDom">0</div><div class="ms">intervalo &gt;= 21 dias</div></div>
+      <div class="memcell new"><div class="ml">Sin ver</div><div class="mv mono" id="mNew">0</div><div class="ms">del banco completo</div></div>
+    </div>
+    <div class="membar" id="memBar"><i></i></div>
+    <div class="memnote" id="mNote">Empieza una sesion inteligente para que el sistema aprenda que te cuesta.</div>
+
+    <div class="shead"><span class="en">03</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
     <div class="panel"><div class="cfg">
+      <div class="field">
+        <label class="flabel">Tipo de sesion</label>
+        <div class="seg" id="kindSeg">
+          <button data-kind="smart" class="on">&#129504; Inteligente</button>
+          <button data-kind="free">Practica libre</button>
+        </div>
+        <div class="fhint" id="kindHint">El sistema elige las preguntas: primero lo vencido, luego tus areas debiles, y 30% nuevas.</div>
+      </div>
+
+      <div id="freeBox" style="display:none">
       <div class="field">
         <label class="flabel">Area</label>
         <div class="chips" id="areaChips"></div>
@@ -442,6 +552,17 @@ details.howto a{color:var(--gold-soft)}
           </select>
         </div>
         <div class="field">
+          <label class="flabel">Orden</label>
+          <div class="seg" id="orderSeg">
+            <button data-order="random" class="on">Aleatorio</button>
+            <button data-order="year">Por anio</button>
+          </div>
+        </div>
+      </div>
+      </div><!-- /freeBox -->
+
+      <div class="row2">
+        <div class="field">
           <label class="flabel">N.o de preguntas</label>
           <select id="countSelect">
             <option value="10">10 preguntas</option>
@@ -451,8 +572,6 @@ details.howto a{color:var(--gold-soft)}
             <option value="0">Todas las disponibles</option>
           </select>
         </div>
-      </div>
-      <div class="row2">
         <div class="field">
           <label class="flabel">Retroalimentacion</label>
           <div class="seg" id="modeSeg">
@@ -461,28 +580,20 @@ details.howto a{color:var(--gold-soft)}
           </div>
           <div class="fhint" id="modeHint">Te explico cada pregunta apenas la marcas.</div>
         </div>
-        <div class="field">
-          <label class="flabel">Orden</label>
-          <div class="seg" id="orderSeg">
-            <button data-order="random" class="on">Aleatorio</button>
-            <button data-order="year">Por anio</button>
-          </div>
-          <div class="fhint">Puedes cambiar la retroalimentacion durante el simulacro.</div>
-        </div>
       </div>
       <button class="start" id="startBtn">Iniciar simulacro &rarr;</button>
       <div class="availnote">Disponibles con esta seleccion: <b id="availNum">&mdash;</b></div>
     </div></div>
 
-    <div class="shead"><span class="en">02</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">04</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
     <div class="agrid" id="areaGrid"></div>
 
-    <div class="shead"><span class="en">03</span><h2 class="serif">Logros</h2><span class="rule"></span>
+    <div class="shead"><span class="en">05</span><h2 class="serif">Logros</h2><span class="rule"></span>
       <span class="mono" style="font-size:12px;color:var(--gold-soft)" id="badgeCount">0/12</span>
     </div>
     <div class="badges" id="badgeGrid"></div>
 
-    <div class="shead"><span class="en">04</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">06</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div class="field">
         <label class="flabel">Modo de conexion</label>
@@ -551,6 +662,7 @@ details.howto a{color:var(--gold-soft)}
   </div>
 
   <div class="foot"><div class="wrap">
+    Sesion inteligente: el sistema elige que preguntarte segun lo que fallaste y cuando lo fallaste.<br>
     Retroalimentacion al instante: explicacion apenas marcas. Al final: como el examen real.<br>
     Puedes cambiarla en cualquier momento con el boton de la barra superior.<br>
     Preguntas de examenes CONAREME &middot; las claves provienen del compendio original.
@@ -581,6 +693,7 @@ details.howto a{color:var(--gold-soft)}
       <span class="tag sp" id="tSp">&mdash;</span>
       <span class="tag ar" id="tAr">&mdash;</span>
       <span class="tag yr" id="tYr">&mdash;</span>
+      <span class="tag nuevo" id="tSrs" style="display:none">&mdash;</span>
     </div>
     <div class="qtext" id="qText">&mdash;</div>
     <div class="opts" id="opts"></div>
@@ -649,11 +762,129 @@ const TOTAL = ALL.length;
 
 const LS='rm_conareme_v1';
 function loadStats(){try{return JSON.parse(localStorage.getItem(LS))||null}catch(e){return null}}
-function blankStats(){return{lifeSeen:0,lifeOk:0,bestStreak:0,bySp:{},xp:0,badges:[],exams:0,perfect:0}}
+function blankStats(){return{lifeSeen:0,lifeOk:0,bestStreak:0,bySp:{},xp:0,badges:[],exams:0,perfect:0,
+  srs:{},dias:{},meta:20,rachaDias:0,rachaMax:0,ultimoCompleto:null}}
 let STATS=Object.assign(blankStats(),loadStats()||{});
 if(!Array.isArray(STATS.badges))STATS.badges=[];
 if(typeof STATS.xp!=='number')STATS.xp=0;
+if(!STATS.srs||typeof STATS.srs!=='object')STATS.srs={};
+if(!STATS.dias||typeof STATS.dias!=='object')STATS.dias={};
 function saveStats(){try{localStorage.setItem(LS,JSON.stringify(STATS))}catch(e){}}
+
+/* ===================== META DIARIA Y RACHA =====================
+   Las fechas se calculan en hora LOCAL, nunca UTC: en Peru (UTC-5) usar UTC
+   partiria el dia a las 7 de la noche y rompería rachas legitimas. */
+function isoLocal(d){
+  d=d||new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function isoMas(iso,dias){
+  const[a,m,d]=iso.split('-').map(Number);
+  return isoLocal(new Date(a,m-1,d+dias));
+}
+const METAS=[10,20,30,50];
+function metaDiaria(){return METAS.includes(STATS.meta)?STATS.meta:20;}
+
+/* La racha solo sigue viva si el ultimo dia completado fue hoy o ayer:
+   si fue anterior, ya se rompio aunque el contador guardado diga otra cosa. */
+function rachaViva(){
+  if(!STATS.ultimoCompleto)return 0;
+  const h=isoLocal();
+  if(STATS.ultimoCompleto===h||STATS.ultimoCompleto===isoMas(h,-1))return STATS.rachaDias||0;
+  return 0;
+}
+/* Registra la respuesta en el dia de hoy y cierra la meta si se alcanza. */
+function marcarDia(correcto){
+  const h=isoLocal();
+  const d=STATS.dias[h]||(STATS.dias[h]={n:0,ok:0});
+  d.n++;if(correcto)d.ok++;
+  if(d.n>=metaDiaria()&&STATS.ultimoCompleto!==h){
+    STATS.rachaDias=(STATS.ultimoCompleto===isoMas(h,-1))?(STATS.rachaDias||0)+1:1;
+    STATS.ultimoCompleto=h;
+    STATS.rachaMax=Math.max(STATS.rachaMax||0,STATS.rachaDias);
+    return true;                 /* meta recien alcanzada */
+  }
+  return false;
+}
+/* Poda dias mas viejos que el calendario para que localStorage no crezca solo. */
+function podarDias(){
+  const corte=isoMas(isoLocal(),-400);
+  for(const k in STATS.dias)if(k<corte)delete STATS.dias[k];
+}
+
+/* ===================== REPETICION ESPACIADA =====================
+   Variante comprimida de SM-2: los intervalos se topan en 60 dias porque
+   estudiar para un examen con fecha no gana nada agendando mas alla.
+   Estado por pregunta: n vistas, k aciertos, d proxima revision (ms),
+   i intervalo en dias, e factor de facilidad, t ultima vez vista. */
+const DIA=86400000;
+const IVL_TOPE=60;
+function srsUpdate(id,correcto){
+  const s=STATS.srs[id]||(STATS.srs[id]={n:0,k:0,d:0,i:0,e:2.5,t:0});
+  s.n++;
+  if(correcto){
+    s.k++;
+    s.e=Math.min(2.8,+(s.e+0.1).toFixed(2));
+    s.i = s.i===0 ? 1 : s.i===1 ? 3 : Math.min(IVL_TOPE,Math.round(s.i*s.e));
+  }else{
+    s.e=Math.max(1.3,+(s.e-0.25).toFixed(2));
+    s.i=0;                      /* vuelve a la cola de inmediato */
+  }
+  s.t=Date.now();
+  s.d=s.t+s.i*DIA;
+  return s;
+}
+/* Cuatro estados para el tablero de memoria del inicio. */
+function srsEstado(){
+  const ahora=Date.now();
+  let repasar=0,aprendiendo=0,dominadas=0;
+  for(const id in STATS.srs){
+    const s=STATS.srs[id];
+    if(s.d<=ahora)repasar++;
+    else if(s.i>=21)dominadas++;
+    else aprendiendo++;
+  }
+  return{repasar,aprendiendo,dominadas,sinVer:TOTAL-Object.keys(STATS.srs).length};
+}
+function fmtDias(d){
+  if(d<=0)return'ahora';
+  if(d===1)return'manana';
+  if(d<30)return'en '+d+' dias';
+  const m=Math.round(d/30);return'en '+m+(m===1?' mes':' meses');
+}
+/* Que tan floja esta una especialidad: 1 = nunca acierta, 0 = siempre. */
+function spDebilidad(sp){
+  const st=STATS.bySp[sp];
+  if(!st||st.seen<3)return .55;          /* sin datos: prioridad media-alta */
+  return 1-(st.ok/st.seen);
+}
+/* Arma la seleccion de la sesion inteligente. Reserva un 30% para preguntas
+   nuevas para que una mochila grande de repasos no congele el avance. */
+function adaptivePool(n){
+  const ahora=Date.now();
+  const vencidas=[],debiles=[],nuevas=[],futuras=[];
+  for(const q of ALL){
+    const s=STATS.srs[q.id];
+    if(!s){nuevas.push(q);continue;}
+    if(s.d<=ahora)vencidas.push(q);
+    else if(s.n>=2&&s.k/s.n<0.5)debiles.push(q);
+    else futuras.push(q);
+  }
+  vencidas.sort((a,b)=>STATS.srs[a.id].d-STATS.srs[b.id].d);      /* la mas atrasada primero */
+  debiles.sort((a,b)=>STATS.srs[a.id].k/STATS.srs[a.id].n-STATS.srs[b.id].k/STATS.srs[b.id].n);
+  /* las nuevas se ordenan por debilidad de la especialidad, con ruido para
+     que dos sesiones seguidas no traigan exactamente las mismas */
+  nuevas.forEach(q=>q._w=spDebilidad(q.sp)+Math.random()*0.35);
+  nuevas.sort((a,b)=>b._w-a._w);
+  futuras.sort((a,b)=>STATS.srs[a.id].d-STATS.srs[b.id].d);
+
+  const cupoNuevas=Math.min(nuevas.length,Math.round(n*0.3));
+  let sel=vencidas.slice(0,n-cupoNuevas);
+  if(sel.length<n-cupoNuevas)sel=sel.concat(debiles.slice(0,n-cupoNuevas-sel.length));
+  sel=sel.concat(nuevas.slice(0,n-sel.length));
+  if(sel.length<n)sel=sel.concat(futuras.slice(0,n-sel.length));
+  return shuffle(sel);
+}
 
 /* ===================== NIVELES ===================== */
 const LEVELS=[
@@ -699,7 +930,11 @@ const BADGES=[
   {id:'acc70',  i:'\u{1F3AF}', t:'Punteria',         d:'70% global (min. 50 preg.)', f:s=>s.lifeSeen>=50&&s.lifeOk/s.lifeSeen>=.70},
   {id:'acc85',  i:'\u{1F3C6}', t:'Elite',            d:'85% global (min. 100 preg.)',f:s=>s.lifeSeen>=100&&s.lifeOk/s.lifeSeen>=.85},
   {id:'perf',   i:'\u{2B50}',  t:'Simulacro perfecto',d:'100% en un simulacro',      f:s=>s.perfect>=1},
-  {id:'ex10',   i:'\u{1F396}', t:'Constancia',       d:'10 simulacros completados',  f:s=>s.exams>=10}
+  {id:'ex10',   i:'\u{1F396}', t:'Constancia',       d:'10 simulacros completados',  f:s=>s.exams>=10},
+  {id:'d3',     i:'\u{1F331}', t:'Semilla',          d:'3 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=3},
+  {id:'d7',     i:'\u{1F4C5}', t:'Semana completa',  d:'7 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=7},
+  {id:'d30',    i:'\u{1F5D3}', t:'Mes de disciplina',d:'30 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=30},
+  {id:'d100',   i:'\u{1F48E}', t:'Cien dias',        d:'100 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=100}
 ];
 function checkBadges(){
   const nuevos=[];
@@ -745,7 +980,7 @@ function burst(n){
   }
 }
 
-let cfg={area:'all',sp:'all',year:'all',count:20,mode:'practice',order:'random'};
+let cfg={area:'all',sp:'all',year:'all',count:20,mode:'practice',order:'random',kind:'smart'};
 
 const nf=n=>n.toLocaleString('es-PE');
 const fmtTime=s=>{const m=Math.floor(s/60),ss=s%60;return m+':'+String(ss).padStart(2,'0');};
@@ -786,7 +1021,32 @@ function poolFor(){
   }
   return pool;
 }
-function updateAvail(){document.getElementById('availNum').textContent=nf(poolFor().length)+' preguntas';}
+const KIND_HINT={
+  smart:'El sistema elige las preguntas: primero lo vencido, luego tus areas debiles, y 30% nuevas.',
+  free:'Tu eliges area, especialidad, anios y orden. No alimenta la agenda de repasos con prioridad.'
+};
+function setKind(k){
+  cfg.kind=k;
+  document.querySelectorAll('#kindSeg button').forEach(x=>x.classList.toggle('on',x.dataset.kind===k));
+  document.getElementById('kindHint').textContent=KIND_HINT[k];
+  document.getElementById('freeBox').style.display=k==='free'?'':'none';
+  updateAvail();
+}
+document.querySelectorAll('#kindSeg button').forEach(b=>b.onclick=()=>setKind(b.dataset.kind));
+
+function updateAvail(){
+  const el=document.getElementById('availNum');
+  if(cfg.kind==='smart'){
+    const e=srsEstado();
+    const n=cfg.count>0?cfg.count:20;
+    const rep=Math.min(e.repasar,Math.max(0,n-Math.round(n*0.3)));
+    el.innerHTML=rep
+      ? nf(rep)+' de repaso + '+nf(n-rep)+' nuevas'
+      : nf(n)+' preguntas nuevas de tus areas mas flojas';
+  }else{
+    el.textContent=nf(poolFor().length)+' preguntas';
+  }
+}
 
 function renderAreaGrid(){
   const g=document.getElementById('areaGrid');g.innerHTML='';
@@ -813,7 +1073,110 @@ function renderLifetime(){
   let best=null;for(const sp in STATS.bySp){const s=STATS.bySp[sp];if(s.seen>=5){const p=s.ok/s.seen;if(!best||p>best.p)best={sp,p,seen:s.seen};}}
   document.getElementById('lfBest').textContent=best?best.sp:'—';
   document.getElementById('lfBestSub').textContent=best?Math.round(best.p*100)+'% en '+best.seen+' preguntas':'resuelve >=5 para ver';
-  renderLevel();renderBadges();
+  renderLevel();renderBadges();renderMemoria();renderDia();renderHeat();updateAvail();
+}
+
+/* Anillo de meta diaria, racha y selector de meta. */
+function renderDia(){
+  const meta=metaDiaria(),hoy=STATS.dias[isoLocal()]||{n:0,ok:0};
+  const hechas=Math.min(hoy.n,meta),pct=meta?hechas/meta:0;
+  const CIRC=201;
+  document.getElementById('metaArc').style.strokeDashoffset=CIRC*(1-pct);
+  document.getElementById('metaNum').textContent=hoy.n;
+  document.getElementById('metaOf').textContent='/'+meta;
+  document.getElementById('metaRing').classList.toggle('done',hoy.n>=meta);
+
+  const racha=rachaViva();
+  const fb=document.getElementById('fireBox');
+  fb.classList.toggle('off',!racha);
+  fb.querySelector('.fn').textContent=racha;
+  fb.querySelector('.fl').textContent=racha===1?'dia seguido':'dias seguidos';
+
+  const t=document.getElementById('dayTitle'),s=document.getElementById('daySub');
+  if(hoy.n>=meta){
+    t.textContent='\u{1F525} Meta de hoy cumplida';
+    s.innerHTML='Llevas <b>'+hoy.n+'</b> preguntas hoy, '+hoy.ok+' correctas. '+
+      (racha>1?'Tu racha va en <b>'+racha+' dias</b>: vuelve manana para no cortarla.'
+              :'Manana sumas el segundo dia.');
+  }else if(hoy.n){
+    t.textContent='Vas '+hechas+' de '+meta;
+    s.innerHTML='Te faltan <b>'+(meta-hechas)+'</b> '+((meta-hechas)===1?'pregunta':'preguntas')+' para cerrar el dia'+
+      (racha?' y mantener tu racha de <b>'+racha+'</b>.':'.');
+  }else{
+    t.textContent=racha?'Tu racha esta en juego':'Empieza tu meta de hoy';
+    s.innerHTML=racha
+      ? 'Llevas <b>'+racha+'</b> '+(racha===1?'dia':'dias')+' seguidos. Resuelve <b>'+meta+'</b> preguntas hoy para no perderla.'
+      : 'Resuelve <b>'+meta+'</b> preguntas para encender tu racha.';
+  }
+
+  const sel=document.getElementById('metaSel');
+  sel.querySelectorAll('button').forEach(b=>b.remove());
+  METAS.forEach(m=>{
+    const b=document.createElement('button');
+    b.textContent=m;b.className=m===meta?'on':'';
+    b.onclick=()=>{STATS.meta=m;saveStats();renderDia();};
+    sel.appendChild(b);
+  });
+}
+
+/* Calendario de actividad: 13 semanas, una columna por semana, lunes arriba. */
+function renderHeat(){
+  const box=document.getElementById('heatGrid');box.innerHTML='';
+  const hoy=new Date(),hoyIso=isoLocal(hoy);
+  /* retrocede hasta el lunes de la semana actual, luego 12 semanas mas */
+  const diaSem=(hoy.getDay()+6)%7;                    /* 0 = lunes */
+  const inicio=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()-diaSem-12*7);
+  const meta=metaDiaria();
+  let activos=0;
+  for(let sem=0;sem<13;sem++){
+    const col=document.createElement('div');col.className='heatcol';
+    for(let d=0;d<7;d++){
+      const f=new Date(inicio.getFullYear(),inicio.getMonth(),inicio.getDate()+sem*7+d);
+      const iso=isoLocal(f);
+      const reg=STATS.dias[iso];
+      const cel=document.createElement('div');cel.className='heatd';
+      if(iso>hoyIso){cel.style.visibility='hidden';}
+      else if(reg&&reg.n){
+        activos++;
+        const r=reg.n/meta;
+        cel.classList.add(r>=1?'l4':r>=.66?'l3':r>=.33?'l2':'l1');
+        cel.title=iso+': '+reg.n+' preguntas, '+reg.ok+' correctas';
+      }else{cel.title=iso+': sin actividad';}
+      if(iso===hoyIso)cel.classList.add('hoy');
+      col.appendChild(cel);
+    }
+    box.appendChild(col);
+  }
+  document.getElementById('heatNote').textContent=activos
+    ? activos+' '+(activos===1?'dia activo':'dias activos')+' en 13 semanas · mejor racha: '+(STATS.rachaMax||0)
+    : 'Ultimas 13 semanas';
+}
+
+/* Tablero de memoria: cuantas preguntas tocan hoy, cuantas se estan afianzando,
+   cuantas ya estan dominadas y cuantas no has visto nunca. */
+function renderMemoria(){
+  const e=srsEstado();
+  document.getElementById('mDue').textContent=nf(e.repasar);
+  document.getElementById('mLrn').textContent=nf(e.aprendiendo);
+  document.getElementById('mDom').textContent=nf(e.dominadas);
+  document.getElementById('mNew').textContent=nf(e.sinVer);
+  const bar=document.getElementById('memBar');
+  const pct=v=>(v/TOTAL*100).toFixed(2)+'%';
+  bar.innerHTML=
+    '<i style="width:'+pct(e.dominadas)+';background:var(--ok)" title="Dominadas"></i>'+
+    '<i style="width:'+pct(e.aprendiendo)+';background:#7ea8e0" title="Aprendiendo"></i>'+
+    '<i style="width:'+pct(e.repasar)+';background:var(--gold)" title="Por repasar"></i>';
+  const vistas=TOTAL-e.sinVer;
+  const n=document.getElementById('mNote');
+  if(!vistas){
+    n.textContent='Empieza una sesion inteligente para que el sistema aprenda que te cuesta.';
+  }else if(e.repasar){
+    n.innerHTML='Tienes <b>'+nf(e.repasar)+'</b> '+(e.repasar===1?'pregunta':'preguntas')+
+      ' esperando repaso. La sesion inteligente empieza por ahi.';
+  }else{
+    n.innerHTML='Repaso al dia. La proxima sesion traera preguntas nuevas de tus areas mas flojas. '+
+      'Llevas <b>'+nf(vistas)+'</b> de '+nf(TOTAL)+' preguntas trabajadas.';
+  }
 }
 
 const MODE_HINT={
@@ -849,7 +1212,7 @@ document.getElementById('fbToggle').onclick=()=>{
 };
 document.querySelectorAll('#orderSeg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#orderSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cfg.order=b.dataset.order;});
 document.getElementById('yearSelect').onchange=e=>{cfg.year=e.target.value;updateAvail();};
-document.getElementById('countSelect').onchange=e=>{cfg.count=+e.target.value;};
+document.getElementById('countSelect').onchange=e=>{cfg.count=+e.target.value;updateAvail();};
 
 /* ===================== MOTOR DE RETROALIMENTACION ===================== */
 const OK_MSG=[
@@ -991,6 +1354,16 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
                    :'Esta es una de tus areas debiles: vale la pena dedicarle un simulacro completo.')+'</p></div>';
   }
 
+  const sr=S&&S.srs&&S.srs[S.i];
+  if(sr){
+    h+='<div class="fbk-block"><h4>\u{1F501} Proxima revision</h4><p>'+
+       (sr.i===0
+         ? 'Esta pregunta vuelve <b>en tu proxima sesion</b>: mientras falles, insiste.'
+         : 'La vuelves a ver <b>'+fmtDias(sr.i)+'</b>. Si aciertas otra vez, el intervalo se alarga solo.')+
+       ' <span style="color:var(--ink-mut)">La has visto '+sr.n+' '+(sr.n===1?'vez':'veces')+
+       ', con '+sr.k+' '+(sr.k===1?'acierto':'aciertos')+'.</span></p></div>';
+  }
+
   document.getElementById('fbkBody').innerHTML=h;
   document.getElementById('fbkNext').textContent=(S&&S.i===S.qs.length-1)?'Finalizar ✓':'Siguiente →';
 
@@ -1014,12 +1387,20 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
 let S=null;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-function startQuiz(pool){
+/* yaOrdenado: la sesion inteligente entrega el pool ya seleccionado y barajado,
+   no debe reordenarse ni recortarse otra vez. */
+function startQuiz(pool,yaOrdenado){
   let qs=pool.slice();
-  if(cfg.order==='random')qs=shuffle(qs);
-  else qs.sort((a,b)=>(a.y-b.y)||(a.sp<b.sp?-1:1)||(a.n-b.n));
-  if(cfg.count>0)qs=qs.slice(0,cfg.count);
-  S={qs,i:0,ans:new Array(qs.length).fill(null),ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,t0:Date.now(),elapsed:0,mode:cfg.mode};
+  if(!yaOrdenado){
+    if(cfg.order==='random')qs=shuffle(qs);
+    else qs.sort((a,b)=>(a.y-b.y)||(a.sp<b.sp?-1:1)||(a.n-b.n));
+    if(cfg.count>0)qs=qs.slice(0,cfg.count);
+  }
+  /* historial previo de cada pregunta, para poder rotularla como nueva o repaso */
+  const prev={};
+  qs.forEach((q,i)=>{const s=STATS.srs[q.id];prev[i]=s?{n:s.n,k:s.k}:null;});
+  S={qs,i:0,ans:new Array(qs.length).fill(null),ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,
+     t0:Date.now(),elapsed:0,mode:cfg.mode,prev,smart:!!yaOrdenado};
   show('quiz');document.getElementById('qTot').textContent=qs.length;paintFbToggle();
   if(timer)clearInterval(timer);
   timer=setInterval(()=>{S.elapsed=Math.floor((Date.now()-S.t0)/1000);document.getElementById('lkTime').textContent=fmtClock(S.elapsed);},500);
@@ -1033,6 +1414,13 @@ function renderQ(){
   document.getElementById('tSp').textContent=q.sp;
   document.getElementById('tAr').textContent=q.area;
   document.getElementById('tYr').textContent=q.y?('RM '+q.y):'RM s/f';
+  const pv=S.prev&&S.prev[S.i],tag=document.getElementById('tSrs');
+  if(!S.smart){tag.style.display='none';}
+  else{
+    tag.style.display='';
+    if(!pv){tag.className='tag nuevo';tag.textContent='✦ Nueva';}
+    else{tag.className='tag repaso';tag.textContent='↻ Repaso '+pv.n+'ª · '+pv.k+'/'+pv.n;}
+  }
   document.getElementById('qText').textContent=q.q;
   const box=document.getElementById('opts');box.innerHTML='';
   const answered=a!==null;
@@ -1084,6 +1472,11 @@ function answer(lt){
 
   const st=STATS.bySp[q.sp]||(STATS.bySp[q.sp]={seen:0,ok:0});
   st.seen++;if(correct)st.ok++;STATS.lifeSeen++;if(correct)STATS.lifeOk++;
+  S.srs=S.srs||{};S.srs[S.i]=srsUpdate(q.id,correct);
+  if(marcarDia(correct)){
+    burst(40);
+    toast('\u{1F525}','Meta diaria cumplida · racha de '+STATS.rachaDias);
+  }
   STATS.xp+=xp;
   STATS.bestStreak=Math.max(STATS.bestStreak,S.maxStreak);saveStats();
   checkBadges();
@@ -1197,9 +1590,17 @@ document.getElementById('newQuiz').onclick=()=>{renderLifetime();renderAreaGrid(
 document.getElementById('homeBtn').onclick=()=>{renderLifetime();renderAreaGrid();show('home');window.scrollTo(0,0);};
 
 document.getElementById('startBtn').onclick=()=>{
-  const pool=poolFor();
-  if(pool.length<1){alert('No hay preguntas con esa seleccion. Ajusta los filtros.');return;}
-  startQuiz(pool);window.scrollTo(0,0);
+  if(cfg.kind==='smart'){
+    const n=cfg.count>0?cfg.count:40;
+    const pool=adaptivePool(n);
+    if(!pool.length){alert('No quedan preguntas disponibles.');return;}
+    startQuiz(pool,true);
+  }else{
+    const pool=poolFor();
+    if(pool.length<1){alert('No hay preguntas con esa seleccion. Ajusta los filtros.');return;}
+    startQuiz(pool);
+  }
+  window.scrollTo(0,0);
 };
 
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on');}
@@ -1464,7 +1865,7 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowLeft'){if(S.i>0){S.i--;renderQ();}}
 });
 
-renderAreaChips();renderSpSelect();updateAvail();renderAreaGrid();renderLifetime();aiPaintCfg();
+podarDias();renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);
 </script>
 </body>
 </html>
