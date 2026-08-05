@@ -223,6 +223,48 @@ select:focus{outline:none;border-color:var(--gold-deep)}
   background:linear-gradient(90deg,var(--gold-deep),var(--gold-soft),#f2e2a8);transition:width .9s cubic-bezier(.2,.8,.2,1)}
 .lvlsub{font-size:11.5px;color:var(--ink-dim);margin-top:6px;font-family:'IBM Plex Mono',monospace}
 
+/* ============ META DIARIA Y RACHA ============ */
+.dayrow{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;
+  background:linear-gradient(115deg,rgba(255,157,92,.10),rgba(18,37,60,.86));
+  border:1px solid var(--line2);border-radius:14px;padding:16px 18px;backdrop-filter:blur(12px)}
+@media(max-width:640px){.dayrow{grid-template-columns:auto 1fr;gap:13px;padding:14px}}
+.ring{position:relative;width:74px;height:74px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg);width:74px;height:74px}
+.ring circle{fill:none;stroke-width:7;stroke-linecap:round}
+.ring .bg{stroke:rgba(255,255,255,.07)}
+.ring .fg{stroke:url(#gmeta);transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+.ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.ring .num b{font-family:'Fraunces',serif;font-size:19px;font-weight:600}
+.ring .num s{text-decoration:none;font-size:9.5px;color:var(--ink-mut);margin-top:2px;font-family:'IBM Plex Mono',monospace}
+.ring.done .num b{color:var(--ok)}
+.daytxt{min-width:0}
+.dayt{font-family:'Fraunces',serif;font-size:16px;font-weight:600;line-height:1.25}
+.days{font-size:12.5px;color:var(--ink-dim);margin-top:5px;line-height:1.45}
+.days b{color:var(--gold-soft)}
+.dayfire{text-align:center;flex-shrink:0}
+@media(max-width:640px){.dayfire{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;
+  border-top:1px solid var(--line);padding-top:12px;margin-top:2px}}
+.dayfire .fn{font-family:'Fraunces',serif;font-size:31px;font-weight:600;color:#ff9d5c;line-height:1}
+.dayfire .fl{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mut);font-weight:600;margin-top:4px}
+@media(max-width:640px){.dayfire .fl{margin-top:0}}
+.dayfire.off .fn{color:var(--ink-mut)}
+
+.metasel{display:flex;align-items:center;gap:9px;margin-top:12px;flex-wrap:wrap}
+.metasel span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mut);font-weight:600}
+.metasel button{border:1px solid var(--line2);border-radius:999px;padding:5px 12px;font-size:12.5px;color:var(--ink-dim);font-weight:500}
+.metasel button:hover{border-color:var(--gold-deep);color:var(--ink)}
+.metasel button.on{background:var(--gold);color:#1a1305;border-color:var(--gold);font-weight:600}
+
+/* ============ CALENDARIO DE ACTIVIDAD ============ */
+.heat{display:flex;gap:3px;margin-top:14px;overflow-x:auto;padding-bottom:3px}
+.heatcol{display:flex;flex-direction:column;gap:3px}
+.heatd{width:12px;height:12px;border-radius:3px;background:rgba(255,255,255,.05);flex-shrink:0}
+.heatd.l1{background:rgba(212,175,55,.28)} .heatd.l2{background:rgba(212,175,55,.5)}
+.heatd.l3{background:rgba(212,175,55,.75)} .heatd.l4{background:var(--gold);box-shadow:0 0 6px rgba(212,175,55,.5)}
+.heatd.hoy{outline:1.5px solid var(--gold-soft);outline-offset:1px}
+.heatleg{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:11px;color:var(--ink-mut)}
+.heatleg i{width:11px;height:11px;border-radius:3px;display:inline-block}
+
 /* ============ TABLERO DE MEMORIA ============ */
 .memgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 @media(max-width:640px){.memgrid{grid-template-columns:repeat(2,1fr)}}
@@ -440,7 +482,35 @@ details.howto a{color:var(--gold-soft)}
       </div>
     </div>
 
-    <div class="shead"><span class="en">01</span><h2 class="serif">Estado de tu memoria</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">01</span><h2 class="serif">Tu dia</h2><span class="rule"></span></div>
+    <div class="dayrow">
+      <div class="ring" id="metaRing">
+        <svg viewBox="0 0 74 74" aria-hidden="true">
+          <defs><linearGradient id="gmeta" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#b8942a"/><stop offset="100%" stop-color="#f2e2a8"/>
+          </linearGradient></defs>
+          <circle class="bg" cx="37" cy="37" r="32"></circle>
+          <circle class="fg" cx="37" cy="37" r="32" id="metaArc" stroke-dasharray="201" stroke-dashoffset="201"></circle>
+        </svg>
+        <div class="num"><b id="metaNum">0</b><s id="metaOf">/20</s></div>
+      </div>
+      <div class="daytxt">
+        <div class="dayt" id="dayTitle">Empieza tu meta de hoy</div>
+        <div class="days" id="daySub">Resuelve preguntas para encender tu racha.</div>
+        <div class="metasel" id="metaSel"><span>Meta</span></div>
+      </div>
+      <div class="dayfire off" id="fireBox">
+        <div class="fn" id="fireN">0</div>
+        <div class="fl">dias seguidos</div>
+      </div>
+    </div>
+    <div class="heat" id="heatGrid"></div>
+    <div class="heatleg">
+      <span id="heatNote">Ultimas 13 semanas</span><span class="spacer" style="flex:1"></span>
+      <span>menos</span><i class="heatd"></i><i class="heatd l1"></i><i class="heatd l2"></i><i class="heatd l3"></i><i class="heatd l4"></i><span>mas</span>
+    </div>
+
+    <div class="shead"><span class="en">02</span><h2 class="serif">Estado de tu memoria</h2><span class="rule"></span></div>
     <div class="memgrid">
       <div class="memcell due"><div class="ml">Por repasar hoy</div><div class="mv mono" id="mDue">0</div><div class="ms">tocan ahora</div></div>
       <div class="memcell lrn"><div class="ml">Aprendiendo</div><div class="mv mono" id="mLrn">0</div><div class="ms">aun no se afianzan</div></div>
@@ -450,7 +520,7 @@ details.howto a{color:var(--gold-soft)}
     <div class="membar" id="memBar"><i></i></div>
     <div class="memnote" id="mNote">Empieza una sesion inteligente para que el sistema aprenda que te cuesta.</div>
 
-    <div class="shead"><span class="en">02</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">03</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
     <div class="panel"><div class="cfg">
       <div class="field">
         <label class="flabel">Tipo de sesion</label>
@@ -515,15 +585,15 @@ details.howto a{color:var(--gold-soft)}
       <div class="availnote">Disponibles con esta seleccion: <b id="availNum">&mdash;</b></div>
     </div></div>
 
-    <div class="shead"><span class="en">03</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">04</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
     <div class="agrid" id="areaGrid"></div>
 
-    <div class="shead"><span class="en">04</span><h2 class="serif">Logros</h2><span class="rule"></span>
+    <div class="shead"><span class="en">05</span><h2 class="serif">Logros</h2><span class="rule"></span>
       <span class="mono" style="font-size:12px;color:var(--gold-soft)" id="badgeCount">0/12</span>
     </div>
     <div class="badges" id="badgeGrid"></div>
 
-    <div class="shead"><span class="en">05</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">06</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div class="field">
         <label class="flabel">Modo de conexion</label>
@@ -692,12 +762,55 @@ const TOTAL = ALL.length;
 
 const LS='rm_conareme_v1';
 function loadStats(){try{return JSON.parse(localStorage.getItem(LS))||null}catch(e){return null}}
-function blankStats(){return{lifeSeen:0,lifeOk:0,bestStreak:0,bySp:{},xp:0,badges:[],exams:0,perfect:0,srs:{}}}
+function blankStats(){return{lifeSeen:0,lifeOk:0,bestStreak:0,bySp:{},xp:0,badges:[],exams:0,perfect:0,
+  srs:{},dias:{},meta:20,rachaDias:0,rachaMax:0,ultimoCompleto:null}}
 let STATS=Object.assign(blankStats(),loadStats()||{});
 if(!Array.isArray(STATS.badges))STATS.badges=[];
 if(typeof STATS.xp!=='number')STATS.xp=0;
 if(!STATS.srs||typeof STATS.srs!=='object')STATS.srs={};
+if(!STATS.dias||typeof STATS.dias!=='object')STATS.dias={};
 function saveStats(){try{localStorage.setItem(LS,JSON.stringify(STATS))}catch(e){}}
+
+/* ===================== META DIARIA Y RACHA =====================
+   Las fechas se calculan en hora LOCAL, nunca UTC: en Peru (UTC-5) usar UTC
+   partiria el dia a las 7 de la noche y rompería rachas legitimas. */
+function isoLocal(d){
+  d=d||new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function isoMas(iso,dias){
+  const[a,m,d]=iso.split('-').map(Number);
+  return isoLocal(new Date(a,m-1,d+dias));
+}
+const METAS=[10,20,30,50];
+function metaDiaria(){return METAS.includes(STATS.meta)?STATS.meta:20;}
+
+/* La racha solo sigue viva si el ultimo dia completado fue hoy o ayer:
+   si fue anterior, ya se rompio aunque el contador guardado diga otra cosa. */
+function rachaViva(){
+  if(!STATS.ultimoCompleto)return 0;
+  const h=isoLocal();
+  if(STATS.ultimoCompleto===h||STATS.ultimoCompleto===isoMas(h,-1))return STATS.rachaDias||0;
+  return 0;
+}
+/* Registra la respuesta en el dia de hoy y cierra la meta si se alcanza. */
+function marcarDia(correcto){
+  const h=isoLocal();
+  const d=STATS.dias[h]||(STATS.dias[h]={n:0,ok:0});
+  d.n++;if(correcto)d.ok++;
+  if(d.n>=metaDiaria()&&STATS.ultimoCompleto!==h){
+    STATS.rachaDias=(STATS.ultimoCompleto===isoMas(h,-1))?(STATS.rachaDias||0)+1:1;
+    STATS.ultimoCompleto=h;
+    STATS.rachaMax=Math.max(STATS.rachaMax||0,STATS.rachaDias);
+    return true;                 /* meta recien alcanzada */
+  }
+  return false;
+}
+/* Poda dias mas viejos que el calendario para que localStorage no crezca solo. */
+function podarDias(){
+  const corte=isoMas(isoLocal(),-400);
+  for(const k in STATS.dias)if(k<corte)delete STATS.dias[k];
+}
 
 /* ===================== REPETICION ESPACIADA =====================
    Variante comprimida de SM-2: los intervalos se topan en 60 dias porque
@@ -817,7 +930,11 @@ const BADGES=[
   {id:'acc70',  i:'\u{1F3AF}', t:'Punteria',         d:'70% global (min. 50 preg.)', f:s=>s.lifeSeen>=50&&s.lifeOk/s.lifeSeen>=.70},
   {id:'acc85',  i:'\u{1F3C6}', t:'Elite',            d:'85% global (min. 100 preg.)',f:s=>s.lifeSeen>=100&&s.lifeOk/s.lifeSeen>=.85},
   {id:'perf',   i:'\u{2B50}',  t:'Simulacro perfecto',d:'100% en un simulacro',      f:s=>s.perfect>=1},
-  {id:'ex10',   i:'\u{1F396}', t:'Constancia',       d:'10 simulacros completados',  f:s=>s.exams>=10}
+  {id:'ex10',   i:'\u{1F396}', t:'Constancia',       d:'10 simulacros completados',  f:s=>s.exams>=10},
+  {id:'d3',     i:'\u{1F331}', t:'Semilla',          d:'3 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=3},
+  {id:'d7',     i:'\u{1F4C5}', t:'Semana completa',  d:'7 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=7},
+  {id:'d30',    i:'\u{1F5D3}', t:'Mes de disciplina',d:'30 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=30},
+  {id:'d100',   i:'\u{1F48E}', t:'Cien dias',        d:'100 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=100}
 ];
 function checkBadges(){
   const nuevos=[];
@@ -956,7 +1073,83 @@ function renderLifetime(){
   let best=null;for(const sp in STATS.bySp){const s=STATS.bySp[sp];if(s.seen>=5){const p=s.ok/s.seen;if(!best||p>best.p)best={sp,p,seen:s.seen};}}
   document.getElementById('lfBest').textContent=best?best.sp:'—';
   document.getElementById('lfBestSub').textContent=best?Math.round(best.p*100)+'% en '+best.seen+' preguntas':'resuelve >=5 para ver';
-  renderLevel();renderBadges();renderMemoria();updateAvail();
+  renderLevel();renderBadges();renderMemoria();renderDia();renderHeat();updateAvail();
+}
+
+/* Anillo de meta diaria, racha y selector de meta. */
+function renderDia(){
+  const meta=metaDiaria(),hoy=STATS.dias[isoLocal()]||{n:0,ok:0};
+  const hechas=Math.min(hoy.n,meta),pct=meta?hechas/meta:0;
+  const CIRC=201;
+  document.getElementById('metaArc').style.strokeDashoffset=CIRC*(1-pct);
+  document.getElementById('metaNum').textContent=hoy.n;
+  document.getElementById('metaOf').textContent='/'+meta;
+  document.getElementById('metaRing').classList.toggle('done',hoy.n>=meta);
+
+  const racha=rachaViva();
+  const fb=document.getElementById('fireBox');
+  fb.classList.toggle('off',!racha);
+  fb.querySelector('.fn').textContent=racha;
+  fb.querySelector('.fl').textContent=racha===1?'dia seguido':'dias seguidos';
+
+  const t=document.getElementById('dayTitle'),s=document.getElementById('daySub');
+  if(hoy.n>=meta){
+    t.textContent='\u{1F525} Meta de hoy cumplida';
+    s.innerHTML='Llevas <b>'+hoy.n+'</b> preguntas hoy, '+hoy.ok+' correctas. '+
+      (racha>1?'Tu racha va en <b>'+racha+' dias</b>: vuelve manana para no cortarla.'
+              :'Manana sumas el segundo dia.');
+  }else if(hoy.n){
+    t.textContent='Vas '+hechas+' de '+meta;
+    s.innerHTML='Te faltan <b>'+(meta-hechas)+'</b> '+((meta-hechas)===1?'pregunta':'preguntas')+' para cerrar el dia'+
+      (racha?' y mantener tu racha de <b>'+racha+'</b>.':'.');
+  }else{
+    t.textContent=racha?'Tu racha esta en juego':'Empieza tu meta de hoy';
+    s.innerHTML=racha
+      ? 'Llevas <b>'+racha+'</b> '+(racha===1?'dia':'dias')+' seguidos. Resuelve <b>'+meta+'</b> preguntas hoy para no perderla.'
+      : 'Resuelve <b>'+meta+'</b> preguntas para encender tu racha.';
+  }
+
+  const sel=document.getElementById('metaSel');
+  sel.querySelectorAll('button').forEach(b=>b.remove());
+  METAS.forEach(m=>{
+    const b=document.createElement('button');
+    b.textContent=m;b.className=m===meta?'on':'';
+    b.onclick=()=>{STATS.meta=m;saveStats();renderDia();};
+    sel.appendChild(b);
+  });
+}
+
+/* Calendario de actividad: 13 semanas, una columna por semana, lunes arriba. */
+function renderHeat(){
+  const box=document.getElementById('heatGrid');box.innerHTML='';
+  const hoy=new Date(),hoyIso=isoLocal(hoy);
+  /* retrocede hasta el lunes de la semana actual, luego 12 semanas mas */
+  const diaSem=(hoy.getDay()+6)%7;                    /* 0 = lunes */
+  const inicio=new Date(hoy.getFullYear(),hoy.getMonth(),hoy.getDate()-diaSem-12*7);
+  const meta=metaDiaria();
+  let activos=0;
+  for(let sem=0;sem<13;sem++){
+    const col=document.createElement('div');col.className='heatcol';
+    for(let d=0;d<7;d++){
+      const f=new Date(inicio.getFullYear(),inicio.getMonth(),inicio.getDate()+sem*7+d);
+      const iso=isoLocal(f);
+      const reg=STATS.dias[iso];
+      const cel=document.createElement('div');cel.className='heatd';
+      if(iso>hoyIso){cel.style.visibility='hidden';}
+      else if(reg&&reg.n){
+        activos++;
+        const r=reg.n/meta;
+        cel.classList.add(r>=1?'l4':r>=.66?'l3':r>=.33?'l2':'l1');
+        cel.title=iso+': '+reg.n+' preguntas, '+reg.ok+' correctas';
+      }else{cel.title=iso+': sin actividad';}
+      if(iso===hoyIso)cel.classList.add('hoy');
+      col.appendChild(cel);
+    }
+    box.appendChild(col);
+  }
+  document.getElementById('heatNote').textContent=activos
+    ? activos+' '+(activos===1?'dia activo':'dias activos')+' en 13 semanas · mejor racha: '+(STATS.rachaMax||0)
+    : 'Ultimas 13 semanas';
 }
 
 /* Tablero de memoria: cuantas preguntas tocan hoy, cuantas se estan afianzando,
@@ -1280,6 +1473,10 @@ function answer(lt){
   const st=STATS.bySp[q.sp]||(STATS.bySp[q.sp]={seen:0,ok:0});
   st.seen++;if(correct)st.ok++;STATS.lifeSeen++;if(correct)STATS.lifeOk++;
   S.srs=S.srs||{};S.srs[S.i]=srsUpdate(q.id,correct);
+  if(marcarDia(correct)){
+    burst(40);
+    toast('\u{1F525}','Meta diaria cumplida · racha de '+STATS.rachaDias);
+  }
   STATS.xp+=xp;
   STATS.bestStreak=Math.max(STATS.bestStreak,S.maxStreak);saveStats();
   checkBadges();
@@ -1668,7 +1865,7 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='ArrowLeft'){if(S.i>0){S.i--;renderQ();}}
 });
 
-renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);
+podarDias();renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);
 </script>
 </body>
 </html>
