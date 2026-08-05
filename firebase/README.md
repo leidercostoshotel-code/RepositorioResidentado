@@ -97,11 +97,20 @@ Aun así, **vigila tu consumo**. En [platform.claude.com](https://platform.claud
 
 ## Costo aproximado
 
-Con Claude Haiku 4.5 ($1 por millón de tokens de entrada, $5 de salida) una explicación típica ronda los 1200 tokens de entrada y 350 de salida:
+Medido sobre las preguntas reales de este banco (mediana de 429 caracteres de enunciado más alternativas, sistema de 698, y un tope de 200 palabras de respuesta):
 
-**≈ 0.003 USD por explicación**, es decir alrededor de **300 explicaciones por dólar**.
+| Modelo | Por explicación | Con 5 USD |
+|---|---|---|
+| Claude Haiku 4.5 | ≈ 0.0019 USD | ≈ **2 700** explicaciones |
+| Claude Sonnet 5 | ≈ 0.0055 USD | ≈ **900** explicaciones |
 
-Sonnet 5 es unas 3 veces más caro pero explica con más profundidad.
+Las preguntas más largas del banco (percentil 90) apenas mueven la cifra: el costo lo domina la respuesta, no el enunciado.
+
+### Si publicas la app con el proxy
+
+Recuerda que el saldo lo pagas tú para **todos** los que usen la página. El límite de 20 peticiones por minuto por IP frena los abusos, pero no el uso legítimo: 50 estudiantes pidiendo 10 explicaciones cada uno consumen 500, es decir cerca de un dólar.
+
+Dimensiona el saldo según cuánta gente vaya a usarla y fija un límite de gasto mensual en [platform.claude.com](https://platform.claude.com).
 
 ## Si no quieres usar Firebase
 
