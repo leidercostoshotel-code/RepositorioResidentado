@@ -17,6 +17,7 @@ Resultado: cualquier persona que abra la app tiene tutor IA sin configurar nada.
 
 ## Requisitos
 
+- Una **API key de Anthropic** con saldo. Se saca en [platform.claude.com/settings/keys](https://platform.claude.com/settings/keys) y se paga por uso, aparte de cualquier suscripción de claude.ai.
 - Cuenta de Google y un proyecto en [Firebase](https://console.firebase.google.com)
 - **Plan Blaze** (pago por uso). Es obligatorio porque el plan gratuito no permite que una función llame a servicios externos. El uso normal de esta app cae dentro de la capa gratuita mensual de Cloud Functions; lo que sí se cobra es el consumo de la API de Anthropic.
 - Node.js 22 y `firebase-tools`
@@ -92,7 +93,7 @@ let AI={mode:'proxy',url:'',key:'',model:'claude-haiku-4-5'};
 | Ráfagas de peticiones | Límite de 20 por minuto por IP |
 | Peticiones caras inyectadas | El servidor reconstruye el cuerpo: solo acepta modelos de la lista y topa `max_tokens` en 1200 |
 
-Aun así, **vigila tu consumo**. En [console.anthropic.com](https://console.anthropic.com) puedes fijar un límite de gasto mensual, y en Google Cloud puedes poner una alerta de presupuesto.
+Aun así, **vigila tu consumo**. En [platform.claude.com](https://platform.claude.com) puedes fijar un límite de gasto mensual, y en Google Cloud puedes poner una alerta de presupuesto.
 
 ## Costo aproximado
 
