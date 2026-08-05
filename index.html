@@ -284,6 +284,8 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .aiout{margin:0 17px 16px;border:1px solid rgba(126,168,224,.28);border-radius:12px;padding:14px 15px;display:none;
   background:linear-gradient(160deg,rgba(126,168,224,.09),rgba(18,37,60,.5))}
 .aiout.show{display:block;animation:fbkin .3s ease}
+.aiout.local{border-color:rgba(212,175,55,.3);background:linear-gradient(160deg,rgba(212,175,55,.08),rgba(18,37,60,.5))}
+.aiout.local .aihead{color:var(--gold-soft)}
 .aiout .aihead{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9dc0ee;font-weight:600;margin-bottom:9px;
   display:flex;align-items:center;gap:7px}
 .aiout .aibody{font-size:13.8px;line-height:1.62;color:var(--ink)}
@@ -518,6 +520,16 @@ details.howto a{color:var(--gold-soft)}
           <option value="claude-haiku-4-5">Claude Haiku 4.5 &middot; rapido y economico</option>
           <option value="claude-sonnet-5">Claude Sonnet 5 &middot; explicaciones mas profundas</option>
         </select>
+      </div>
+
+      <div class="field" style="margin-top:18px">
+        <label class="flabel">Cuando aparece la explicacion</label>
+        <div class="seg" id="aiAutoSeg">
+          <button data-auto="wrong" class="on">Si fallo</button>
+          <button data-auto="always">Siempre</button>
+          <button data-auto="manual">Al tocar</button>
+        </div>
+        <div class="fhint" id="aiAutoHint">Sale sola cuando te equivocas. En las que aciertas queda el boton por si quieres profundizar.</div>
       </div>
 
       <div class="aistat" id="aiStat"><span class="dot2"></span><span id="aiStatTxt">Sin configurar &mdash; el modo local sigue funcionando.</span></div>
@@ -980,9 +992,23 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
   }
 
   document.getElementById('fbkBody').innerHTML=h;
-  const ao=document.getElementById('aiOut');ao.className='aiout';ao.innerHTML='';
-  const ab=document.getElementById('aiAsk');ab.disabled=false;ab.innerHTML='✨ Explicame por que';
   document.getElementById('fbkNext').textContent=(S&&S.i===S.qs.length-1)?'Finalizar ✓':'Siguiente →';
+
+  const ao=document.getElementById('aiOut');
+  const ab=document.getElementById('aiAsk');
+  ao.className='aiout';ao.innerHTML='';
+  ab.disabled=false;ab.innerHTML='✨ Explicame por que';
+
+  const cache=S&&S.aiCache&&S.aiCache[S.i];
+  if(cache){
+    paintAi(ao,cache);
+    ab.disabled=true;ab.innerHTML='✅ Explicado';
+  }else if(aiApagado&&aiReady()){
+    /* la IA quedo en pausa: se avisa una vez por pregunta sin pedir nada */
+    paintLocal(ao,aiApagado,ab);
+  }else if(autoExplica(correcto)){
+    runAi(q,marcada,ab,ao,S.i);
+  }
 }
 
 let S=null;
@@ -1150,9 +1176,12 @@ function renderReview(wrongOnly){
     list.appendChild(item);
   });
   if(!list.children.length)list.innerHTML='<div style="color:var(--ink-mut);padding:16px 0;font-size:14px">No hay preguntas falladas. Excelente.</div>';
-  list.querySelectorAll('.rv-ai').forEach(b=>b.onclick=function(){
-    const i=+this.dataset.i;
-    runAi(S.qs[i],S.ans[i],this,this.closest('.rvitem').querySelector('.aiout'));
+  list.querySelectorAll('.rv-ai').forEach(b=>{
+    const i=+b.dataset.i;
+    const out=b.closest('.rvitem').querySelector('.aiout');
+    /* si ya se explico durante el simulacro, se reutiliza sin volver a pedirla */
+    if(S.aiCache&&S.aiCache[i]){paintAi(out,S.aiCache[i]);b.disabled=true;b.innerHTML='✅ Explicado';}
+    b.onclick=function(){runAi(S.qs[i],S.ans[i],this,out,i);};
   });
 }
 document.getElementById('filterWrong').onclick=function(){reviewWrongOnly=!reviewWrongOnly;this.classList.toggle('sel',reviewWrongOnly);this.textContent=reviewWrongOnly?'Ver todas':'Solo falladas';renderReview(reviewWrongOnly);};
@@ -1177,20 +1206,35 @@ function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.re
 
 /* ===================== TUTOR IA ===================== */
 const AILS='rm_ai_v1';
-let AI={mode:'proxy',url:'',key:'',model:'claude-haiku-4-5'};
+let AI={mode:'proxy',url:'',key:'',model:'claude-haiku-4-5',auto:'wrong'};
 try{Object.assign(AI,JSON.parse(localStorage.getItem(AILS))||{});}catch(e){}
+
+const AUTO_HINT={
+  wrong:'Sale sola cuando te equivocas. En las que aciertas queda el boton por si quieres profundizar.',
+  always:'Sale sola en todas las preguntas. Consume mas saldo: una peticion por pregunta.',
+  manual:'Solo aparece cuando tocas el boton. Es la opcion que menos gasta.'
+};
 
 function aiReady(){return AI.mode==='proxy'?!!AI.url:!!AI.key;}
 function aiPaintCfg(){
   document.getElementById('aiProxyUrl').value=AI.url||'';
   document.getElementById('aiKey').value=AI.key||'';
   document.getElementById('aiModel').value=AI.model||'claude-haiku-4-5';
+  document.querySelectorAll('#aiAutoSeg button').forEach(b=>b.classList.toggle('on',b.dataset.auto===AI.auto));
+  document.getElementById('aiAutoHint').textContent=AUTO_HINT[AI.auto]||AUTO_HINT.wrong;
   document.querySelectorAll('#aiModeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.aimode===AI.mode));
   document.getElementById('aiProxyBox').style.display=AI.mode==='proxy'?'':'none';
   document.getElementById('aiDirectBox').style.display=AI.mode==='direct'?'':'none';
-  aiStat(aiReady()?'ok':'',aiReady()
-    ? 'Tutor IA activo · '+(AI.mode==='proxy'?'via servidor propio':'clave personal')+' · '+AI.model
-    : 'Sin configurar — el modo local sigue funcionando.');
+  const auto=AI.auto==='always'?'automatica en todas'
+            :AI.auto==='wrong'?'automatica al fallar':'manual';
+  if(aiApagado){
+    const info=AI_FALLO[aiApagado]||AI_FALLO.otro;
+    aiStat('err',info.t+'. Trabajando en modo local; toca "Guardar y probar" para reintentar.');
+  }else{
+    aiStat(aiReady()?'ok':'',aiReady()
+      ? 'Tutor IA activo · '+(AI.mode==='proxy'?'via servidor propio':'clave personal')+' · '+AI.model+' · '+auto
+      : 'Sin configurar — el modo local sigue funcionando.');
+  }
 }
 function aiStat(cls,txt){
   const el=document.getElementById('aiStat');
@@ -1222,8 +1266,45 @@ function aiPrompt(q,marcada){
     'Explica siguiendo el formato indicado.';
 }
 
+/* Clasifica el fallo para decidir si se apaga la IA o solo se salta esta pregunta.
+   'saldo', 'clave' y 'permiso' son permanentes: no tiene sentido reintentar
+   pregunta tras pregunta. 'limite' y 'caida' son pasajeros. */
+function aiError(status,msg,forzar){
+  let code=forzar||'otro';
+  const m=(msg||'').toLowerCase();
+  if(!forzar){
+    if(/credit|balance|billing|insufficient|saldo|fondos/.test(m))code='saldo';
+    else if(status===400&&/credit|balance/.test(m))code='saldo';
+    else if(status===401)code='clave';
+    else if(status===403)code='permiso';
+    else if(status===429)code='limite';
+    else if(status>=500)code='caida';
+  }
+  const e=new Error(msg||('HTTP '+status));
+  e.code=code;e.status=status;
+  return e;
+}
+const AI_FALLO={
+  saldo:{t:'Se agoto el saldo de la API',
+         d:'Recarga en platform.claude.com para volver a tener explicaciones con IA.'},
+  clave:{t:'La clave no es valida',
+         d:'Revisala en Inicio, seccion Tutor con IA.'},
+  permiso:{t:'La clave no tiene permiso',
+         d:'Verifica el estado de tu cuenta en platform.claude.com.'},
+  limite:{t:'Demasiadas consultas seguidas',
+         d:'Espera un momento y vuelve a tocar el boton.'},
+  caida:{t:'El servicio no responde',
+         d:'Es temporal. Intenta de nuevo en un rato.'},
+  refusal:{t:'El modelo no respondio esta pregunta',
+         d:'Ocurre en temas que sus filtros restringen.'},
+  otro:{t:'No se pudo obtener la explicacion',d:''}
+};
+/* Se apaga sola para el resto de la sesion cuando el error es permanente.
+   Se limpia al recargar la pagina o al probar la conexion de nuevo. */
+let aiApagado=null;
+
 async function aiExplain(q,marcada){
-  if(!aiReady())throw new Error('NOCFG');
+  if(!aiReady())throw aiError(0,'Tutor no configurado','otro');
   const body={model:AI.model,max_tokens:900,system:AI_SYSTEM,
     messages:[{role:'user',content:aiPrompt(q,marcada)}]};
   if(AI.model!=='claude-haiku-4-5')body.output_config={effort:'low'};
@@ -1241,10 +1322,10 @@ async function aiExplain(q,marcada){
   }
   if(!res.ok){
     let d='';try{d=(await res.json()).error?.message||'';}catch(e){}
-    throw new Error('HTTP '+res.status+(d?' — '+d:''));
+    throw aiError(res.status,d);
   }
   const data=await res.json();
-  if(data.stop_reason==='refusal')throw new Error('El modelo declino responder esta pregunta.');
+  if(data.stop_reason==='refusal')throw aiError(0,'El modelo declino responder esta pregunta.','refusal');
   const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
   if(!txt)throw new Error('Respuesta vacia del modelo.');
   return txt;
@@ -1268,56 +1349,106 @@ function mdLite(s){
   return out||'<p></p>';
 }
 
-async function runAi(q,marcada,btn,out){
+/* Aviso de que la IA quedo en pausa y el simulacro sigue con el banco local. */
+function paintLocal(out,code,btn,pie){
+  const info=AI_FALLO[code]||AI_FALLO.otro;
+  out.className='aiout show local';
+  out.innerHTML='<div class="aihead">\u{1F4D6} Modo local</div>'+
+    '<div class="aibody"><p><b>'+esc(info.t)+'.</b> '+esc(info.d)+'</p>'+
+    '<p style="color:var(--ink-dim)">El analisis de arriba sigue completo: la clave, las opciones '+
+    'descartadas y el dato de repaso salen del banco local y no dependen de internet.</p></div>'+
+    (pie?'<div class="aifoot">'+esc(pie)+'</div>':'');
+  if(btn){btn.disabled=true;btn.innerHTML='\u{1F4D6} Modo local';}
+}
+
+function paintAi(out,txt){
+  out.className='aiout show';
+  out.innerHTML='<div class="aihead">✨ Tutor IA · '+esc(AI.model)+'</div>'+
+    '<div class="aibody">'+mdLite(txt)+'</div>'+
+    '<div class="aifoot">Generado por IA — contrasta siempre con tu fuente oficial de estudio.</div>';
+}
+
+/* clave: indice de la pregunta en el simulacro, para no repetir la peticion
+   al navegar hacia atras. null en la revision final (cada item ya es unico). */
+async function runAi(q,marcada,btn,out,clave){
   if(!aiReady()){
     out.className='aiout show';
     out.innerHTML='<div class="aihead">Tutor IA</div><div class="aierr">Aun no configuras el tutor. '+
       'Ve al inicio, seccion <b>Tutor con IA</b>, y elige servidor propio (Firebase) o tu clave personal.</div>';
     return;
   }
-  btn.disabled=true;
-  const old=btn.innerHTML;
-  btn.innerHTML='<span class="dots"><i></i><i></i><i></i></span> Pensando';
+  if(clave!=null&&S&&S.aiCache&&S.aiCache[clave]){
+    paintAi(out,S.aiCache[clave]);
+    if(btn){btn.disabled=true;btn.innerHTML='✅ Explicado';}
+    return;
+  }
+  /* ya sabemos que la IA no va a responder: no gastamos otra peticion */
+  if(aiApagado){paintLocal(out,aiApagado,btn);return;}
+  const old=btn?btn.innerHTML:'';
+  if(btn){btn.disabled=true;btn.innerHTML='<span class="dots"><i></i><i></i><i></i></span> Pensando';}
   out.className='aiout show';
-  out.innerHTML='<div class="aihead">Tutor IA · '+esc(AI.model)+'</div><div class="aibody" style="color:var(--ink-dim)">Analizando la pregunta…</div>';
+  out.innerHTML='<div class="aihead">Tutor IA · '+esc(AI.model)+'</div>'+
+    '<div class="aibody" style="color:var(--ink-dim)"><span class="dots"><i></i><i></i><i></i></span> Analizando la pregunta…</div>';
   try{
     const txt=await aiExplain(q,marcada);
-    out.innerHTML='<div class="aihead">✨ Tutor IA · '+esc(AI.model)+'</div>'+
-      '<div class="aibody">'+mdLite(txt)+'</div>'+
-      '<div class="aifoot">Generado por IA — contrasta siempre con tu fuente oficial de estudio.</div>';
-    btn.innerHTML='✅ Explicado';
+    if(clave!=null&&S)(S.aiCache||(S.aiCache={}))[clave]=txt;
+    paintAi(out,txt);
+    if(btn){btn.innerHTML='✅ Explicado';}
   }catch(err){
-    out.innerHTML='<div class="aihead">Tutor IA</div><div class="aierr">No se pudo obtener la explicacion.<br>'+
-      esc(err.message||String(err))+'</div>';
-    btn.disabled=false;btn.innerHTML=old;
+    const code=err.code||'otro';
+    const info=AI_FALLO[code]||AI_FALLO.otro;
+    const permanente=code==='saldo'||code==='clave'||code==='permiso';
+    if(permanente){
+      aiApagado=code;aiPaintCfg();
+      paintLocal(out,code,btn,'La IA queda en pausa hasta que recargues la pagina o vuelvas a probar la conexion en Inicio.');
+    }else{
+      paintLocal(out,code,null);
+      if(btn){btn.disabled=false;btn.innerHTML=old;}
+    }
   }
+}
+
+/* Decide si la explicacion sale sola, sin que el usuario toque el boton. */
+function autoExplica(correcto){
+  if(!aiReady()||aiApagado)return false;
+  if(AI.auto==='always')return true;
+  if(AI.auto==='wrong')return !correcto;
+  return false;
 }
 
 document.querySelectorAll('#aiModeSeg button').forEach(b=>b.onclick=()=>{
   AI.mode=b.dataset.aimode;aiPaintCfg();
 });
+document.querySelectorAll('#aiAutoSeg button').forEach(b=>b.onclick=()=>{
+  AI.auto=b.dataset.auto;aiSaveCfg();aiPaintCfg();
+});
 document.getElementById('aiSave').onclick=async function(){
   aiSaveCfg();
+  aiApagado=null;   /* reintento limpio: quiza ya recargaron saldo */
   if(!aiReady()){aiStat('err',AI.mode==='proxy'?'Falta la URL de la funcion.':'Falta la API key.');return;}
   aiStat('','Probando conexion…');
   this.disabled=true;
   try{
     await aiExplain({q:'Prueba de conexion.',o:[['A','Opcion A'],['B','Opcion B']],c:'A',sp:'General',area:'General',y:2024},'A');
+    aiPaintCfg();
     aiStat('ok','Conexion correcta. Tutor IA activo con '+AI.model+'.');
   }catch(e){
-    aiStat('err','Fallo: '+(e.message||e));
+    const code=e.code||'otro';
+    if(code==='saldo'||code==='clave'||code==='permiso')aiApagado=code;
+    const info=AI_FALLO[code]||AI_FALLO.otro;
+    aiStat('err',info.t+'. '+info.d+' El modo local sigue funcionando.');
   }
   this.disabled=false;
 };
 document.getElementById('aiClear').onclick=()=>{
-  AI={mode:AI.mode,url:'',key:'',model:'claude-haiku-4-5'};
+  AI={mode:AI.mode,url:'',key:'',model:'claude-haiku-4-5',auto:AI.auto};
   try{localStorage.removeItem(AILS);}catch(e){}
   aiPaintCfg();
 };
 document.getElementById('aiModel').onchange=e=>{AI.model=e.target.value;aiSaveCfg();aiPaintCfg();};
 
 document.getElementById('aiAsk').onclick=function(){
-  runAi(S.qs[S.i],S.ans[S.i],this,document.getElementById('aiOut'));
+  runAi(S.qs[S.i],S.ans[S.i],this,document.getElementById('aiOut'),S.i);
 };
 document.getElementById('fbkNext').onclick=()=>{
   if(S.i===S.qs.length-1)finish();else{S.i++;renderQ();window.scrollTo({top:0,behavior:'smooth'});}

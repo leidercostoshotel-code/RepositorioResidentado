@@ -106,6 +106,30 @@ Medido sobre las preguntas reales de este banco (mediana de 429 caracteres de en
 
 Las preguntas más largas del banco (percentil 90) apenas mueven la cifra: el costo lo domina la respuesta, no el enunciado.
 
+### Cuánto gasta cada modo de explicación
+
+En Inicio → Tutor con IA eliges cuándo aparece la explicación. Sobre un simulacro de 20 preguntas con 70 % de aciertos:
+
+| Modo | Peticiones | Costo con Haiku |
+|---|---|---|
+| **Si fallo** (por defecto) | 6 | ≈ 0.011 USD |
+| **Siempre** | 20 | ≈ 0.038 USD |
+| **Al tocar** | las que elijas | — |
+
+Las explicaciones se guardan en memoria durante el simulacro: volver a una pregunta ya explicada no genera una petición nueva.
+
+### Qué pasa cuando se acaba el saldo
+
+La app **no se rompe ni se queda cargando**. Al primer error de saldo agotado, clave inválida o permiso denegado:
+
+1. Apaga la IA para el resto de la sesión, así no gasta una petición condenada al error en cada pregunta.
+2. Muestra un aviso de **Modo local** explicando qué pasó y cómo solucionarlo.
+3. El simulacro continúa normal con la retroalimentación del banco local: clave, opciones descartadas, dato de repaso e historial por especialidad.
+
+Los errores pasajeros (429 por ráfaga de peticiones, 5xx por sobrecarga) **no** apagan nada: el botón queda disponible para reintentar.
+
+Para reactivarla después de recargar saldo, basta con recargar la página o tocar **Guardar y probar** en Inicio → Tutor con IA.
+
 ### Si publicas la app con el proxy
 
 Recuerda que el saldo lo pagas tú para **todos** los que usen la página. El límite de 20 peticiones por minuto por IP frena los abusos, pero no el uso legítimo: 50 estudiantes pidiendo 10 explicaciones cada uno consumen 500, es decir cerca de un dólar.
