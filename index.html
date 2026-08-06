@@ -386,7 +386,46 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .aiout.local .aihead{color:var(--gold-soft)}
 .aiout .aihead{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9dc0ee;font-weight:600;margin-bottom:9px;
   display:flex;align-items:center;gap:7px}
-.aiout .aibody{font-size:13.8px;line-height:1.62;color:var(--ink)}
+.aiout .aibody{font-size:14px;line-height:1.65;color:var(--ink)}
+
+/* ---- Maquetado de la respuesta del tutor ----
+   El modelo devuelve siempre tres bloques; se separan visualmente en vez de
+   dejarlos correr como un solo parrafo. */
+.aisec{margin-top:16px}
+.aisec:first-child{margin-top:2px}
+.aisec>h5{display:flex;align-items:center;gap:8px;margin:0 0 9px;
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700}
+.aisec>h5 i{font-style:normal;width:19px;height:19px;flex-shrink:0;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.aisec>p{margin:0 0 7px;font-size:14px;line-height:1.65;color:var(--ink)}
+.aisec>p:last-child{margin-bottom:0}
+
+.aisec.ok>h5{color:#7fe0b4}   .aisec.ok>h5 i{background:rgba(63,184,131,.2);color:#7fe0b4}
+.aisec.no>h5{color:#f2a3a3}   .aisec.no>h5 i{background:rgba(224,102,102,.2);color:#f2a3a3}
+
+/* Distractores: cada uno en su renglon, con su letra como insignia. */
+.aidist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0;padding:0}
+.aidist li{display:flex;gap:10px;align-items:flex-start;
+  background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.aidist li b{flex-shrink:0;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;
+  justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  background:rgba(224,102,102,.16);color:#f2a3a3;border:1px solid rgba(224,102,102,.28);margin-top:1px}
+.aidist li span{flex:1;min-width:0;font-size:13.5px;line-height:1.55;color:var(--ink-dim)}
+.aidist li span em{font-style:normal;color:var(--ink)}
+
+/* "Para recordar": lo que conviene memorizar va destacado, no perdido al final. */
+.aimem{margin-top:16px;border-radius:12px;padding:13px 15px;
+  background:linear-gradient(150deg,rgba(212,175,55,.15),rgba(212,175,55,.05));
+  border:1px solid rgba(212,175,55,.32)}
+.aimem>h5{display:flex;align-items:center;gap:8px;margin:0 0 8px;color:var(--gold-soft);
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700}
+.aimem>p{margin:0 0 6px;font-size:14px;line-height:1.65;color:#f0e6cd}
+.aimem>p:last-child{margin-bottom:0}
+.aimem b,.aisec b{color:var(--gold-soft);font-weight:600}
+@media(max-width:640px){
+  .aisec>p,.aimem>p{font-size:13.5px}
+  .aidist li{padding:8px 10px;gap:9px}
+}
 .aiout .aibody strong{color:var(--gold-soft);font-weight:600}
 .aiout .aibody h5{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9dc0ee;margin:12px 0 5px;font-weight:600}
 .aiout .aibody ul{margin:6px 0 6px 18px} .aiout .aibody li{margin-bottom:4px}
@@ -1717,14 +1756,23 @@ function aiSaveCfg(){
   try{localStorage.setItem(AILS,JSON.stringify(AI));}catch(e){}
 }
 
+/* El formato es estricto porque la interfaz lo interpreta para maquetarlo:
+   cada etiqueta abre su propio bloque y cada distractor va en su renglon. */
 const AI_SYSTEM='Eres un tutor medico peruano que prepara postulantes al examen de residentado (CONAREME). '+
-  'Explicas preguntas de opcion multiple ya respondidas. Reglas: responde SIEMPRE en espanol, en maximo 200 palabras, '+
-  'con este formato exacto usando markdown simple:\n'+
-  '**Por que es correcta:** una o dos frases sobre la opcion clave.\n'+
-  '**Por que fallan las otras:** una linea brevisima por cada distractor relevante, con su letra.\n'+
-  '**Para recordar:** una regla nemotecnica, criterio diagnostico o dato de alto rendimiento.\n'+
-  'No inventes datos que no puedas sostener. Si la clave oficial parece discutible o la pregunta esta mal transcrita, dilo en una linea. '+
-  'No uses encabezados de nivel 1 ni listas anidadas.';
+  'Explicas preguntas de opcion multiple ya respondidas. Responde SIEMPRE en espanol, en maximo 200 palabras, '+
+  'con este formato exacto y en este orden:\n\n'+
+  '**Por que es correcta:** una o dos frases sobre la opcion clave.\n\n'+
+  '**Por que fallan las otras:**\n'+
+  'A) motivo brevisimo\n'+
+  'B) motivo brevisimo\n\n'+
+  '**Para recordar:** una regla nemotecnica, criterio diagnostico o dato de alto rendimiento.\n\n'+
+  'Reglas de formato, importantes porque la aplicacion interpreta tu respuesta:\n'+
+  '- Cada una de las tres etiquetas va al inicio de su propia linea.\n'+
+  '- Bajo "Por que fallan las otras" escribe UNA LINEA POR DISTRACTOR, empezando por su letra '+
+  'seguida de un parentesis. No juntes varios distractores en un mismo parrafo.\n'+
+  '- Omite la alternativa correcta de esa lista.\n'+
+  '- No uses encabezados con almohadilla, ni listas anidadas, ni tablas.\n\n'+
+  'No inventes datos que no puedas sostener. Si la clave oficial parece discutible o la pregunta esta mal transcrita, dilo en una linea.';
 
 function aiPrompt(q,marcada){
   return 'Especialidad: '+q.sp+' ('+q.area+'). Examen de residentado '+(q.y||'sin ano')+'.\n\n'+
@@ -1830,10 +1878,78 @@ function paintLocal(out,code,btn,pie){
   if(btn){btn.disabled=true;btn.innerHTML='\u{1F4D6} Modo local';}
 }
 
+/* El modelo devuelve tres bloques fijos. Se separan para maquetarlos; si no
+   se reconoce la estructura, se cae al render plano de siempre. */
+/* Las etiquetas llegan como "**Por que es correcta:**", asi que hay asteriscos
+   antes del texto y tambien despues de los dos puntos: se consumen ambos. */
+const RE_OK=/^\s*(?:[-*]\s+)?\*{0,2}\s*por\s+qu[eé]\s+es\s+correcta\s*\*{0,2}\s*:?\s*\*{0,2}\s*/i;
+const RE_NO=/^\s*(?:[-*]\s+)?\*{0,2}\s*por\s+qu[eé]\s+fallan[^:*]*\*{0,2}\s*:?\s*\*{0,2}\s*/i;
+const RE_MEM=/^\s*(?:[-*]\s+)?\*{0,2}\s*para\s+recordar\s*\*{0,2}\s*:?\s*\*{0,2}\s*/i;
+const RE_DIST=/^\**\s*\(?([A-Ea-e])\)?\s*[)\.:–-]\s*(.+)$/;
+
+function aiSecciones(txt){
+  const s={ok:[],no:[],mem:[],libre:[]};
+  let cur='libre',visto=false;
+  for(const cruda of String(txt).split('\n')){
+    const l=cruda.trim();
+    if(!l)continue;
+    let m;
+    if((m=l.match(RE_OK))){cur='ok';visto=true;const r=l.slice(m[0].length).trim();if(r)s.ok.push(r);continue;}
+    if((m=l.match(RE_NO))){cur='no';visto=true;const r=l.slice(m[0].length).trim();if(r)s.no.push(r);continue;}
+    if((m=l.match(RE_MEM))){cur='mem';visto=true;const r=l.slice(m[0].length).trim();if(r)s.mem.push(r);continue;}
+    /* se quita la vineta de markdown: el modelo a veces escribe "- A) motivo" */
+    s[cur].push(l.replace(/^[-*•]\s+/,''));
+  }
+  return visto?s:null;
+}
+
+/* Si el modelo mete varios distractores en un mismo renglon
+   ("A) uno. B) dos. D) tres"), se separan para que cada uno tenga el suyo. */
+function partirDistractores(l){
+  const partes=l.split(/\s+(?=\(?[A-E]\)\s*[^\s])/);
+  return partes.length>1?partes.map(x=>x.trim()).filter(Boolean):[l];
+}
+
+/* Negritas del modelo, ya escapado. Los asteriscos que queden sin pareja se
+   descartan: uno huerfano abriria una negrita que se cierra parrafos despues. */
+function inl(t){
+  return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*+/g,'');
+}
+
 function paintAi(out,txt){
+  const s=aiSecciones(txt);
+  let cuerpo;
+  if(s){
+    let h='';
+    if(s.libre.length)h+='<div class="aisec">'+s.libre.map(p=>'<p>'+inl(p)+'</p>').join('')+'</div>';
+    if(s.ok.length){
+      h+='<div class="aisec ok"><h5><i>&#10003;</i>Por que es correcta</h5>'+
+         s.ok.map(p=>'<p>'+inl(p)+'</p>').join('')+'</div>';
+    }
+    if(s.no.length){
+      /* cada distractor que empiece por su letra se vuelve un renglon propio */
+      const items=[],sueltos=[];
+      for(const cruda of s.no){
+        for(const l of partirDistractores(cruda)){
+          const m=l.match(RE_DIST);
+          if(m)items.push('<li><b>'+esc(m[1].toUpperCase())+'</b><span>'+inl(m[2])+'</span></li>');
+          else sueltos.push('<p>'+inl(l)+'</p>');
+        }
+      }
+      h+='<div class="aisec no"><h5><i>&#10007;</i>Por que fallan las otras</h5>'+
+         sueltos.join('')+(items.length?'<ul class="aidist">'+items.join('')+'</ul>':'')+'</div>';
+    }
+    if(s.mem.length){
+      h+='<div class="aimem"><h5>\u{1F4A1} Para recordar</h5>'+
+         s.mem.map(p=>'<p>'+inl(p)+'</p>').join('')+'</div>';
+    }
+    cuerpo=h;
+  }else{
+    cuerpo=mdLite(txt);   /* el modelo no siguió el formato: render plano */
+  }
   out.className='aiout show';
   out.innerHTML='<div class="aihead">✨ Tutor IA · '+esc(AI.model)+'</div>'+
-    '<div class="aibody">'+mdLite(txt)+'</div>'+
+    '<div class="aibody">'+cuerpo+'</div>'+
     '<div class="aifoot">Generado por IA — contrasta siempre con tu fuente oficial de estudio.</div>';
 }
 
