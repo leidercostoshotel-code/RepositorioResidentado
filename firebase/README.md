@@ -136,6 +136,19 @@ Recuerda que el saldo lo pagas tú para **todos** los que usen la página. El l�
 
 Dimensiona el saldo según cuánta gente vaya a usarla y fija un límite de gasto mensual en [platform.claude.com](https://platform.claude.com).
 
+## La app funciona sin conexión, el tutor no
+
+Desde que la app es instalable con service worker, conviene tener clara la separación:
+
+| Parte | ¿Necesita internet? |
+|---|---|
+| Abrir la app, banco de 3 125 preguntas, retroalimentación local, repetición espaciada, racha | **No** |
+| Tutor IA (explicaciones de Claude) | **Sí** |
+
+Sin señal, el simulacro sigue funcionando completo y el tutor queda en pausa con un aviso. Al recuperar la conexión vuelve solo.
+
+El service worker **nunca intercepta ni guarda** las llamadas a `api.anthropic.com` ni a la Cloud Function: son respuestas distintas cada vez y pueden llevar datos del usuario.
+
 ## Si no quieres usar Firebase
 
 La app funciona igual sin esto:
