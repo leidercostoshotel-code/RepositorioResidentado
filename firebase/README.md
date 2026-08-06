@@ -2,12 +2,15 @@
 
 El proyecto conectado es **`examen-residentado`**. Firebase cumple dos papeles distintos e independientes:
 
-| Parte | Para qué sirve | ¿Ya funciona? |
+| Parte | Para qué sirve | Requisitos |
 |---|---|---|
-| **Cuenta en la nube** (Auth + Firestore) | Que el progreso del estudiante lo siga entre el celular y la computadora | Solo falta activarla en la consola. No cuesta nada, entra en la capa gratuita |
-| **Tutor IA** (Cloud Function) | Guardar la clave de Anthropic fuera del navegador | Requiere plan Blaze y desplegar la función |
+| **Cuenta en la nube** (Auth + Firestore) | Que el progreso del estudiante lo siga entre el celular y la computadora | Activarla en la consola. Gratis, entra en la capa gratuita |
+| **Hosting** | Publicar la app en `examen-residentado.web.app` | Un comando. Gratis |
+| **Tutor IA** (Cloud Function) | Guardar la clave de Anthropic fuera del navegador | Plan Blaze y desplegar la función |
 
-Puedes activar una sin la otra. Sin ninguna de las dos, la app funciona completa en modo local.
+Las tres son independientes: puedes activar una sin las otras. Sin ninguna, la app funciona completa en modo local.
+
+Todos los comandos de esta guía se corren **desde la raíz del repositorio**. El proyecto ya viene fijado en `.firebaserc`, así que no hace falta enlazarlo a mano.
 
 ---
 
@@ -29,13 +32,15 @@ const FB_CFG={ apiKey:"AIza…", authDomain:"examen-residentado.firebaseapp.com"
 
 **2. Autoriza el dominio de tu sitio**
 
-Authentication → Settings → **Authorized domains** → agrega:
+Authentication → Settings → **Authorized domains** → agrega el dominio desde el que sirves la app:
 
 ```
 leidercostoshotel-code.github.io
 ```
 
-Si te saltas esto, al entrar aparece el aviso *"Este dominio no esta autorizado en Firebase"*. `localhost` viene autorizado de fábrica.
+Si te saltas esto, al entrar aparece el aviso *"Este dominio no esta autorizado en Firebase"*.
+
+`localhost`, `examen-residentado.web.app` y `examen-residentado.firebaseapp.com` **vienen autorizados de fábrica**: si publicas con Firebase Hosting (sección 2), este paso no hace falta.
 
 **3. Crea la base de datos**
 
@@ -44,10 +49,10 @@ Si te saltas esto, al entrar aparece el aviso *"Este dominio no esta autorizado 
 **4. Publica las reglas**
 
 ```bash
-cd firebase
-firebase use examen-residentado
 firebase deploy --only firestore:rules
 ```
+
+(desde la raíz del repositorio; el proyecto ya viene fijado en `.firebaserc`)
 
 O pégalas a mano desde `firestore.rules` en la pestaña **Rules** de la consola. Dicen que cada quien solo alcanza su propio documento:
 
@@ -99,7 +104,46 @@ En todos los casos la app **sigue funcionando completa**: el simulacro, la repet
 
 ---
 
-# 2. Tutor IA vía Cloud Function
+# 2. Publicar la app (Hosting)
+
+Sirve la app en `https://examen-residentado.web.app`. Es gratis en plan Spark y es una alternativa a GitHub Pages —o un respaldo, si Pages se atasca.
+
+**1. Instala la CLI e inicia sesión** (una sola vez)
+
+```bash
+npm install -g firebase-tools
+firebase login
+```
+
+**2. Publica**
+
+```bash
+firebase deploy --only hosting
+```
+
+Eso es todo. En menos de un minuto imprime:
+
+```
+Hosting URL: https://examen-residentado.web.app
+```
+
+## Qué se sube
+
+Solo lo que la app necesita: `index.html`, `sw.js`, `manifest.webmanifest` y `assets/`. La configuración en `firebase.json` deja fuera `firebase/`, `tools/`, los `.md` y todo lo que empiece por punto (incluido `.git`).
+
+## Detalles que ya están resueltos
+
+- **Rutas relativas.** En GitHub Pages la app vive bajo `/RepositorioResidentado/` y aquí en la raíz. El manifiesto usa `start_url: "."` y los iconos son relativos, así que funciona igual en ambas sin tocar nada.
+- **Caché.** `index.html`, `sw.js` y el manifiesto se sirven con `no-cache` para que una versión nueva llegue de inmediato; los iconos se cachean una semana. Sin esto, el service worker podía quedarse con una copia vieja pegada.
+- **Dominio autorizado.** `examen-residentado.web.app` ya está en la lista de Firebase Auth, así que el ingreso con Google funciona sin configurar nada más.
+
+## Publicar en los dos sitios
+
+No hay conflicto: GitHub Pages se actualiza solo al fusionar en `main`, y Firebase Hosting cuando corres el comando. Si usas ambos, acuérdate de correr el deploy después de cada cambio para que no se desfasen.
+
+---
+
+# 3. Tutor IA vía Cloud Function
 
 Esta carpeta contiene una **Cloud Function** que actúa de intermediario entre la app y la API de Claude.
 
@@ -134,10 +178,7 @@ firebase login
 
 **2. Enlaza tu proyecto**
 
-```bash
-cd firebase
-firebase use examen-residentado
-```
+El proyecto ya viene fijado en `.firebaserc`, así que no hay que enlazarlo a mano. Todos los comandos se corren **desde la raíz del repositorio**.
 
 **3. Guarda tu API key como secreto**
 
@@ -150,11 +191,12 @@ La clave queda cifrada en Google Secret Manager. No la escribas nunca en un arch
 
 **4. Autoriza tu dominio**
 
-Abre `functions/index.js` y edita `ORIGENES_PERMITIDOS` con la URL real de tu sitio:
+Abre `firebase/functions/index.js` y edita `ORIGENES_PERMITIDOS` con las URL reales de tu sitio:
 
 ```js
 const ORIGENES_PERMITIDOS = [
   "https://leidercostoshotel-code.github.io",
+  "https://examen-residentado.web.app",
 ];
 ```
 
@@ -163,7 +205,7 @@ Si el dominio no está en esa lista, la función rechaza la petición. Es lo que
 **5. Despliega**
 
 ```bash
-cd functions && npm install && cd ..
+cd firebase/functions && npm install && cd ../..
 firebase deploy --only functions
 ```
 
