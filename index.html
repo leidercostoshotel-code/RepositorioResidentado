@@ -7,9 +7,19 @@
 <title>Residentado Médico · Banco de Preguntas</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='2' y='2' width='60' height='60' rx='14' fill='%230e1d31' stroke='%23d4af37' stroke-width='3'/%3E%3Cpath d='M26 15h12v11h11v12H38v11H26V38H15V26h11z' fill='%23d4af37'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Residentado">
+<meta name="description" content="Banco de preguntas de examenes nacionales de residentado medico (CONAREME) con repeticion espaciada y retroalimentacion explicada.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Las fuentes se cargan sin bloquear el renderizado: la app abre con las
+     tipografias del sistema y cambia a las definitivas cuando llegan. Antes,
+     una red lenta dejaba la pantalla en blanco hasta 13 segundos. -->
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"></noscript>
 <style>
 :root{
   --bg:#0a1626; --bg2:#0e1d31; --panel:#12253c; --panel2:#16293f;
@@ -376,7 +386,46 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .aiout.local .aihead{color:var(--gold-soft)}
 .aiout .aihead{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#9dc0ee;font-weight:600;margin-bottom:9px;
   display:flex;align-items:center;gap:7px}
-.aiout .aibody{font-size:13.8px;line-height:1.62;color:var(--ink)}
+.aiout .aibody{font-size:14px;line-height:1.65;color:var(--ink)}
+
+/* ---- Maquetado de la respuesta del tutor ----
+   El modelo devuelve siempre tres bloques; se separan visualmente en vez de
+   dejarlos correr como un solo parrafo. */
+.aisec{margin-top:16px}
+.aisec:first-child{margin-top:2px}
+.aisec>h5{display:flex;align-items:center;gap:8px;margin:0 0 9px;
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700}
+.aisec>h5 i{font-style:normal;width:19px;height:19px;flex-shrink:0;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.aisec>p{margin:0 0 7px;font-size:14px;line-height:1.65;color:var(--ink)}
+.aisec>p:last-child{margin-bottom:0}
+
+.aisec.ok>h5{color:#7fe0b4}   .aisec.ok>h5 i{background:rgba(63,184,131,.2);color:#7fe0b4}
+.aisec.no>h5{color:#f2a3a3}   .aisec.no>h5 i{background:rgba(224,102,102,.2);color:#f2a3a3}
+
+/* Distractores: cada uno en su renglon, con su letra como insignia. */
+.aidist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:0;padding:0}
+.aidist li{display:flex;gap:10px;align-items:flex-start;
+  background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:9px;padding:9px 11px}
+.aidist li b{flex-shrink:0;width:21px;height:21px;border-radius:6px;display:flex;align-items:center;
+  justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  background:rgba(224,102,102,.16);color:#f2a3a3;border:1px solid rgba(224,102,102,.28);margin-top:1px}
+.aidist li span{flex:1;min-width:0;font-size:13.5px;line-height:1.55;color:var(--ink-dim)}
+.aidist li span em{font-style:normal;color:var(--ink)}
+
+/* "Para recordar": lo que conviene memorizar va destacado, no perdido al final. */
+.aimem{margin-top:16px;border-radius:12px;padding:13px 15px;
+  background:linear-gradient(150deg,rgba(212,175,55,.15),rgba(212,175,55,.05));
+  border:1px solid rgba(212,175,55,.32)}
+.aimem>h5{display:flex;align-items:center;gap:8px;margin:0 0 8px;color:var(--gold-soft);
+  font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;font-weight:700}
+.aimem>p{margin:0 0 6px;font-size:14px;line-height:1.65;color:#f0e6cd}
+.aimem>p:last-child{margin-bottom:0}
+.aimem b,.aisec b{color:var(--gold-soft);font-weight:600}
+@media(max-width:640px){
+  .aisec>p,.aimem>p{font-size:13.5px}
+  .aidist li{padding:8px 10px;gap:9px}
+}
 .aiout .aibody strong{color:var(--gold-soft);font-weight:600}
 .aiout .aibody h5{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:#9dc0ee;margin:12px 0 5px;font-weight:600}
 .aiout .aibody ul{margin:6px 0 6px 18px} .aiout .aibody li{margin-bottom:4px}
@@ -387,6 +436,14 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .dots i{width:6px;height:6px;border-radius:50%;background:#9dc0ee;animation:bl 1.1s infinite}
 .dots i:nth-child(2){animation-delay:.16s} .dots i:nth-child(3){animation-delay:.32s}
 @keyframes bl{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+
+/* ============ AVISO DE CONEXION ============ */
+#netBar{position:fixed;left:0;right:0;bottom:0;z-index:90;display:none;
+  padding:9px 16px;text-align:center;font-size:12px;line-height:1.4;font-weight:500;
+  background:linear-gradient(180deg,rgba(184,148,42,.94),rgba(148,116,28,.96));color:#1a1305;
+  padding-bottom:calc(9px + env(safe-area-inset-bottom))}
+body.sinred #netBar{display:block}
+body.sinred #toast{bottom:calc(26px + 40px)}
 
 /* ============ CONFETI ============ */
 #burst{position:fixed;inset:0;pointer-events:none;z-index:99;overflow:hidden}
@@ -626,7 +683,22 @@ details.howto a{color:var(--gold-soft)}
     </div>
     <div class="badges" id="badgeGrid"></div>
 
-    <div class="shead"><span class="en">06</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">06</span><h2 class="serif">Respaldo de tu progreso</h2><span class="rule"></span></div>
+    <div class="panel"><div class="aicfg">
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.55;margin-bottom:16px">
+        Tu avance vive en este navegador. Si cambias de equipo, borras datos o usas modo incognito, se pierde.
+        Descarga un respaldo cada cierto tiempo y guardalo donde quieras.
+      </div>
+      <div class="bkinfo" id="bkInfo">&mdash;</div>
+      <div class="aiacts">
+        <button class="go" id="bkExport">&#11015; Descargar respaldo</button>
+        <button id="bkImport">&#11014; Restaurar desde archivo</button>
+      </div>
+      <input type="file" id="bkFile" accept="application/json,.json" style="display:none">
+      <div class="aistat" id="bkStat" style="display:none"><span class="dot2"></span><span id="bkStatTxt"></span></div>
+    </div></div>
+
+    <div class="shead"><span class="en">07</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div class="field">
         <label class="flabel">Modo de conexion</label>
@@ -782,6 +854,7 @@ details.howto a{color:var(--gold-soft)}
   </div>
 </section>
 
+<div id="netBar"></div>
 <div id="burst"></div>
 <div id="toast"><span class="ti" id="toastIco">&#127942;</span><div><div class="tl">Logro desbloqueado</div><div class="tt" id="toastTxt">&mdash;</div></div></div>
 
@@ -1107,6 +1180,7 @@ function renderLifetime(){
   document.getElementById('lfBest').textContent=best?best.sp:'—';
   document.getElementById('lfBestSub').textContent=best?Math.round(best.p*100)+'% en '+best.seen+' preguntas':'resuelve >=5 para ver';
   renderLevel();renderBadges();renderMemoria();renderDia();renderHeat();updateAvail();
+  if(document.getElementById('bkInfo'))bkResumen();
 }
 
 /* Anillo de meta diaria, racha y selector de meta. */
@@ -1682,14 +1756,23 @@ function aiSaveCfg(){
   try{localStorage.setItem(AILS,JSON.stringify(AI));}catch(e){}
 }
 
+/* El formato es estricto porque la interfaz lo interpreta para maquetarlo:
+   cada etiqueta abre su propio bloque y cada distractor va en su renglon. */
 const AI_SYSTEM='Eres un tutor medico peruano que prepara postulantes al examen de residentado (CONAREME). '+
-  'Explicas preguntas de opcion multiple ya respondidas. Reglas: responde SIEMPRE en espanol, en maximo 200 palabras, '+
-  'con este formato exacto usando markdown simple:\n'+
-  '**Por que es correcta:** una o dos frases sobre la opcion clave.\n'+
-  '**Por que fallan las otras:** una linea brevisima por cada distractor relevante, con su letra.\n'+
-  '**Para recordar:** una regla nemotecnica, criterio diagnostico o dato de alto rendimiento.\n'+
-  'No inventes datos que no puedas sostener. Si la clave oficial parece discutible o la pregunta esta mal transcrita, dilo en una linea. '+
-  'No uses encabezados de nivel 1 ni listas anidadas.';
+  'Explicas preguntas de opcion multiple ya respondidas. Responde SIEMPRE en espanol, en maximo 200 palabras, '+
+  'con este formato exacto y en este orden:\n\n'+
+  '**Por que es correcta:** una o dos frases sobre la opcion clave.\n\n'+
+  '**Por que fallan las otras:**\n'+
+  'A) motivo brevisimo\n'+
+  'B) motivo brevisimo\n\n'+
+  '**Para recordar:** una regla nemotecnica, criterio diagnostico o dato de alto rendimiento.\n\n'+
+  'Reglas de formato, importantes porque la aplicacion interpreta tu respuesta:\n'+
+  '- Cada una de las tres etiquetas va al inicio de su propia linea.\n'+
+  '- Bajo "Por que fallan las otras" escribe UNA LINEA POR DISTRACTOR, empezando por su letra '+
+  'seguida de un parentesis. No juntes varios distractores en un mismo parrafo.\n'+
+  '- Omite la alternativa correcta de esa lista.\n'+
+  '- No uses encabezados con almohadilla, ni listas anidadas, ni tablas.\n\n'+
+  'No inventes datos que no puedas sostener. Si la clave oficial parece discutible o la pregunta esta mal transcrita, dilo en una linea.';
 
 function aiPrompt(q,marcada){
   return 'Especialidad: '+q.sp+' ('+q.area+'). Examen de residentado '+(q.y||'sin ano')+'.\n\n'+
@@ -1795,10 +1878,78 @@ function paintLocal(out,code,btn,pie){
   if(btn){btn.disabled=true;btn.innerHTML='\u{1F4D6} Modo local';}
 }
 
+/* El modelo devuelve tres bloques fijos. Se separan para maquetarlos; si no
+   se reconoce la estructura, se cae al render plano de siempre. */
+/* Las etiquetas llegan como "**Por que es correcta:**", asi que hay asteriscos
+   antes del texto y tambien despues de los dos puntos: se consumen ambos. */
+const RE_OK=/^\s*(?:[-*]\s+)?\*{0,2}\s*por\s+qu[eé]\s+es\s+correcta\s*\*{0,2}\s*:?\s*\*{0,2}\s*/i;
+const RE_NO=/^\s*(?:[-*]\s+)?\*{0,2}\s*por\s+qu[eé]\s+fallan[^:*]*\*{0,2}\s*:?\s*\*{0,2}\s*/i;
+const RE_MEM=/^\s*(?:[-*]\s+)?\*{0,2}\s*para\s+recordar\s*\*{0,2}\s*:?\s*\*{0,2}\s*/i;
+const RE_DIST=/^\**\s*\(?([A-Ea-e])\)?\s*[)\.:–-]\s*(.+)$/;
+
+function aiSecciones(txt){
+  const s={ok:[],no:[],mem:[],libre:[]};
+  let cur='libre',visto=false;
+  for(const cruda of String(txt).split('\n')){
+    const l=cruda.trim();
+    if(!l)continue;
+    let m;
+    if((m=l.match(RE_OK))){cur='ok';visto=true;const r=l.slice(m[0].length).trim();if(r)s.ok.push(r);continue;}
+    if((m=l.match(RE_NO))){cur='no';visto=true;const r=l.slice(m[0].length).trim();if(r)s.no.push(r);continue;}
+    if((m=l.match(RE_MEM))){cur='mem';visto=true;const r=l.slice(m[0].length).trim();if(r)s.mem.push(r);continue;}
+    /* se quita la vineta de markdown: el modelo a veces escribe "- A) motivo" */
+    s[cur].push(l.replace(/^[-*•]\s+/,''));
+  }
+  return visto?s:null;
+}
+
+/* Si el modelo mete varios distractores en un mismo renglon
+   ("A) uno. B) dos. D) tres"), se separan para que cada uno tenga el suyo. */
+function partirDistractores(l){
+  const partes=l.split(/\s+(?=\(?[A-E]\)\s*[^\s])/);
+  return partes.length>1?partes.map(x=>x.trim()).filter(Boolean):[l];
+}
+
+/* Negritas del modelo, ya escapado. Los asteriscos que queden sin pareja se
+   descartan: uno huerfano abriria una negrita que se cierra parrafos despues. */
+function inl(t){
+  return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/\*+/g,'');
+}
+
 function paintAi(out,txt){
+  const s=aiSecciones(txt);
+  let cuerpo;
+  if(s){
+    let h='';
+    if(s.libre.length)h+='<div class="aisec">'+s.libre.map(p=>'<p>'+inl(p)+'</p>').join('')+'</div>';
+    if(s.ok.length){
+      h+='<div class="aisec ok"><h5><i>&#10003;</i>Por que es correcta</h5>'+
+         s.ok.map(p=>'<p>'+inl(p)+'</p>').join('')+'</div>';
+    }
+    if(s.no.length){
+      /* cada distractor que empiece por su letra se vuelve un renglon propio */
+      const items=[],sueltos=[];
+      for(const cruda of s.no){
+        for(const l of partirDistractores(cruda)){
+          const m=l.match(RE_DIST);
+          if(m)items.push('<li><b>'+esc(m[1].toUpperCase())+'</b><span>'+inl(m[2])+'</span></li>');
+          else sueltos.push('<p>'+inl(l)+'</p>');
+        }
+      }
+      h+='<div class="aisec no"><h5><i>&#10007;</i>Por que fallan las otras</h5>'+
+         sueltos.join('')+(items.length?'<ul class="aidist">'+items.join('')+'</ul>':'')+'</div>';
+    }
+    if(s.mem.length){
+      h+='<div class="aimem"><h5>\u{1F4A1} Para recordar</h5>'+
+         s.mem.map(p=>'<p>'+inl(p)+'</p>').join('')+'</div>';
+    }
+    cuerpo=h;
+  }else{
+    cuerpo=mdLite(txt);   /* el modelo no siguió el formato: render plano */
+  }
   out.className='aiout show';
   out.innerHTML='<div class="aihead">✨ Tutor IA · '+esc(AI.model)+'</div>'+
-    '<div class="aibody">'+mdLite(txt)+'</div>'+
+    '<div class="aibody">'+cuerpo+'</div>'+
     '<div class="aifoot">Generado por IA — contrasta siempre con tu fuente oficial de estudio.</div>';
 }
 
@@ -1899,6 +2050,98 @@ document.addEventListener('keydown',e=>{
 });
 
 podarDias();renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);
+
+/* ===================== RESPALDO DE PROGRESO =====================
+   Un archivo JSON con todo el estado: memoria de repasos, dias, XP y logros.
+   No incluye la clave de la API: esa se queda solo en el navegador. */
+const BK_VERSION=1;
+function bkResumen(){
+  const vistas=Object.keys(STATS.srs||{}).length;
+  const dias=Object.keys(STATS.dias||{}).length;
+  document.getElementById('bkInfo').innerHTML=
+    '<b>'+nf(STATS.lifeSeen||0)+'</b> respuestas · <b>'+nf(vistas)+'</b> preguntas con memoria · '+
+    '<b>'+nf(dias)+'</b> dias registrados · <b>'+nf(STATS.xp||0)+'</b> XP · '+
+    (STATS.badges||[]).length+' logros';
+}
+function bkStat(cls,txt){
+  const el=document.getElementById('bkStat');
+  el.style.display='';el.className='aistat'+(cls?' '+cls:'');
+  document.getElementById('bkStatTxt').textContent=txt;
+}
+document.getElementById('bkExport').onclick=()=>{
+  const datos={app:'residentado-conareme',version:BK_VERSION,fecha:new Date().toISOString(),stats:STATS};
+  const blob=new Blob([JSON.stringify(datos,null,1)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='residentado-respaldo-'+isoLocal()+'.json';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  bkStat('ok','Respaldo descargado. Guardalo fuera del equipo si puedes.');
+};
+document.getElementById('bkImport').onclick=()=>document.getElementById('bkFile').click();
+document.getElementById('bkFile').onchange=function(){
+  const f=this.files&&this.files[0];
+  this.value='';
+  if(!f)return;
+  const fr=new FileReader();
+  fr.onload=()=>{
+    let d;
+    try{d=JSON.parse(fr.result);}catch(e){return bkStat('err','El archivo no es un respaldo valido.');}
+    if(!d||d.app!=='residentado-conareme'||!d.stats||typeof d.stats!=='object')
+      return bkStat('err','El archivo no corresponde a esta aplicacion.');
+    const n=d.stats;
+    if(typeof n.lifeSeen!=='number')return bkStat('err','El respaldo esta incompleto.');
+    const resumen=nf(n.lifeSeen)+' respuestas, '+Object.keys(n.srs||{}).length+' preguntas con memoria y '+
+      nf(n.xp||0)+' XP, del '+String(d.fecha||'').slice(0,10);
+    if(!confirm('Vas a reemplazar tu progreso actual por el del respaldo:\n\n'+resumen+
+                '\n\nEsto no se puede deshacer. Continuar?'))return bkStat('','Restauracion cancelada.');
+    STATS=Object.assign(blankStats(),n);
+    if(!Array.isArray(STATS.badges))STATS.badges=[];
+    if(!STATS.srs||typeof STATS.srs!=='object')STATS.srs={};
+    if(!STATS.dias||typeof STATS.dias!=='object')STATS.dias={};
+    saveStats();podarDias();renderLifetime();bkResumen();
+    bkStat('ok','Progreso restaurado.');
+    toast('\u{2705}','Progreso restaurado');
+  };
+  fr.onerror=()=>bkStat('err','No se pudo leer el archivo.');
+  fr.readAsText(f);
+};
+bkResumen();
+
+/* ===================== APP INSTALABLE / SIN RED =====================
+   El service worker solo se registra al servirse por http(s): con file://
+   el navegador lo rechaza, y en local no aporta nada. */
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
+  addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js').then(reg=>{
+      /* Si llega una version nueva, se avisa en vez de recargar de golpe:
+         recargar a mitad de un simulacro perderia la sesion en curso. */
+      reg.addEventListener('updatefound',()=>{
+        const sw=reg.installing;
+        if(!sw)return;
+        sw.addEventListener('statechange',()=>{
+          if(sw.state==='installed'&&navigator.serviceWorker.controller){
+            toast('\u{1F195}','Nueva version lista · recarga cuando termines');
+          }
+        });
+      });
+    }).catch(()=>{});
+  });
+}
+
+/* Aviso de conexion: la retroalimentacion local no depende de la red, pero
+   el tutor de IA si, y conviene que se entienda la diferencia. */
+function pintaRed(){
+  const off=!navigator.onLine;
+  document.body.classList.toggle('sinred',off);
+  const b=document.getElementById('netBar');
+  if(b)b.textContent=off
+    ? 'Sin conexion · sigues estudiando con el banco local; el tutor IA vuelve al recuperar señal'
+    : '';
+}
+addEventListener('online',()=>{pintaRed();toast('\u{1F4F6}','Conexion recuperada');});
+addEventListener('offline',pintaRed);
+pintaRed();
 </script>
 </body>
 </html>

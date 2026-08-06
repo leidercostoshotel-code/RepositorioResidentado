@@ -1,0 +1,19 @@
+{
+  "name": "Residentado Médico · Banco de Preguntas",
+  "short_name": "Residentado",
+  "description": "Banco de preguntas de exámenes nacionales de residentado médico (CONAREME) con repetición espaciada y retroalimentación explicada.",
+  "lang": "es-PE",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a1626",
+  "theme_color": "#0a1626",
+  "categories": ["education", "medical"],
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
