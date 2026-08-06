@@ -35,12 +35,14 @@ body::before{
   background:url("https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=2000&q=80") center/cover no-repeat;
   filter:saturate(1.06) contrast(1.03);
 }
+/* El velo se mantiene solo lo justo para que el texto suelto siga legible:
+   la lectura ocurre dentro de tarjetas opacas, asi que el fondo puede respirar. */
 body::after{
   content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(1300px 750px at 78% -8%,rgba(212,175,55,.12),transparent 60%),
-    radial-gradient(140% 100% at 50% 118%,rgba(6,14,26,.88),transparent 62%),
-    linear-gradient(180deg,rgba(7,16,29,.78),rgba(10,22,38,.6) 42%,rgba(8,18,32,.8));
+    radial-gradient(1300px 750px at 78% -8%,rgba(212,175,55,.10),transparent 60%),
+    radial-gradient(150% 105% at 50% 120%,rgba(6,14,26,.62),transparent 68%),
+    linear-gradient(180deg,rgba(7,16,29,.46),rgba(10,22,38,.24) 45%,rgba(8,18,32,.5));
 }
 .wrap{max-width:940px;margin:0 auto;padding:0 20px;
   padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
@@ -54,7 +56,12 @@ select{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-.mast{border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(212,175,55,.03),transparent);}
+/* El texto que va directo sobre la foto lleva sombra: garantiza legibilidad
+   aunque se cambie la imagen de fondo por una mas clara. */
+h1.title,.tagline,.shead h2,.shead .en,.availnote,.foot{text-shadow:0 2px 10px rgba(4,10,20,.85)}
+.mast{border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(7,16,29,.72),rgba(7,16,29,.42));
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .mast .wrap{padding-top:26px;padding-bottom:22px}
 .brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .crest{font-family:'Fraunces',serif;font-weight:700;font-size:12px;letter-spacing:.34em;text-transform:uppercase;
@@ -118,7 +125,7 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .qbar .wrap{display:flex;align-items:center;gap:14px;padding-top:13px;padding-bottom:13px}
 .xbtn{border:1px solid var(--line2);border-radius:8px;padding:7px 12px;font-size:13px;color:var(--ink-dim);font-weight:500}
 .xbtn:hover{color:var(--ink);border-color:var(--gold-deep)}
-.qpos{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-dim);font-weight:500}
+.qpos{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink-dim);font-weight:500;white-space:nowrap}
 .qpos b{color:var(--ink)}
 .qbar .spacer{flex:1}
 .livekpi{display:flex;gap:14px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:13px}
@@ -127,7 +134,16 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .pbar{height:3px;background:rgba(255,255,255,.05)}
 .pbar>i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-soft));width:0;transition:width .4s ease}
 
-.qcard{padding:30px 0 40px}
+/* Columna de lectura mas estrecha que el resto de la app: con 940px las
+   alternativas cortas dejaban un hueco enorme hasta la marca de la derecha. */
+#quiz .wrap{max-width:840px}
+
+.qcard{
+  background:linear-gradient(180deg,rgba(19,38,62,.94),rgba(13,28,48,.96));
+  border:1px solid var(--line2);border-radius:20px;
+  padding:26px 28px 28px;margin:26px 0 44px;
+  box-shadow:0 26px 64px -28px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.02) inset;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
 .qtags{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
 .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:4px 9px;border-radius:5px;letter-spacing:.02em}
 .tag.sp{background:rgba(212,175,55,.12);color:var(--gold-soft);border:1px solid rgba(212,175,55,.25)}
@@ -135,22 +151,27 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .tag.yr{background:rgba(255,255,255,.04);color:var(--ink-mut);border:1px solid var(--line2)}
 .tag.nuevo{background:rgba(63,184,131,.12);color:#7fe0b4;border:1px solid rgba(63,184,131,.3)}
 .tag.repaso{background:rgba(126,168,224,.12);color:#9dc0ee;border:1px solid rgba(126,168,224,.32)}
-.qtext{font-size:19px;line-height:1.5;font-weight:400;color:#f2f6fb;margin-bottom:24px;letter-spacing:-.003em}
+.qtext{font-size:19px;line-height:1.58;font-weight:400;color:#f2f6fb;margin-bottom:22px;letter-spacing:-.003em;
+  padding-bottom:20px;border-bottom:1px solid var(--line)}
 .opts{display:flex;flex-direction:column;gap:10px}
-.opt{display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;
-  background:var(--panel);border:1px solid var(--line2);border-radius:11px;padding:15px 16px;
+.opt{display:flex;gap:14px;align-items:center;text-align:left;width:100%;
+  background:rgba(255,255,255,.045);border:1px solid var(--line2);border-radius:12px;padding:14px 16px;
   font-size:15px;line-height:1.45;transition:all .14s ease;position:relative}
-.opt:hover:not(:disabled){border-color:var(--gold-deep);background:var(--panel2)}
+.opt:hover:not(:disabled){border-color:var(--gold-deep);background:rgba(212,175,55,.09);transform:translateX(2px)}
 .opt:disabled{cursor:default}
 .opt .lt{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;width:26px;height:26px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;border-radius:6px;background:rgba(255,255,255,.05);
   color:var(--ink-dim);border:1px solid var(--line2);transition:all .14s}
-.opt .ot{flex:1;padding-top:2px}
+.opt .ot{flex:1;min-width:0}
 .opt.correct{border-color:var(--ok-line);background:var(--ok-bg)}
 .opt.correct .lt{background:var(--ok);color:#06251a;border-color:var(--ok)}
 .opt.wrong{border-color:var(--bad-line);background:var(--bad-bg)}
 .opt.wrong .lt{background:var(--bad);color:#2a0b0b;border-color:var(--bad)}
-.opt .mk{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;opacity:0}
+/* La marca participa del flex en vez de estar clavada al borde derecho:
+   asi acompaña al texto y no deja un hueco largo en las alternativas cortas. */
+.opt .mk{flex-shrink:0;margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;opacity:0;padding:3px 9px;border-radius:6px;white-space:nowrap}
+.opt.correct .mk{background:rgba(63,184,131,.16)} .opt.wrong .mk{background:rgba(224,102,102,.16)}
 .opt.correct .mk{opacity:1;color:var(--ok)} .opt.wrong .mk{opacity:1;color:var(--bad)}
 .opt.sel-exam{border-color:var(--gold);background:rgba(212,175,55,.08)}
 .opt.sel-exam .lt{background:var(--gold);color:#1a1305;border-color:var(--gold)}
@@ -255,8 +276,13 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .metasel button:hover{border-color:var(--gold-deep);color:var(--ink)}
 .metasel button.on{background:var(--gold);color:#1a1305;border-color:var(--gold);font-weight:600}
 
+/* Superficie tenue para elementos que antes flotaban sobre la foto:
+   con el velo mas claro, el texto suelto perdia contraste. */
+.subpanel{background:rgba(13,28,48,.78);border:1px solid var(--line);border-radius:14px;
+  padding:14px 16px;margin-top:12px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+
 /* ============ CALENDARIO DE ACTIVIDAD ============ */
-.heat{display:flex;gap:3px;margin-top:14px;overflow-x:auto;padding-bottom:3px}
+.heat{display:flex;gap:3px;margin-top:0;overflow-x:auto;padding-bottom:3px}
 .heatcol{display:flex;flex-direction:column;gap:3px}
 .heatd{width:12px;height:12px;border-radius:3px;background:rgba(255,255,255,.05);flex-shrink:0}
 .heatd.l1{background:rgba(212,175,55,.28)} .heatd.l2{background:rgba(212,175,55,.5)}
@@ -411,10 +437,13 @@ details.howto a{color:var(--gold-soft)}
   .cfg{padding:18px 16px}
   .shead{margin:30px 0 14px}
   select{font-size:16px;padding:13px 14px} /* ≥16px evita el zoom automático de iOS al enfocar */
-  .qcard{padding:22px 0 32px}
-  .qtext{font-size:17px}
-  .opt{padding:13px 13px;gap:11px;font-size:14.5px}
-  .qbar .wrap{gap:10px;padding-top:11px;padding-bottom:11px}
+  .qcard{padding:18px 16px 20px;margin:18px 0 32px;border-radius:16px}
+  .qtext{font-size:17px;padding-bottom:16px;margin-bottom:18px}
+  .opt{padding:12px 13px;gap:11px;font-size:14.5px}
+  .opt .mk{font-size:10px;padding:2px 7px}
+  .qbar .wrap{gap:8px;padding-top:11px;padding-bottom:11px}
+  .qpos{font-size:12px}
+  .xbtn{padding:7px 10px;font-size:12.5px}
   .livekpi{gap:10px;font-size:12px}
   .rbtns .nbtn{min-width:0;flex:1 1 45%}
   .bdrow .bn{width:34%;font-size:12.5px}
@@ -504,10 +533,12 @@ details.howto a{color:var(--gold-soft)}
         <div class="fl">dias seguidos</div>
       </div>
     </div>
-    <div class="heat" id="heatGrid"></div>
-    <div class="heatleg">
-      <span id="heatNote">Ultimas 13 semanas</span><span class="spacer" style="flex:1"></span>
-      <span>menos</span><i class="heatd"></i><i class="heatd l1"></i><i class="heatd l2"></i><i class="heatd l3"></i><i class="heatd l4"></i><span>mas</span>
+    <div class="subpanel">
+      <div class="heat" id="heatGrid"></div>
+      <div class="heatleg">
+        <span id="heatNote">Ultimas 13 semanas</span><span style="flex:1"></span>
+        <span>menos</span><i class="heatd"></i><i class="heatd l1"></i><i class="heatd l2"></i><i class="heatd l3"></i><i class="heatd l4"></i><span>mas</span>
+      </div>
     </div>
 
     <div class="shead"><span class="en">02</span><h2 class="serif">Estado de tu memoria</h2><span class="rule"></span></div>
@@ -517,8 +548,10 @@ details.howto a{color:var(--gold-soft)}
       <div class="memcell dom"><div class="ml">Dominadas</div><div class="mv mono" id="mDom">0</div><div class="ms">intervalo &gt;= 21 dias</div></div>
       <div class="memcell new"><div class="ml">Sin ver</div><div class="mv mono" id="mNew">0</div><div class="ms">del banco completo</div></div>
     </div>
-    <div class="membar" id="memBar"><i></i></div>
-    <div class="memnote" id="mNote">Empieza una sesion inteligente para que el sistema aprenda que te cuesta.</div>
+    <div class="subpanel">
+      <div class="membar" id="memBar"><i></i></div>
+      <div class="memnote" id="mNote">Empieza una sesion inteligente para que el sistema aprenda que te cuesta.</div>
+    </div>
 
     <div class="shead"><span class="en">03</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
     <div class="panel"><div class="cfg">
