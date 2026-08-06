@@ -17,6 +17,8 @@ const ANTHROPIC_API_KEY = defineSecret("ANTHROPIC_API_KEY");
    Cambia estos valores por los tuyos antes de desplegar. */
 const ORIGENES_PERMITIDOS = [
   "https://leidercostoshotel-code.github.io",
+  "https://examen-residentado.web.app",
+  "https://examen-residentado.firebaseapp.com",
   "http://localhost:5000",
   "http://127.0.0.1:5500",
 ];
