@@ -2264,7 +2264,9 @@ function nubePinta(){
 /* Hasta no haber fusionado una vez en esta sesion no se escribe nada en la
    nube: subir lo local sin haber leido lo remoto pisaria el avance de otro
    equipo. */
-let nubeListo=false,nubeT=null,nubeEspera=null,nubeVigilando=false,nubeUid=null;
+/* nubeUid arranca en undefined, no en null: asi el primer aviso de "sin
+   sesion" si se procesa y puede corregir la marca de localStorage. */
+let nubeListo=false,nubeT=null,nubeEspera=null,nubeVigilando=false,nubeUid,nubeRedirigiendo=false;
 
 function nubeRef(){
   const u=nubeUsuario();
@@ -2331,19 +2333,45 @@ function nubeVigila(api){
        y un aviso de error recien mostrado se borraria solo. */
     const uid=u?u.uid:null;
     if(uid===nubeUid)return;
+    const salio=!!nubeUid;
     nubeUid=uid;
     if(u){
       NUBE.activo=true;NUBE.correo=u.email||'';nubePrefs();
       nubePinta();nubeStat('','Cuenta conectada. Sincronizando...');
       nubeSincroniza();
     }else{
-      nubeListo=false;NUBE.activo=false;nubePrefs();nubePinta();
-      nubeStat('','Sin cuenta — tu progreso vive solo en este navegador.');
+      nubeListo=false;
+      /* Si se esta yendo a Google por redireccion, la marca tiene que
+         sobrevivir: irse de la pagina dispara este aviso de "sin sesion", y
+         borrarla ahi dejaba el ingreso muerto al volver. */
+      if(!nubeRedirigiendo){NUBE.activo=false;nubePrefs();}
+      nubePinta();
+      /* Solo habla cuando de verdad se cerro una sesion. Si nunca la hubo,
+         deja el mensaje que ya estaba en pantalla: suele ser el motivo por
+         el que el ingreso fallo, y eso importa mas que repetir el estado. */
+      if(salio)nubeStat('','Sesion cerrada. Tu progreso sigue en este navegador.');
     }
   });
-  /* Regreso del ingreso por redireccion, en los moviles donde no abre el popup. */
-  api.au.getRedirectResult(api.auth).catch(()=>{});
+  /* Regreso del ingreso por redireccion, en los moviles donde no abre el
+     popup. Si fallo, el motivo se muestra: antes se perdia en silencio y el
+     usuario volvia a una pantalla que no decia nada. */
+  api.au.getRedirectResult(api.auth).catch(e=>{
+    NUBE.activo=false;nubePrefs();
+    nubeStat('err',navegadorIncrustado()?AVISO_INCRUSTADO:nubeMsg(e));
+  });
 }
+
+/* Los navegadores incrustados dentro de otras apps (WhatsApp, Instagram,
+   Facebook) no pueden completar el ingreso: Google los rechaza por politica,
+   no por un fallo de la app. Es el motivo tipico de que funcione en la
+   computadora y no en el celular, porque en el celular el enlace suele
+   abrirse desde un chat. */
+function navegadorIncrustado(){
+  const u=navigator.userAgent||'';
+  return /FBAN|FBAV|FB_IAB|Instagram|Line\/|MicroMessenger|Twitter|; wv\)/i.test(u);
+}
+const AVISO_INCRUSTADO='Abriste la app desde otra aplicacion (WhatsApp, Instagram...) y Google no permite iniciar sesion ahi. '+
+  'Toca el menu de tres puntos y elige "Abrir en Chrome" o "Abrir en Safari", y vuelve a intentarlo.';
 
 document.getElementById('nbEntrar').onclick=async()=>{
   nubeStat('','Abriendo el ingreso de Google...');
@@ -2357,11 +2385,20 @@ document.getElementById('nbEntrar').onclick=async()=>{
   }catch(e){
     const c=(e&&e.code)||'';
     if(/popup-closed-by-user|cancelled-popup-request/.test(c))
-      return nubeStat('','Cancelaste el ingreso.');
+      return nubeStat('',navegadorIncrustado()?AVISO_INCRUSTADO:'Cancelaste el ingreso.');
     if(/popup-blocked|operation-not-supported/.test(c)){
-      try{return await api.au.signInWithRedirect(api.auth,prov);}catch(e2){}
+      try{
+        /* La redireccion recarga la pagina entera al volver. Hay que dejar
+           marcado que se estaba entrando: sin esta marca el SDK no se carga
+           de vuelta, nadie recoge la sesion y el ingreso se pierde en
+           silencio. Es justo lo que pasa en los moviles, donde el popup
+           casi nunca abre. */
+        nubeRedirigiendo=true;
+        NUBE.activo=true;nubePrefs();
+        return await api.au.signInWithRedirect(api.auth,prov);
+      }catch(e2){nubeRedirigiendo=false;NUBE.activo=false;nubePrefs();}
     }
-    nubeStat('err',nubeMsg(e));
+    nubeStat('err',navegadorIncrustado()?AVISO_INCRUSTADO:nubeMsg(e));
   }
 };
 document.getElementById('nbSync').onclick=()=>nubeSincroniza(true);
