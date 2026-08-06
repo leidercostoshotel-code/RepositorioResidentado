@@ -15,8 +15,9 @@
  *   - todo lo demas        se deja pasar sin tocar.
  *
  * Importante: las llamadas al tutor de IA (api.anthropic.com o la Cloud
- * Function) NO se interceptan ni se guardan.  Son respuestas distintas cada
- * vez y pueden llevar datos del usuario.
+ * Function) y las de la cuenta en la nube (Firebase Auth y Firestore) NO se
+ * interceptan ni se guardan.  Son respuestas distintas cada vez y llevan
+ * datos y credenciales del usuario.
  */
 
 const VERSION = "v1";
@@ -67,11 +68,16 @@ self.addEventListener("fetch", (e) => {
 
   const url = new URL(req.url);
 
-  /* El tutor de IA nunca se cachea ni se intercepta. */
+  /* Ni el tutor de IA ni la cuenta en la nube se cachean o interceptan: son
+     respuestas distintas cada vez y llevan datos y credenciales del usuario.
+     La regla de mismo origen de mas abajo ya las dejaria pasar, pero se
+     nombran aparte para que ningun cambio futuro las arrastre por descuido. */
   if (
     url.hostname === "api.anthropic.com" ||
     url.pathname.includes("cloudfunctions.net") ||
-    url.hostname.endsWith(".run.app")
+    url.hostname.endsWith(".run.app") ||
+    url.hostname.endsWith(".googleapis.com") ||
+    url.hostname.endsWith(".firebaseapp.com")
   ) {
     return;
   }

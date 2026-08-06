@@ -1,4 +1,105 @@
-# Tutor IA vía Firebase
+# Firebase
+
+El proyecto conectado es **`examen-residentado`**. Firebase cumple dos papeles distintos e independientes:
+
+| Parte | Para qué sirve | ¿Ya funciona? |
+|---|---|---|
+| **Cuenta en la nube** (Auth + Firestore) | Que el progreso del estudiante lo siga entre el celular y la computadora | Solo falta activarla en la consola. No cuesta nada, entra en la capa gratuita |
+| **Tutor IA** (Cloud Function) | Guardar la clave de Anthropic fuera del navegador | Requiere plan Blaze y desplegar la función |
+
+Puedes activar una sin la otra. Sin ninguna de las dos, la app funciona completa en modo local.
+
+---
+
+# 1. Cuenta en la nube
+
+La configuración web ya está escrita en `index.html`:
+
+```js
+const FB_CFG={ apiKey:"AIza…", authDomain:"examen-residentado.firebaseapp.com", … };
+```
+
+**Esa `apiKey` no es un secreto.** A diferencia de la de Anthropic, solo identifica al proyecto: no autoriza nada. Google la publica a propósito en todos sus ejemplos. Lo que protege los datos son las reglas de Firestore, no esconderla.
+
+## Pasos en la consola
+
+**1. Habilita el ingreso con Google**
+
+[Authentication → Sign-in method](https://console.firebase.google.com/project/examen-residentado/authentication/providers) → **Google** → Habilitar → Guardar.
+
+**2. Autoriza el dominio de tu sitio**
+
+Authentication → Settings → **Authorized domains** → agrega:
+
+```
+leidercostoshotel-code.github.io
+```
+
+Si te saltas esto, al entrar aparece el aviso *"Este dominio no esta autorizado en Firebase"*. `localhost` viene autorizado de fábrica.
+
+**3. Crea la base de datos**
+
+[Firestore Database](https://console.firebase.google.com/project/examen-residentado/firestore) → Crear base de datos → modo **producción** → región `southamerica-east1` o `us-central1`.
+
+**4. Publica las reglas**
+
+```bash
+cd firebase
+firebase use examen-residentado
+firebase deploy --only firestore:rules
+```
+
+O pégalas a mano desde `firestore.rules` en la pestaña **Rules** de la consola. Dicen que cada quien solo alcanza su propio documento:
+
+```
+match /usuarios/{uid} {
+  allow read, write: if request.auth != null && request.auth.uid == uid;
+}
+```
+
+Sin esas reglas publicadas, la app avisa *"Firestore rechazo la operacion"* y sigue trabajando en local.
+
+## Qué se guarda
+
+Un solo documento por estudiante, en `usuarios/{uid}`:
+
+```json
+{ "version": 1, "guardado": 1738800000000, "stats": { "srs": {…}, "dias": {…}, "xp": 2450, … } }
+```
+
+Solo el progreso. **No** se sube el correo (ya está en la sesión de Google), **ni** ninguna clave de la API de Anthropic, **ni** las preguntas.
+
+## Cómo se combinan dos equipos
+
+Al entrar en un equipo nuevo, lo que hay ahí se fusiona con lo de la nube en vez de pisarse:
+
+| Dato | Regla |
+|---|---|
+| Memoria de cada pregunta (repetición espaciada) | Gana el repaso **más reciente**, pregunta por pregunta |
+| Logros | Se **unen** los de ambos lados |
+| Racha diaria | La define el **último día completado** |
+| Contadores de por vida (XP, respuestas, simulacros) | Se toma el **mayor** de los dos |
+
+El máximo en los contadores se queda corto si estudiaste en dos equipos el mismo día sin sincronizar; sumarlos sería peor, porque duplicaría en cada sincronización. Lo que de verdad manda el repaso —la memoria por pregunta— sí se fusiona exacto.
+
+## Costo
+
+Nulo en la práctica. La capa gratuita de Firestore da 50 000 lecturas y 20 000 escrituras al día; esta app hace **una lectura al abrir** y **una escritura agrupada cada 8 segundos de inactividad**, nunca una por respuesta. Un simulacro de 100 preguntas gasta unas pocas escrituras, no cien.
+
+## Si algo falla
+
+| Aviso en la app | Qué hacer |
+|---|---|
+| "Este dominio no esta autorizado" | Paso 2: agregar el dominio en Authorized domains |
+| "El ingreso con Google no esta habilitado" | Paso 1: habilitar el proveedor |
+| "Firestore rechazo la operacion" | Paso 4: publicar las reglas |
+| "No se pudo cargar Firebase" | Sin conexión. El progreso local queda intacto |
+
+En todos los casos la app **sigue funcionando completa**: el simulacro, la repetición espaciada y la racha nunca dependieron de la nube.
+
+---
+
+# 2. Tutor IA vía Cloud Function
 
 Esta carpeta contiene una **Cloud Function** que actúa de intermediario entre la app y la API de Claude.
 
@@ -35,7 +136,7 @@ firebase login
 
 ```bash
 cd firebase
-firebase use --add   # elige tu proyecto de la lista
+firebase use examen-residentado
 ```
 
 **3. Guarda tu API key como secreto**
@@ -69,7 +170,7 @@ firebase deploy --only functions
 Al terminar, la consola imprime la URL. Se ve así:
 
 ```
-https://us-central1-TU-PROYECTO.cloudfunctions.net/explicar
+https://us-central1-examen-residentado.cloudfunctions.net/explicar
 ```
 
 **6. Conéctala en la app**
@@ -143,11 +244,12 @@ Desde que la app es instalable con service worker, conviene tener clara la separ
 | Parte | ¿Necesita internet? |
 |---|---|
 | Abrir la app, banco de 3 125 preguntas, retroalimentación local, repetición espaciada, racha | **No** |
+| Cuenta en la nube (sincronizar entre equipos) | **Sí**, pero se pone al día sola al volver la señal |
 | Tutor IA (explicaciones de Claude) | **Sí** |
 
 Sin señal, el simulacro sigue funcionando completo y el tutor queda en pausa con un aviso. Al recuperar la conexión vuelve solo.
 
-El service worker **nunca intercepta ni guarda** las llamadas a `api.anthropic.com` ni a la Cloud Function: son respuestas distintas cada vez y pueden llevar datos del usuario.
+El service worker **nunca intercepta ni guarda** las llamadas a `api.anthropic.com`, a la Cloud Function, ni a Firebase Auth y Firestore: son respuestas distintas cada vez y llevan datos y credenciales del usuario.
 
 ## Si no quieres usar Firebase
 

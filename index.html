@@ -470,6 +470,9 @@ body.sinred #toast{bottom:calc(26px + 40px)}
 .aicfg input[type=password],.aicfg input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line2);
   color:var(--ink);padding:12px 14px;border-radius:9px;font-size:14px;font-family:'IBM Plex Mono',monospace}
 .aicfg input:focus{outline:none;border-color:var(--gold-deep)}
+.bkinfo{background:rgba(13,28,48,.78);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
+  font-size:12.5px;line-height:1.7;color:var(--ink-dim)}
+.bkinfo b{color:var(--gold-soft);font-weight:600}
 .aistat{font-size:12.5px;margin-top:12px;display:flex;align-items:center;gap:7px;color:var(--ink-mut)}
 .aistat .dot2{width:8px;height:8px;border-radius:50%;background:var(--ink-mut);flex-shrink:0}
 .aistat.ok .dot2{background:var(--ok);box-shadow:0 0 8px var(--ok)} .aistat.ok{color:var(--ok)}
@@ -698,7 +701,35 @@ details.howto a{color:var(--gold-soft)}
       <div class="aistat" id="bkStat" style="display:none"><span class="dot2"></span><span id="bkStatTxt"></span></div>
     </div></div>
 
-    <div class="shead"><span class="en">07</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">07</span><h2 class="serif">Tu cuenta en la nube</h2><span class="rule"></span></div>
+    <div class="panel"><div class="aicfg">
+      <div style="font-size:13px;color:var(--ink-dim);line-height:1.55;margin-bottom:16px">
+        Opcional. Si entras con tu cuenta de Google, tu progreso se guarda en Firebase y te sigue
+        entre el celular y la computadora. Sin cuenta la app funciona igual de completa,
+        solo que el avance vive unicamente en este navegador.
+      </div>
+      <div class="bkinfo" id="nbInfo">&mdash;</div>
+      <div class="aiacts" id="nbFuera">
+        <button class="go" id="nbEntrar">Entrar con Google</button>
+      </div>
+      <div class="aiacts" id="nbDentro" style="display:none">
+        <button class="go" id="nbSync">&#8635; Sincronizar ahora</button>
+        <button id="nbSalir">Cerrar sesion</button>
+      </div>
+      <div class="aistat" id="nbStat"><span class="dot2"></span><span id="nbStatTxt">Sin cuenta &mdash; tu progreso vive solo en este navegador.</span></div>
+
+      <details class="howto">
+        <summary>Que se guarda y como se combina</summary>
+        <ol>
+          <li>Se guarda solo tu <b>progreso</b>: memoria de repasos, dias de actividad, XP y logros. Ni las preguntas ni ninguna clave de IA salen de tu navegador.</li>
+          <li>Al entrar en un equipo nuevo, lo que traes se <b>combina</b> con lo que ya habia: en cada pregunta gana el repaso mas reciente, asi que no se pisa nada.</li>
+          <li>Las <b>reglas de Firestore</b> hacen que cada quien solo pueda leer y escribir su propio documento.</li>
+          <li>Sin conexion la app sigue entera; al volver la señal se sincroniza sola.</li>
+        </ol>
+      </details>
+    </div></div>
+
+    <div class="shead"><span class="en">08</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div class="field">
         <label class="flabel">Modo de conexion</label>
@@ -2107,6 +2138,252 @@ document.getElementById('bkFile').onchange=function(){
   fr.readAsText(f);
 };
 bkResumen();
+
+/* ===================== CUENTA EN LA NUBE =====================
+   Firebase Auth + Firestore para que el progreso siga al estudiante entre
+   el celular y la computadora. Es opcional: sin cuenta, todo vive en
+   localStorage y la app no pierde ni una funcion.
+
+   El SDK se carga bajo demanda con import() dinamico y nunca en el arranque.
+   Son cientos de kilobytes que no deben retrasar la primera pantalla ni
+   hacen falta sin conexion; si la descarga falla, la app ni se entera.
+
+   La apiKey de Firebase NO es un secreto, a diferencia de la de Anthropic:
+   identifica al proyecto, no autoriza nada. Quien protege los datos son las
+   reglas de Firestore (firebase/firestore.rules), donde cada usuario solo
+   alcanza su propio documento. */
+const FB_CFG={
+  apiKey:"AIzaSyBZi7BCSBoDtfVTGRwzDgN0RZZp8ITt7_c",
+  authDomain:"examen-residentado.firebaseapp.com",
+  projectId:"examen-residentado",
+  storageBucket:"examen-residentado.firebasestorage.app",
+  messagingSenderId:"355283213921",
+  appId:"1:355283213921:web:674e381dbaba01ea9e5420"
+};
+const FB_SDK='https://www.gstatic.com/firebasejs/12.17.1/';
+
+const NUBELS='rm_nube_v1';
+let NUBE={activo:false,correo:'',ultima:0};
+try{Object.assign(NUBE,JSON.parse(localStorage.getItem(NUBELS))||{});}catch(e){}
+function nubePrefs(){try{localStorage.setItem(NUBELS,JSON.stringify(NUBE));}catch(e){}}
+
+let fbApi=null,fbCarga=null;
+function fbCargar(){
+  if(fbApi)return Promise.resolve(fbApi);
+  if(fbCarga)return fbCarga;
+  fbCarga=Promise.all([
+    import(FB_SDK+'firebase-app.js'),
+    import(FB_SDK+'firebase-auth.js'),
+    /* La variante "lite" de Firestore pesa mucho menos y alcanza de sobra
+       para leer y escribir un documento: el trabajo sin red ya lo resuelve
+       localStorage. Si el CDN no la sirviera, cae a la completa. */
+    import(FB_SDK+'firebase-firestore-lite.js').catch(()=>import(FB_SDK+'firebase-firestore.js'))
+  ]).then(([a,au,fs])=>{
+    const app=a.initializeApp(FB_CFG);
+    fbApi={au,fs,auth:au.getAuth(app),db:fs.getFirestore(app)};
+    return fbApi;
+  }).catch(e=>{fbCarga=null;throw e;});
+  return fbCarga;
+}
+
+/* Fusion de dos progresos: el de este equipo y el que estaba en la nube.
+   No puede perder nada ni inflar cifras, asi que va por partes:
+
+   - La memoria de cada pregunta (lo que de verdad importa para el repaso
+     espaciado) se resuelve una por una: gana el repaso mas reciente.
+   - Los contadores de por vida toman el mayor de los dos. Sumarlos
+     duplicaria en cada sincronizacion; el maximo nunca infla ni retrocede,
+     aunque se quede corto si se estudio en dos equipos a la vez. */
+function fusionar(a,b){
+  if(!b||typeof b!=='object')return a;
+  const r=Object.assign(blankStats(),a);
+  ['lifeSeen','lifeOk','bestStreak','xp','exams','perfect','rachaMax']
+    .forEach(k=>{r[k]=Math.max(Number(a[k])||0,Number(b[k])||0);});
+  r.badges=[...new Set([].concat(a.badges||[],b.badges||[]))];
+
+  r.bySp={};
+  for(const sp of new Set([].concat(Object.keys(a.bySp||{}),Object.keys(b.bySp||{})))){
+    const x=(a.bySp||{})[sp]||{},y=(b.bySp||{})[sp]||{};
+    r.bySp[sp]={seen:Math.max(x.seen||0,y.seen||0),ok:Math.max(x.ok||0,y.ok||0)};
+  }
+  r.srs={};
+  for(const id of new Set([].concat(Object.keys(a.srs||{}),Object.keys(b.srs||{})))){
+    const x=(a.srs||{})[id],y=(b.srs||{})[id];
+    r.srs[id]=!x?y:!y?x:((y.t||0)>(x.t||0)?y:x);
+  }
+  r.dias={};
+  for(const d of new Set([].concat(Object.keys(a.dias||{}),Object.keys(b.dias||{})))){
+    const x=(a.dias||{})[d]||{},y=(b.dias||{})[d]||{};
+    r.dias[d]={n:Math.max(x.n||0,y.n||0),ok:Math.max(x.ok||0,y.ok||0)};
+  }
+  /* La racha la define el ultimo dia completado; si coinciden, la mas larga. */
+  const ua=a.ultimoCompleto||'',ub=b.ultimoCompleto||'';
+  if(ub>ua){r.ultimoCompleto=ub;r.rachaDias=b.rachaDias||0;}
+  else if(ua>ub){r.ultimoCompleto=ua;r.rachaDias=a.rachaDias||0;}
+  else{r.ultimoCompleto=ua||null;r.rachaDias=Math.max(a.rachaDias||0,b.rachaDias||0);}
+  r.rachaMax=Math.max(r.rachaMax,r.rachaDias);
+  r.meta=METAS.includes(a.meta)?a.meta:(METAS.includes(b.meta)?b.meta:20);
+  return r;
+}
+
+const NUBE_FALLO={
+  'auth/unauthorized-domain':'Este dominio no esta autorizado en Firebase. Agregalo en Authentication → Settings → Authorized domains.',
+  'auth/operation-not-allowed':'El ingreso con Google no esta habilitado en el proyecto de Firebase.',
+  'auth/network-request-failed':'Sin conexion con Firebase. Tu progreso local esta intacto.',
+  'auth/popup-blocked':'El navegador bloqueo la ventana de Google. Permite las ventanas emergentes de este sitio.',
+  'permission-denied':'Firestore rechazo la operacion. Revisa que las reglas de firebase/firestore.rules esten publicadas.',
+  'unavailable':'Firestore no responde ahora. Se reintenta solo mas adelante.'
+};
+function nubeStat(cls,txt){
+  const el=document.getElementById('nbStat');
+  el.className='aistat'+(cls?' '+cls:'');
+  document.getElementById('nbStatTxt').textContent=txt;
+}
+function nubeMsg(e){
+  const c=(e&&(e.code||e.message))||'';
+  for(const k in NUBE_FALLO)if(c.indexOf(k)>=0)return NUBE_FALLO[k];
+  return 'No se pudo conectar con la nube ('+(c||'error desconocido')+'). Tu progreso local esta intacto.';
+}
+function fechaCorta(ms){
+  try{return new Date(ms).toLocaleString('es-PE',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
+  catch(e){return new Date(ms).toISOString().slice(0,16).replace('T',' ');}
+}
+function nubeUsuario(){return fbApi&&fbApi.auth&&fbApi.auth.currentUser||null;}
+function nubePinta(){
+  const u=nubeUsuario();
+  document.getElementById('nbFuera').style.display=u?'none':'';
+  document.getElementById('nbDentro').style.display=u?'':'none';
+  document.getElementById('nbInfo').innerHTML=u
+    ? 'Sesion de <b>'+esc(u.email||u.displayName||'tu cuenta')+'</b> · '+
+      (NUBE.ultima?'ultima sincronizacion el <b>'+esc(fechaCorta(NUBE.ultima))+'</b>':'aun sin sincronizar')
+    : (NUBE.correo
+        ? 'Ultima cuenta usada: <b>'+esc(NUBE.correo)+'</b>. Entra otra vez para seguir sincronizando.'
+        : 'Sin cuenta. Tu progreso vive solo en este navegador.');
+}
+
+/* Hasta no haber fusionado una vez en esta sesion no se escribe nada en la
+   nube: subir lo local sin haber leido lo remoto pisaria el avance de otro
+   equipo. */
+let nubeListo=false,nubeT=null,nubeEspera=null,nubeVigilando=false,nubeUid=null;
+
+function nubeRef(){
+  const u=nubeUsuario();
+  return u?fbApi.fs.doc(fbApi.db,'usuarios',u.uid):null;
+}
+async function nubeSincroniza(manual){
+  if(!nubeUsuario())return;
+  /* Nunca se mezcla a mitad de un simulacro: cambiar STATS bajo los pies de
+     la sesion en curso descuadraria los contadores en pantalla. */
+  if(S){
+    if(manual)nubeStat('','Sincronizo apenas termines el simulacro.');
+    clearTimeout(nubeEspera);nubeEspera=setTimeout(()=>nubeSincroniza(),20000);
+    return;
+  }
+  if(manual)nubeStat('','Sincronizando...');
+  let remoto=null;
+  try{
+    const s=await fbApi.fs.getDoc(nubeRef());
+    if(s.exists&&s.exists())remoto=s.data();
+  }catch(e){return nubeStat('err',nubeMsg(e));}
+
+  if(remoto&&remoto.stats&&typeof remoto.stats==='object'){
+    STATS=fusionar(STATS,remoto.stats);
+    try{localStorage.setItem(LS,JSON.stringify(STATS));}catch(e){}
+    podarDias();renderLifetime();renderAreaGrid();bkResumen();
+  }
+  nubeListo=true;
+  try{
+    await fbApi.fs.setDoc(nubeRef(),{version:BK_VERSION,guardado:Date.now(),stats:STATS});
+  }catch(e){return nubeStat('err',nubeMsg(e));}
+  NUBE.ultima=Date.now();nubePrefs();nubePinta();
+  nubeStat('ok','Progreso sincronizado con tu cuenta.');
+}
+async function nubeEmpuja(){
+  if(!nubeListo||!nubeUsuario())return;
+  try{
+    await fbApi.fs.setDoc(nubeRef(),{version:BK_VERSION,guardado:Date.now(),stats:STATS});
+    NUBE.ultima=Date.now();nubePrefs();nubePinta();
+  }catch(e){nubeStat('err',nubeMsg(e));}
+}
+/* Se escribe con retraso y agrupado: una peticion por respuesta gastaria
+   cien escrituras en un simulacro de cien preguntas. */
+function nubeProgramaEmpuje(){
+  if(!nubeListo||!nubeUsuario())return;
+  clearTimeout(nubeT);
+  nubeT=setTimeout(()=>{nubeT=null;nubeEmpuja();},8000);
+}
+addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='hidden'&&nubeT){clearTimeout(nubeT);nubeT=null;nubeEmpuja();}
+});
+
+/* El enganche se hace aqui y no dentro de saveStats() para que el modulo de
+   progreso no dependa de Firebase: si algun dia se quita la nube, se borra
+   esta seccion entera y nada mas. */
+const guardaLocal=saveStats;
+saveStats=function(){guardaLocal();nubeProgramaEmpuje();};
+
+function nubeVigila(api){
+  if(nubeVigilando)return;
+  nubeVigilando=true;
+  api.au.onAuthStateChanged(api.auth,u=>{
+    /* Firebase puede avisar varias veces del mismo estado (al restaurar la
+       sesion, al renovar el token). Sin este filtro se sincronizaria de mas
+       y un aviso de error recien mostrado se borraria solo. */
+    const uid=u?u.uid:null;
+    if(uid===nubeUid)return;
+    nubeUid=uid;
+    if(u){
+      NUBE.activo=true;NUBE.correo=u.email||'';nubePrefs();
+      nubePinta();nubeStat('','Cuenta conectada. Sincronizando...');
+      nubeSincroniza();
+    }else{
+      nubeListo=false;NUBE.activo=false;nubePrefs();nubePinta();
+      nubeStat('','Sin cuenta — tu progreso vive solo en este navegador.');
+    }
+  });
+  /* Regreso del ingreso por redireccion, en los moviles donde no abre el popup. */
+  api.au.getRedirectResult(api.auth).catch(()=>{});
+}
+
+document.getElementById('nbEntrar').onclick=async()=>{
+  nubeStat('','Abriendo el ingreso de Google...');
+  let api;
+  try{api=await fbCargar();}
+  catch(e){return nubeStat('err','No se pudo cargar Firebase. Revisa tu conexion; tu progreso local esta intacto.');}
+  nubeVigila(api);
+  const prov=new api.au.GoogleAuthProvider();
+  try{
+    await api.au.signInWithPopup(api.auth,prov);
+  }catch(e){
+    const c=(e&&e.code)||'';
+    if(/popup-closed-by-user|cancelled-popup-request/.test(c))
+      return nubeStat('','Cancelaste el ingreso.');
+    if(/popup-blocked|operation-not-supported/.test(c)){
+      try{return await api.au.signInWithRedirect(api.auth,prov);}catch(e2){}
+    }
+    nubeStat('err',nubeMsg(e));
+  }
+};
+document.getElementById('nbSync').onclick=()=>nubeSincroniza(true);
+document.getElementById('nbSalir').onclick=async()=>{
+  if(!fbApi)return;
+  if(!confirm('Cerrar sesion? Tu progreso queda guardado en este navegador y en la nube.'))return;
+  if(nubeT){clearTimeout(nubeT);nubeT=null;await nubeEmpuja();}
+  try{
+    await fbApi.au.signOut(fbApi.auth);
+    NUBE.ultima=0;nubePrefs();
+    nubeStat('','Sesion cerrada. Tu progreso sigue en este navegador.');
+  }catch(e){nubeStat('err',nubeMsg(e));}
+};
+
+nubePinta();
+if(NUBE.activo){
+  /* Ya uso la nube en este equipo: se restaura la sesion en segundo plano,
+     cuando el navegador este libre, para no retrasar la primera pantalla. */
+  const arranca=()=>fbCargar().then(nubeVigila)
+    .catch(()=>nubeStat('','Sin conexion con la nube; sigues estudiando con lo local.'));
+  'requestIdleCallback' in window?requestIdleCallback(arranca,{timeout:4000}):setTimeout(arranca,1500);
+}
 
 /* ===================== APP INSTALABLE / SIN RED =====================
    El service worker solo se registra al servirse por http(s): con file://
