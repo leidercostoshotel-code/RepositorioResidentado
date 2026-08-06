@@ -3,5 +3,8 @@
     "source": "functions",
     "runtime": "nodejs22",
     "ignore": ["node_modules", ".git", "*.log"]
+  },
+  "firestore": {
+    "rules": "firestore.rules"
   }
 }
