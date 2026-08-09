@@ -59,6 +59,10 @@ body::after{
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
 .serif{font-family:'Fraunces',Georgia,serif}
 button{font-family:inherit;cursor:pointer;color:inherit;border:none;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+/* Cualquier display de clase gana al display:none que el navegador da a
+   [hidden]. Sin esto, ocultar un .resume o cualquier flex con el atributo
+   no hace nada y el elemento se queda a la vista. */
+[hidden]{display:none!important}
 select{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 ::selection{background:rgba(212,175,55,.28)}
 .screen{display:none;animation:fade .4s ease}
@@ -191,6 +195,57 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .verdict.good{background:var(--ok-bg);border:1px solid var(--ok-line);color:var(--ok)}
 .verdict.miss{background:var(--bad-bg);border:1px solid var(--bad-line);color:var(--bad)}
 .verdict b{font-weight:600}
+/* ---- Navegador de preguntas ----
+   Con 100 preguntas la cuadricula no cabe siempre visible en un celular, asi
+   que se despliega desde el indicador de posicion y se cierra al saltar. */
+.qgrid{background:linear-gradient(180deg,rgba(18,37,60,.94),rgba(14,29,49,.96));border:1px solid var(--line);
+  border-radius:14px;box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  padding:16px;margin-top:18px}
+.qgh{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;
+  font-size:11.5px;color:var(--ink-mut)}
+.qgt{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-dim);font-weight:600;margin-right:auto}
+.qgl{display:inline-flex;align-items:center;gap:6px}
+.gk{width:11px;height:11px;border-radius:3px;border:1px solid var(--line2);background:var(--panel2);display:inline-block}
+.gk.done{background:var(--gold-deep);border-color:var(--gold-deep)}
+.gk.mark{background:var(--panel2);border-color:var(--bad);box-shadow:inset 0 0 0 1px var(--bad)}
+.qgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:7px;
+  max-height:44vh;overflow-y:auto}
+.gc{position:relative;aspect-ratio:1;border:1px solid var(--line2);border-radius:8px;background:var(--panel2);
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;color:var(--ink-mut);
+  display:flex;align-items:center;justify-content:center;transition:transform .1s ease,border-color .14s}
+.gc:hover{border-color:var(--gold-deep);color:var(--ink)}
+.gc.done{background:var(--gold-deep);border-color:var(--gold-deep);color:#1a1305}
+.gc.ok{background:rgba(93,191,138,.22);border-color:var(--ok);color:var(--ok)}
+.gc.bad{background:rgba(224,102,102,.18);border-color:var(--bad);color:var(--bad)}
+.gc.mark::after{content:"";position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%;
+  background:var(--bad);box-shadow:0 0 0 1.5px rgba(10,22,38,.9)}
+.gc.now{outline:2px solid var(--gold-soft);outline-offset:1px;transform:scale(1.06)}
+.qgf{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:13px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--ink-dim);flex-wrap:wrap}
+.qgf #qgCount{margin-right:auto}
+.qgf .nbtn{flex:0 0 auto;padding:10px 18px;font-size:13.5px}
+.qpos .cv{display:inline-block;font-style:normal;transition:transform .18s ease;margin-left:2px;color:var(--gold-soft)}
+.qpos[aria-expanded="true"] .cv{transform:rotate(180deg)}
+.qpos:hover{color:var(--ink)}
+/* button{border:none} en el reset, asi que el borde se declara entero aqui */
+.tag.marcar{margin-left:auto;border:1px solid var(--line2);color:var(--ink-mut);background:rgba(255,255,255,.02)}
+.tag.marcar:hover{border-color:var(--bad);color:var(--bad)}
+.tag.marcar[aria-pressed="true"]{background:rgba(224,102,102,.14);border-color:var(--bad);color:#ffc9c9}
+
+/* ---- Aviso de simulacro sin terminar ---- */
+.resume{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:22px;padding:15px 17px;
+  border:1px solid var(--gold-deep);border-radius:14px;
+  background:linear-gradient(180deg,rgba(184,148,42,.14),rgba(14,29,49,.9))}
+.resume .ri{font-size:22px;color:var(--gold-soft);line-height:1}
+.resume .rt{flex:1;min-width:180px}
+.resume .rtt{font-weight:600;font-size:14.5px;color:var(--ink)}
+.resume .rts{font-size:12.5px;color:var(--ink-dim);margin-top:3px}
+.resume .ra{display:flex;gap:9px}
+.resume .ra button{padding:10px 16px;border-radius:10px;font-size:13.5px;font-weight:600;
+  border:1px solid var(--line2);color:var(--ink-dim)}
+.resume .ra button:hover{border-color:var(--gold-deep);color:var(--ink)}
+.resume .ra button.go{background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:#1a1305;border-color:var(--gold)}
+
 .qnav{display:flex;gap:12px;margin-top:26px}
 .nbtn{flex:1;padding:14px;border-radius:11px;font-weight:600;font-size:14.5px;transition:all .14s ease;border:1px solid var(--line2);color:var(--ink-dim)}
 .nbtn:hover{border-color:var(--gold-deep);color:var(--ink)}
@@ -540,6 +595,17 @@ details.howto a{color:var(--gold-soft)}
   .qnav{flex-wrap:wrap}
   .qnav .nbtn{flex:1 1 100%}
   .qnav .nbtn.prime{order:-1}
+  .qgrid{padding:13px;margin-top:14px}
+  /* El titulo toma su propia linea para que la leyenda no quede repartida
+     entre dos renglones distintos */
+  .qgt{flex:1 1 100%;margin-right:0;margin-bottom:2px}
+  .qgh{gap:12px}
+  .qgg{grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:6px;max-height:38vh}
+  .gc{font-size:12px}
+  .qgf .nbtn{flex:1 1 100%}
+  .resume{padding:13px 14px;gap:11px}
+  .resume .ra{flex:1 1 100%}
+  .resume .ra button{flex:1}
 }
 @media(hover:none){
   .acard:hover,.start:hover,.nbtn.prime:hover{transform:none}
@@ -562,6 +628,18 @@ details.howto a{color:var(--gold-soft)}
   </div></div>
 
   <div class="wrap">
+    <div class="resume" id="resumeBox" hidden>
+      <span class="ri">&#8635;</span>
+      <div class="rt">
+        <div class="rtt">Tienes un simulacro sin terminar</div>
+        <div class="rts" id="resumeSub">&mdash;</div>
+      </div>
+      <div class="ra">
+        <button class="go" id="resumeGo">Continuar</button>
+        <button id="resumeDrop">Descartar</button>
+      </div>
+    </div>
+
     <div class="kstrip" id="lifeStrip">
       <div class="kcell"><div class="kl">Preguntas resueltas</div><div class="kv mono" id="lfSeen">0</div><div class="ks">en total, historico</div></div>
       <div class="kcell"><div class="kl">Precision global</div><div class="kv g mono" id="lfAcc">&mdash;</div><div class="ks" id="lfAccSub">aun sin datos</div></div>
@@ -840,7 +918,10 @@ details.howto a{color:var(--gold-soft)}
   <div class="qbar">
     <div class="wrap">
       <button class="xbtn" id="exitBtn">&larr; Salir</button>
-      <span class="qpos">Pregunta <b id="qNow">1</b> / <span id="qTot">20</span></span>
+      <!-- El indicador de posicion es tambien el disparador del navegador:
+           abre la cuadricula sin ocupar un boton extra en una barra ya llena. -->
+      <button class="qpos" id="qposBtn" aria-expanded="false" aria-controls="qgrid"
+              title="Ver todas las preguntas">Pregunta <b id="qNow">1</b> / <span id="qTot">20</span> <i class="cv">&#9662;</i></button>
       <button class="xbtn fbtog" id="fbToggle" title="Cambiar cuando ves la retroalimentacion">
         <span class="fbi">&#128161;</span><span class="fbl">Al instante</span>
       </button>
@@ -855,12 +936,28 @@ details.howto a{color:var(--gold-soft)}
     </div>
   </div>
   <div class="pbar"><i id="pFill"></i></div>
-  <div class="wrap"><div class="qcard">
+  <div class="wrap">
+    <div class="qgrid" id="qgrid" hidden>
+      <div class="qgh">
+        <span class="qgt">Todas las preguntas</span>
+        <span class="qgl"><i class="gk done"></i>respondida</span>
+        <span class="qgl"><i class="gk"></i>en blanco</span>
+        <span class="qgl"><i class="gk mark"></i>marcada</span>
+      </div>
+      <div class="qgg" id="qgg"></div>
+      <div class="qgf">
+        <span id="qgCount">&mdash;</span>
+        <button class="nbtn prime" id="qgFinish">Entregar simulacro</button>
+      </div>
+    </div>
+    <div class="qcard">
     <div class="qtags">
       <span class="tag sp" id="tSp">&mdash;</span>
       <span class="tag ar" id="tAr">&mdash;</span>
       <span class="tag yr" id="tYr">&mdash;</span>
       <span class="tag nuevo" id="tSrs" style="display:none">&mdash;</span>
+      <button class="tag marcar" id="markBtn" aria-pressed="false"
+              title="Marcar para volver despues">&#9873; Marcar</button>
     </div>
     <div class="qtext" id="qText">&mdash;</div>
     <div class="opts" id="opts"></div>
@@ -1556,9 +1653,145 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
 let S=null;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
+/* ===================== SESION EN CURSO =====================
+   El simulacro se guarda en cada respuesta y en cada salto. Antes vivia solo
+   en memoria: una llamada entrante, una recarga o cerrar la pestaña sin querer
+   borraba cien preguntas y tocaba empezar de cero.
+
+   No se guardan las preguntas completas sino sus id: el banco ya esta en la
+   pagina, y guardar los enunciados multiplicaria por veinte el tamaño. */
+const SESLS='rm_sesion_v1';
+let PORID=null;
+function porId(id){
+  if(!PORID){PORID=new Map();for(const q of ALL)PORID.set(q.id,q);}
+  return PORID.get(id);
+}
+function sesionGuarda(){
+  if(!S)return;
+  try{
+    localStorage.setItem(SESLS,JSON.stringify({v:1,t:Date.now(),
+      ids:S.qs.map(q=>q.id),i:S.i,ans:S.ans,flag:S.flag,
+      ok:S.ok,bad:S.bad,streak:S.streak,maxStreak:S.maxStreak,errStreak:S.errStreak,
+      xp:S.xp,elapsed:S.elapsed,mode:S.mode,prev:S.prev,smart:S.smart,meta:S.meta||{}}));
+  }catch(e){}
+}
+function sesionBorra(){try{localStorage.removeItem(SESLS);}catch(e){}}
+function sesionLee(){
+  try{
+    const d=JSON.parse(localStorage.getItem(SESLS));
+    if(!d||d.v!==1||!Array.isArray(d.ids)||!d.ids.length||!Array.isArray(d.ans))return null;
+    return d;
+  }catch(e){return null;}
+}
+function haceCuanto(t){
+  const m=Math.round((Date.now()-t)/60000);
+  if(m<1)return'hace un momento';
+  if(m<60)return'hace '+m+' min';
+  const h=Math.round(m/60);
+  if(h<24)return'hace '+h+' h';
+  const d=Math.round(h/24);
+  return'hace '+d+(d>1?' dias':' dia');
+}
+function resumePinta(){
+  const d=sesionLee(),box=document.getElementById('resumeBox');
+  if(!d){box.hidden=true;return;}
+  const resp=d.ans.filter(a=>a!==null).length;
+  document.getElementById('resumeSub').textContent=
+    resp+' de '+d.ids.length+' respondidas · '+haceCuanto(d.t);
+  box.hidden=false;
+}
+function sesionRetoma(d){
+  const qs=d.ids.map(porId);
+  /* Si el banco cambio y falta alguna pregunta no se retoma a medias: los
+     indices de respuestas dejarian de corresponder con las preguntas. */
+  if(qs.some(q=>!q))return false;
+  S={qs,i:Math.min(Math.max(0,d.i|0),qs.length-1),ans:d.ans,
+     flag:Array.isArray(d.flag)&&d.flag.length===qs.length?d.flag:new Array(qs.length).fill(false),
+     ok:d.ok||0,bad:d.bad||0,streak:d.streak||0,maxStreak:d.maxStreak||0,errStreak:d.errStreak||0,
+     xp:d.xp||0,elapsed:d.elapsed||0,mode:d.mode==='exam'?'exam':'practice',
+     prev:d.prev||{},smart:!!d.smart,meta:d.meta||{},
+     t0:Date.now()-(d.elapsed||0)*1000};   /* el cronometro sigue donde iba */
+  arrancaPantalla();
+  return true;
+}
+/* Comun al simulacro nuevo y al retomado. */
+function arrancaPantalla(){
+  show('quiz');
+  document.getElementById('qTot').textContent=S.qs.length;
+  paintFbToggle();gridCierra();
+  if(timer)clearInterval(timer);
+  timer=setInterval(()=>{S.elapsed=Math.floor((Date.now()-S.t0)/1000);
+    document.getElementById('lkTime').textContent=fmtClock(S.elapsed);},500);
+  document.getElementById('lkTime').textContent=fmtClock(S.elapsed);
+  renderQ();
+}
+
+/* ===================== NAVEGADOR DE PREGUNTAS ===================== */
+function gridAbierto(){return !document.getElementById('qgrid').hidden;}
+function gridCierra(){
+  document.getElementById('qgrid').hidden=true;
+  document.getElementById('qposBtn').setAttribute('aria-expanded','false');
+}
+function gridAbre(){
+  document.getElementById('qgrid').hidden=false;
+  document.getElementById('qposBtn').setAttribute('aria-expanded','true');
+  gridPinta();
+}
+function gridPinta(){
+  if(!S||!gridAbierto())return;   /* no se repinta lo que nadie ve */
+  const g=document.getElementById('qgg'),frag=document.createDocumentFragment();
+  S.qs.forEach((q,i)=>{
+    const b=document.createElement('button'),a=S.ans[i];
+    b.className='gc';b.textContent=i+1;
+    /* En practica ya viste el resultado, asi que la cuadricula lo muestra;
+       en modo examen solo se sabe si esta respondida o en blanco. */
+    if(a!==null)b.classList.add(S.mode==='practice'?(a===q.c?'ok':'bad'):'done');
+    if(S.flag[i])b.classList.add('mark');
+    if(i===S.i)b.classList.add('now');
+    b.setAttribute('aria-label','Pregunta '+(i+1)+(a!==null?', respondida':', sin responder')+(S.flag[i]?', marcada':''));
+    b.onclick=()=>{S.i=i;renderQ();gridCierra();window.scrollTo({top:0,behavior:'smooth'});};
+    frag.appendChild(b);
+  });
+  g.innerHTML='';g.appendChild(frag);
+  const sin=S.ans.filter(a=>a===null).length,mk=S.flag.filter(Boolean).length;
+  const marcadas=mk?' · '+mk+(mk>1?' marcadas':' marcada'):'';
+  document.getElementById('qgCount').textContent=
+    (sin?sin+(sin>1?' sin responder':' sin responder'):'Todas respondidas')+marcadas;
+}
+function pintaMarca(){
+  const b=document.getElementById('markBtn'),on=!!(S&&S.flag[S.i]);
+  b.setAttribute('aria-pressed',on?'true':'false');
+  b.innerHTML=on?'&#9873; Marcada':'&#9873; Marcar';
+}
+document.getElementById('qposBtn').onclick=()=>{gridAbierto()?gridCierra():gridAbre();};
+document.getElementById('qgFinish').onclick=()=>finish();
+document.getElementById('markBtn').onclick=()=>{
+  if(!S)return;
+  S.flag[S.i]=!S.flag[S.i];
+  pintaMarca();gridPinta();sesionGuarda();
+};
+document.getElementById('resumeGo').onclick=()=>{
+  const d=sesionLee();
+  if(d&&sesionRetoma(d)){window.scrollTo(0,0);return;}
+  sesionBorra();resumePinta();
+  toast('\u{26A0}\u{FE0F}','Ese simulacro ya no se puede retomar');
+};
+document.getElementById('resumeDrop').onclick=()=>{
+  if(!confirm('Descartar el simulacro sin terminar?\n\nLo que ya respondiste sigue contando en tus estadisticas, pero no podras retomarlo.'))return;
+  sesionBorra();resumePinta();
+};
+
 /* yaOrdenado: la sesion inteligente entrega el pool ya seleccionado y barajado,
    no debe reordenarse ni recortarse otra vez. */
 function startQuiz(pool,yaOrdenado){
+  /* Empezar uno nuevo descarta el que estuviera a medias: se avisa antes,
+     porque perderlo sin querer es justo lo que este guardado viene a evitar. */
+  const pend=sesionLee();
+  if(pend){
+    const resp=pend.ans.filter(a=>a!==null).length;
+    if(!confirm('Tienes un simulacro sin terminar ('+resp+' de '+pend.ids.length+' respondidas).\n\n'+
+                'Si empiezas uno nuevo, ese se descarta. Continuar?'))return;
+  }
   let qs=pool.slice();
   if(!yaOrdenado){
     if(cfg.order==='random')qs=shuffle(qs);
@@ -1568,12 +1801,10 @@ function startQuiz(pool,yaOrdenado){
   /* historial previo de cada pregunta, para poder rotularla como nueva o repaso */
   const prev={};
   qs.forEach((q,i)=>{const s=STATS.srs[q.id];prev[i]=s?{n:s.n,k:s.k}:null;});
-  S={qs,i:0,ans:new Array(qs.length).fill(null),ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,
+  S={qs,i:0,ans:new Array(qs.length).fill(null),flag:new Array(qs.length).fill(false),
+     ok:0,bad:0,streak:0,maxStreak:0,errStreak:0,xp:0,
      t0:Date.now(),elapsed:0,mode:cfg.mode,prev,smart:!!yaOrdenado};
-  show('quiz');document.getElementById('qTot').textContent=qs.length;paintFbToggle();
-  if(timer)clearInterval(timer);
-  timer=setInterval(()=>{S.elapsed=Math.floor((Date.now()-S.t0)/1000);document.getElementById('lkTime').textContent=fmtClock(S.elapsed);},500);
-  renderQ();
+  arrancaPantalla();
 }
 
 function renderQ(){
@@ -1619,7 +1850,10 @@ function renderQ(){
   document.getElementById('prevBtn').disabled=S.i===0;
   const nb=document.getElementById('nextBtn');
   nb.textContent=(S.i===S.qs.length-1)?'Finalizar \u2713':'Siguiente \u2192';
-  updateLive();
+  pintaMarca();gridPinta();updateLive();
+  /* Guardar aqui cubre todo: responder, saltar, marcar y cambiar de modo
+     pasan por renderQ, asi que no hay camino que se quede sin persistir. */
+  sesionGuarda();
 }
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 
@@ -1672,10 +1906,29 @@ document.getElementById('nextBtn').onclick=()=>{
   else{S.i++;renderQ();}
 };
 document.getElementById('prevBtn').onclick=()=>{if(S.i>0){S.i--;renderQ();}};
-document.getElementById('exitBtn').onclick=()=>{if(confirm('Salir del simulacro? Las estadisticas por especialidad ya se registraron, pero no se generara un resultado de esta sesion.')){if(timer)clearInterval(timer);renderLifetime();renderAreaGrid();show('home');}};
+document.getElementById('exitBtn').onclick=()=>{
+  if(!confirm('Salir del simulacro?\n\nQueda guardado: puedes retomarlo desde Inicio, en la pregunta donde lo dejaste.'))return;
+  if(timer)clearInterval(timer);
+  sesionGuarda();gridCierra();
+  renderLifetime();renderAreaGrid();resumePinta();show('home');window.scrollTo(0,0);
+};
 
 let timer=null;
 function finish(){
+  /* Entregar con preguntas en blanco tiene que ser una decision, no un
+     descuido: en un examen de verdad tambien se avisa. */
+  const sin=S.ans.filter(a=>a===null).length;
+  if(sin){
+    const entregar=confirm('Te faltan '+sin+(sin>1?' preguntas':' pregunta')+' por responder.\n\n'+
+      'Aceptar: entregar asi.\nCancelar: ir a la primera sin responder.');
+    if(!entregar){
+      const j=S.ans.indexOf(null);
+      if(j>=0){S.i=j;renderQ();}
+      gridCierra();window.scrollTo({top:0,behavior:'smooth'});
+      return;
+    }
+  }
+  gridCierra();sesionBorra();
   if(timer)clearInterval(timer);
   S.elapsed=Math.floor((Date.now()-S.t0)/1000);
   const n=S.qs.length,ok=S.ans.filter((a,i)=>a===S.qs[i].c).length;
@@ -1755,8 +2008,8 @@ document.getElementById('retryWrong').onclick=()=>{
   reviewWrongOnly=false;
   startQuiz(wrong);window.scrollTo(0,0);
 };
-document.getElementById('newQuiz').onclick=()=>{renderLifetime();renderAreaGrid();show('home');window.scrollTo(0,0);};
-document.getElementById('homeBtn').onclick=()=>{renderLifetime();renderAreaGrid();show('home');window.scrollTo(0,0);};
+document.getElementById('newQuiz').onclick=()=>{renderLifetime();renderAreaGrid();resumePinta();show('home');window.scrollTo(0,0);};
+document.getElementById('homeBtn').onclick=()=>{renderLifetime();renderAreaGrid();resumePinta();show('home');window.scrollTo(0,0);};
 
 document.getElementById('startBtn').onclick=()=>{
   if(cfg.kind==='smart'){
@@ -2102,16 +2355,21 @@ document.getElementById('fbkNext').onclick=()=>{
 };
 
 document.addEventListener('keydown',e=>{
-  if(!document.getElementById('quiz').classList.contains('on'))return;
+  if(!document.getElementById('quiz').classList.contains('on')||!S)return;
+  /* Con el navegador abierto las teclas no responden preguntas: se estaria
+     contestando algo que no se ve. Solo se puede cerrar. */
+  if(gridAbierto()){if(e.key==='Escape')gridCierra();return;}
   const q=S.qs[S.i];
   const map={'1':0,'2':1,'3':2,'4':3,'5':4,'a':0,'b':1,'c':2,'d':3,'e':4};
   const k=e.key.toLowerCase();
   if(k in map && S.ans[S.i]===null){const o=q.o[map[k]];if(o)answer(o[0]);}
+  else if(k==='m'){S.flag[S.i]=!S.flag[S.i];pintaMarca();sesionGuarda();}
   else if(e.key==='ArrowRight'||e.key==='Enter'){if(S.i===S.qs.length-1)finish();else{S.i++;renderQ();}}
   else if(e.key==='ArrowLeft'){if(S.i>0){S.i--;renderQ();}}
+  else if(e.key==='Escape')gridAbre();
 });
 
-podarDias();renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);
+podarDias();renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);resumePinta();
 
 /* ===================== RESPALDO DE PROGRESO =====================
    Un archivo JSON con todo el estado: memoria de repasos, dias, XP y logros.
