@@ -1,0 +1,34 @@
+// Copia este archivo, renombralo (por ejemplo 2025-A.txt) y reemplaza el
+// contenido. El formato completo esta en fuentes/README.md.
+// Las lineas que empiezan con // se ignoran.
+
+# año: 2025
+# prueba: A
+
+@ Clínicas / Cardiología
+
+// Desde 2023 el examen tiene cuatro alternativas (A a D). Hasta 2022 tenia
+// cinco (A a E). El importador acepta las dos.
+
+1. Escribe aqui el enunciado completo de la pregunta. Puede ocupar
+   varias lineas: se unen solas.
+A. Primera alternativa
+B. Segunda alternativa
+C. Tercera alternativa
+D. Cuarta alternativa
+Rpta: A
+
+@ Pediatría / Neonatología
+
+2. Otro enunciado.
+A. ...
+B. ...
+C. ...
+D. ...
+Rpta: C
+
+// Si el cuadernillo trae las respuestas al final en vez de una por una,
+// borra los "Rpta:" y usa una seccion asi:
+//
+// CLAVES
+// 1 A   2 C   3 E   4 B   5 D
