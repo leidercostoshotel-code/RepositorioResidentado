@@ -1,0 +1,892 @@
+// Examen Unico Nacional al Residentado Medico 2025, Prueba A.
+// 100 preguntas con su clave, sacadas del cuadernillo resuelto en PDF.
+// El formato esta explicado en fuentes/README.md.
+
+# año: 2025
+# prueba: A
+
+@ Clínicas / UCI
+
+1. ¿Cuál es el marcador pronóstico cuyo valor en sangre permite monitorizar la evolución, y está asociado a mayor mortalidad y progresión a disfunción orgánica en sepsis?
+A. Procalcitonina
+B. Lactato
+C. PCR
+D. Glucemia
+Rpta: B
+
+@ Clínicas / Infectología
+
+2. Adolescente de 14 años, acude por náusea, vómitos y deposiciones líquidas sin moco sin sangre. Compañeros con síntomas similares tras comer hamburguesas en una excursión. ¿Cuál es el probable agente infeccioso en este caso?
+A. Bacillus cereus
+B. Campylobacter jejuni
+C. Vibrion cholerae
+D. Estaphylococcus aureus
+Rpta: D
+
+@ Clínicas / Neurología
+
+3. Mujer de 64 años, presenta episodios intermitentes de dolor intenso en labios, encías y pómulos, que se intensifican al contacto. Examen: normal, resonancia magnética sin alteraciones. ¿Cuál es el diagnóstico más probable?
+A. Neurinoma acústica
+B. Parálisis del nervio facial
+C. Neuralgia del trigémino
+D. Meningioma
+Rpta: C
+
+@ Clínicas / Neumología
+
+4. Varón de 64 años con diagnóstico de enfermedad pulmonar obstructiva crónica, ingresa a emergencias por descompensación. Examen: FR: 32X’. Laboratorio: pH: 7.24, PaCO2: 62 mmHg, PaO2: 55 mmHg. ¿Qué tipo de receptores son los más sensibles a los cambios de CO2?
+A. Quimioreceptores centrales bulbo raquídeo
+B. Receptores de estiramiento pulmonar
+C. Receptores J (yuxtacapilares)
+D. Quimiorreceptores periféricos en los cuerpos carotideos y aórticos
+Rpta: A
+
+@ Gineco-Obstetricia / Obstetricia
+
+5. Multigesta de 40 semanas, acude por dolor tipo contracción. Examen: AU: 31 cm, SPP: LCI, LCF 144 X’. Tacto vaginal: dilatación: 9 cm, B: 100%, AP + 1, membranas rotas con líquido claro, se palpa presentación cara mento anterior. ¿Cuál es la conducta más adecuada?
+A. Programar cesárea de emergencia
+B. Dejar evolucionar parto vaginal
+C. Convertir a presentación occipucio
+D. Usar vacuum de salida
+Rpta: B
+
+6. Primigesta de 32 semanas por ecografía del primer trimestre; acude a control prenatal asintomática. examen: AU: 27cm, SPP: LCI, LCF: 142X’. Ecografía: gestación única activa con ponderado fetal en percentil 2 y Doppler fetal normal. ¿Cuál es el diagnóstico más probable?
+A. Error en la edad gestacional
+B. Restricción en el crecimiento intrauterino
+C. Pequeño para la edad gestacional
+D. Crecimiento adecuado para la edad gestacional
+Rpta: C
+
+@ Clínicas / Cardiología
+
+7. Mujer de 42 años, acude a emergencia por dolor torácico y palpitaciones luego de consumo de cocaína. examen: PA: 110/70 mmHg, FC: 135X’, FR: 23X’ T°: 36.5 °C, SatO2: 97%. ¿Cuál es el diagnóstico más probable?
+A. Taquicardia nodal
+B. Taquicardia supraventricular
+C. Taquicardia auricular
+D. Taquicardia sinusal
+Rpta: D
+
+@ Gineco-Obstetricia / Ginecología
+
+8. Mujer de 35 años que acude por dismenorrea, dolor a la defecación desde hace un año. Ecografía: tumor quístico anexial contenido como vidrio esmerilado de 3 cm. El tratamiento de primera opción además de los analgésicos incluye:
+A. Progesterona
+B. Agonista de la GnRH
+C. Antagonista de la GnRH
+D. Anticonceptivos combinados
+Rpta: D
+
+@ Gineco-Obstetricia / Obstetricia
+
+9. Primigesta de 28 semanas asintomática acude a control prenatal. Se realizó ecografía morfológica sin alteraciones. Examen: PA: 100/80 mmHg, FC: 80 X’. Altura uterina: 26 cm, LCF: 144 X’. La paciente pregunta por su esquema de inmunización. ¿Qué vacuna le corresponde?
+A. Varicela
+B. Rubéola
+C. Tdap
+D. VPH
+Rpta: C
+
+@ Pediatría / Neonatología
+
+10. Recién nacido de 37 semanas, peso 2000 g, es evaluado en las primeras horas de vida, letárgico, nauseoso, succión débil y temblores finos. Glicerina capilar: 39 mg/dl. ¿Cuál es la causa más probable?
+A. Adaptación metabólica transitoria
+B. Disminución de reservas energéticas
+C. Hiperinsulinismo congénito
+D. Asfixia perinatal
+Rpta: B
+
+@ Salud Pública / Salud Comunitaria
+
+11. Desde hace 3 años, el centro de salud ubicado en el ámbito de una comunidad cuya principal actividad económica es la explotación minera, ha incrementado la notificación de casos de menores de 10 años con retardo del desarrollo psicomotor, irritabilidad, cefalea, vómitos y disgeusia. ¿Qué contaminante ambiental es la causa más probable?
+A. Níquel
+B. Plomo
+C. Arsénico
+D. Azufre
+Rpta: B
+
+@ Pediatría / Neonatología
+
+12. Lactante de 40 días, es referido a Lima, por presentar desde el nacimiento coriza y hace 3 días lactancia entrecortada. Antecedentes: EG: 38 semanas, parto eutócico. Recibe corticoides nasales y clorfenamina. Examen: Peso: 3900 g, FC: 90X’, FR: 40X’, T: 37 °C; ictericia hasta abdomen. Abdomen: hepatomegalia, RHA presente. ¿Cuál es el diagnóstico más probable?
+A. Toxoplasmosis congénita
+B. Atresia biliar
+C. Sífilis congénita
+D. Atresia de coanas
+Rpta: B
+
+@ Ciencias Básicas / Bioquímica
+
+13. ¿Qué sustancia facilita la absorción de hierro a nivel intestinal?
+A. Oxalatos
+B. Calcio
+C. Fructosa
+D. Polifenoles
+Rpta: C
+
+@ Clínicas / Cardiología
+
+14. Varón de 35 años es evaluado en consultorio de cardiología y luego de estudios electrofisiológicos es diagnosticado de síndrome de taqui-bradi; sin embargo, luego de tratamientos médico ingresa a emergencia por episodios de palpitaciones y síncopes. ¿Cuál es la mejor indicación?
+A. Carvedilol
+B. Ablación
+C. Atropina
+D. Marcapaso
+Rpta: D
+
+@ Pediatría / Pediatría
+
+15. Niño de 10 años, presenta hace cinco días rinorrea acuosa y disfagia, dos días antes se agrega tos con flema, silbido de pecho, fiebre e hiporexia. Antecedentes: inmunizaciones completas. Examen: REG, FC: 78X’, FR: 26 X’, SatO2: 95%. Mg/L; procalcitonina ligeramente elevada. ¿Cuál es el agente etiológico más probable?
+A. Streptococcus pneumoníae
+B. Virus sincitial respiratorio
+C. Mycoplasma pneumoniae
+D. Haemuphilus influenzae tipo b
+Rpta: C
+
+16. Niño de 16 meses, traído por dificultad para evacuar desde hace tres semanas; presenta vómitos y alza térmica no cuantificada. Antecedentes: estreñimiento en forma intermitente. Examen: FC: 115X’, FR: 30X’, SatO2: 100%, PA: 113/85 mmHg. Abdomen: moderadamente distendido, depresible y doloroso a la palpación. ¿Cuál es la conducta inicial a seguir?
+A. Resonancia abdominal
+B. RX abdomen de pie
+C. Enemas evacuantes
+D. Polietilenglicol en gastroclisis
+Rpta: B
+
+17. Niño de 10 años es llevado urgencias por presentar desde hace tres días ictericia, letargo, somnolencia y hematemesis. Hace 7 días presentó alza térmica, dolor abdominal y vómitos que cedieron con sintomáticos. Examen: ictericia de piel y mucosas, hígado a 3 cm DRCD doloroso. Glasgow 12, ROT: aumentados. según su presunción diagnóstica. ¿Cuál es la conducta inicial a seguir?
+A. Hidratación parenteral y referencia a centro hospitalario de mayor complejidad
+B. Iniciar tratamiento empírico con antibióticos de amplio espectro
+C. Administrar omeprazol para proteger la mucosa gástrica y mantener en observación
+D. Solicitar pruebas de función hepática y realizar una ecografía abdominal
+Rpta: A
+
+@ Cirugía / Traumatología
+
+18. Escolar de 7 años presenta aplanamiento plantar bilateral asintomático. Examen: disminución del arco plantar y valgo de retropié; en bipedestación el arco desaparece. ¿Cuál es el diagnóstico de pie plano?
+A. Neurológico
+B. Rígido congénito
+C. Con contractura
+D. Flexible
+Rpta: D
+
+@ Pediatría / Neonatología
+
+19. Neonato pretérmino tardío nace con antecedente de ruptura de membranas de 20 h, líquido amniótico claro, peso de 2700 g, APGAR 9-10 y buen reflejo de succión. ¿Cuál es la conducta más apropiada?
+A. Solicitar ecocardiografía
+B. Iniciar antibióticos de amplio espectro
+C. Estudio de LCR
+D. Monitorizar signos de infección
+Rpta: D
+
+@ Clínicas / Hematología
+
+20. Varón de 36 años que acude por astenia, fatigabilidad. Examen: palidez de piel y mucosa. Laboratorio: anemia normocítica, normocrómica, hierro sérico disminuido, saturación de transferrina baja y ferritina aumentada. ¿Cuál es el mecanismo fisiopatológico de la anemia?
+A. Aumento de la hepcidina
+B. Disminución de la respuesta eritropoyética
+C. Secuestro de hierro en los macrófagos
+D. Producción inadecuada de transferrina
+Rpta: A
+
+@ Cirugía / Anestesiología
+
+21. Mujer de 25 años programada para colecistectomía por colecistitis aguda, refiere haber ingerido un vaso de limonada azucarada una hora antes de la intervención. ¿Cuál es la conducta adecuada?
+A. Se administra un antiemético y se procede
+B. Postergar la cirugía por 24 horas
+C. Postergar la cirugía por 2 horas
+D. Se monitoriza de cerca durante la inducción anestésica
+Rpta: C
+
+@ Gineco-Obstetricia / Obstetricia
+
+22. Primípara de 32 años, Rh negativo; actualmente puérpera de 96 horas de parto vaginal, manifiesta que su hijo es Rh positivo y ella no ha recibido inmunoglobulina anti-D durante su embarazo, ni en el puerperio inmediato. ¿Cuál es la conducta a seguir?
+A. Colocar inmunoglobulina anti-D inmediatamente
+B. Solicitar prueba de combs indirecta
+C. Diferir inmunoglobulina anti-D hasta el próximo embarazo
+D. Administrar corticoides intramuscular
+Rpta: A
+
+@ Cirugía / Cirugía de Trauma
+
+23. Varón de 20 años, hace 6 días sufre atropello por vehículo, presenta herida en el muslo derecho. Examen: PA: 90/60 mmHg, FR: 24X’, FC: 100X’. Herida en tercio medio de muslo derecho, bordes negruzcos, ampollas con contenido rojo vinoso y secreción fétida. laboratorio: Hb: g/dL. ¿Cuál es el tratamiento prioritario?
+A. Vacuna antitetánica
+B. Antibióticos de amplio espectro
+C. Transfusión sanguínea
+D. Desbridamiento y drenaje
+Rpta: D
+
+@ Cirugía / Cirugía General
+
+24. Varón de 45 años, obeso y con diabetes mellitus no controlada, acude a servicio de urgencias por una gangrena de Fournier. Examen: PA: 120/60 mmHg, 86X’, FR: 24X’. Región anorrectal: celulitis con edema y necrosis marcada con afectación del esfínter anal externo. ¿Qué tipo de colostomía es la más indicada?
+A. En asa derecha
+B. Bocas separadas por piel
+C. En caño de escopeta
+D. En asa izquierda
+Rpta: B
+
+@ Clínicas / Endocrinología
+
+25. Varón de 39 años, obeso, acude por anorexia, constipación, poliuria y dolores óseos difusos. Examen: PA: 130/80 mmHg, FC: 84X’. Laboratorio: calcio: 11,6 mg/dL. ¿Cuál es el diagnóstico presuntivo?
+A. Hiperparatiroidismo primario
+B. Consumo de tiazidas
+C. Neoplasia metastásica
+D. Hiperparatiroidismo secundario
+Rpta: A
+
+@ Pediatría / Neonatología
+
+26. RN de 8 días, traído a urgencias por pobre ganancia ponderal, irritabilidad, orina escasa y pobre succión. Antecedente: nacido por cesárea, alta conjunta, madre adolescente con embarazo controlado. Examen: FC: 140X’, FR: 30X’; T°: 37.8 °C. Ictericia hasta raíz de muslos, adelgazado y llanto energético. ¿Cuál es el diagnóstico más probable?
+A. Ictericia neonatal
+B. Deshidratación hipernatrémica
+C. Sepsis neonatal
+D. Hipoglicemia
+Rpta: B
+
+@ Cirugía / Cirugía Pediátrica
+
+27. Neonato de dos horas presenta sialorrea súbita, tos y cianosis durante la alimentación. Antecedentes: nacido de parto cesárea, líquido amniótico aumentado. Examen: abdomen: escafoideo, RHA ausentes. ¿Cuál es el diagnóstico más probable?
+A. Atresia esofágica
+B. Hernia diafragmática
+C. Fístula traqueosofágica tipo H
+D. Neumonía por aspiración meconial
+Rpta: A
+
+@ Salud Pública / Salud Comunitaria
+
+28. Con el objetivo de disminuir la incidencia de embarazo en adolescentes la dirección regional de salud implementa un plan de comunicación educativa dirigidos a los escolares de secundaria de su ámbito. ¿Qué tipo de intervención sanitaria se está implementando?
+A. Recuperación
+B. Prevención
+C. Rehabilitación
+D. Promoción
+Rpta: D
+
+@ Cirugía / Cirugía General
+
+29. Varón de 70 años, con antecedentes de diabetes mellitus tipo 1 y enfermedad diverticular; consulta por dolor abdominal recurrente en el cuadrante inferior izquierdo, fiebre y presencia de neumaturia y fecaluria. Examen: dolor a la palpación profunda en esa zona. ¿Cuál es la complicación más probable?
+A. Fístula colovesical
+B. Absceso pélvico
+C. Obstrucción colónica
+D. Infección urinaria
+Rpta: A
+
+@ Pediatría / Neonatología
+
+30. Neonato de 12 días, recibe LME, traído a urgencias por ictericia. Examen: FC: 120X’, FR: 30X’; T°: 37 °C, ictericia hasta raíz de muslos; llenado capilar <2’; sensorio: activo y reactivo succión vigorosa. Laboratorio: bilirrubina total: 18 mg/dL a predominio indirecta; madre es A+ y el neonato es O+. ¿Cuál es el diagnóstico más probable?
+A. Sepsis neonatal
+B. Deficiencia de G6PD
+C. Incompatibilidad ABO
+D. Ictericia por la estancia materna
+Rpta: D
+
+@ Ciencias Básicas / Anatomía Humana
+
+31. Varón de 14 años post amigdalectomizado presenta alteración del gusto. Examen: ageusia en el tercio posterior de la lengua, anestesia de la faringe, sequedad oral parcial y dificultad en la deglución. ¿Qué par craneal se encuentra comprometido?
+A. XII
+B. VII
+C. XI
+D. IX
+Rpta: D
+
+@ Gineco-Obstetricia / Obstetricia
+
+32. Primigesta de 41 semanas, acude a control prenatal porque aún no ha iniciado trabajo de parto. Examen: ponderado fetal 3700 g y oligohidramnios. Test no estresante normal. ¿Cuál es la conducta más adecuada?
+A. Inducción de trabajo de parto
+B. Cesárea a las 42 semanas
+C. Vigilancia fetal cada 72 horas
+D. Cesárea de emergencia
+Rpta: A
+
+@ Ciencias Básicas / Bioquímica
+
+33. Varón de 68 años con antecedente de cardiopatía isquémica, sufre de infarto agudo de miocardio y desarrolla daño estructural celular extenso. ¿Cuál es el mecanismo predominante de daño celular irreversible en este contexto?
+A. Disminución del k extracelular
+B. Detención de H* intracelular
+C. Disminución de la Na intracelular
+D. Entrada masiva de calcio intracelular
+Rpta: D
+
+@ Clínicas / Infectología
+
+34. Varón de 38 años, gasfitero, presenta fiebre, escalofríos, cefalea frontal intensa, náusea, vómitos, dolor abdominal inespecífico, congestión conjuntival, mialgia intensa y fotofobia. Examen: febril, ictericia, PA: 105/75 mmHg, FC: 68 X’, congestión conjuntival y faríngea, sensibilidad muscular, adenomegalia cervical, meningismo y hepatoesplenomegalia Crepitantes en hemitórax derecho. ¿Cuál es el tratamiento indicado?
+A. Metronidazol
+B. Gentamicina
+C. Sulfametoxazol
+D. Penicilina
+Rpta: D
+
+@ Gineco-Obstetricia / Ginecología
+
+35. En el sistema de cuantificación POP-Q para prolapso genital. ¿Qué significa cuando el punto D se omite?
+A. Prolapso genital total
+B. Hay presencia de incontinencia
+C. No hay cérvix
+D. Dificultad para cuantificar
+Rpta: C
+
+@ Cirugía / Cirugía General
+
+36. Varón de 40 años, hace un día con dolor en región inquinal izquierda después de levantar objeto pesado. Examen: MEG abdomen: globuloso, RHA disminuidos; a nivel de pliegue de la ingle aumento de volumen por tumoración 2x2 cm, indurada, no reducible y con signos de flogosis. Rx abdomen simple de pie; múltiples niveles hidroaéreos. ¿Cuál es el diagnóstico?
+A. Hernia inguinal estrangulada
+B. Hernia crural encarcelada
+C. Y Íleo adinámico
+D. Hernia de Spiegel estrangulada
+Rpta: A
+
+@ Clínicas / Neurología
+
+37. Mujer de 38 años, acude por cefalea y convulsiones tónico clínicas generalizadas de larga data. Resonancia cerebral informa dos quistes parenquimatosos compatibles con neurocisticercosis. ¿Cuál es el tratamiento de elección?
+A. Albendazol
+B. Prednisona
+C. Albendazol y Praziquantel
+D. Praziquantel
+Rpta: C
+
+@ Ciencias Básicas / Anatomía Humana
+
+38. Varón de 18 años sufre caída sobre su hombro izquierdo, acude por limitación en la movilidad del miembro superior izquierdo. Examen: hombro en aducción, brazo en rotación interna y codo extendido. ¿Dónde se localiza la lesión?
+A. Tronco inferior del plexo braquial
+B. Tronco superior de plexo braquial
+C. Tronco medio del plexo braquial
+D. Nervio cubital y braquial cutáneo medial
+Rpta: B
+
+@ Clínicas / Hematología
+
+39. Niño de 7 años referido de centro de salud por anemia refractaria al tratamiento con hierro. Examen: FC: 120X’, FR: 20X’, T°: 36.7 °C. Manchas café con leche e hiperpigmentación cutánea; talla corta, pulgares y radios anormales, hipogonadismo, dismorfias en cabeza. ¿Cuál es el diagnóstico más probable?
+A. Anemia de Fanconi
+B. Anemia regenerativa
+C. Anemia megaloblástica
+D. Síndrome de Shawchman-Diamond
+Rpta: A
+
+@ Clínicas / Neumología
+
+40. Varón de 30 años, acude por dolor torácico, fiebre, diaforesis nocturna y baja de peso. Antecedentes: inmunodeficiencia y consumidor de sustancias ilícitas. Examen: pulmones: VV y MV abolidos en 1/3 inferior de HTD. Rx de tórax muestra derrame pleural derecho. ¿Cuál de las siguientes pruebas en el líquido pleural es útil para el diagnóstico de tuberculosis pleural?
+A. Proteínas bajas
+B. Test de ADA positivo
+C. Glucosa alta
+D. DHL elevado
+Rpta: B
+
+41. Varón de 64 años, consulta por fiebre, escalofríos, cefalea, náuseas, sudoración, tos improductiva y dolor torácico. Antecedentes de alcoholismo. Examen: T°: 39.2 °C, FC: 118X’, FR: 23X’, se ausculta crepitantes y frote pleural. ¿Cuál es el examen de elección para confirmar su diagnóstico?
+A. RX tórax
+B. Cultivo de esputo
+C. Procalcitonina sérica
+D. TC tórax contraste
+Rpta: A
+
+@ Gineco-Obstetricia / Ginecología
+
+42. Mujer de 32 años asintomática que acude por chequeo. Al examen de mama a la expresión de uno de los pezones sale secreción blanco lechoso. ¿Cuál es el manejo más adecuado?
+A. Observación
+B. Ecografía de mamas
+C. Mamografía
+D. Solicitar prolactina
+Rpta: D
+
+43. Puérpera mediata de 33 años, acude por presentar fiebre y congestión mamaria desde hace tres días. Se inicia cobertura antibiótica con dicloxacilina y compresas; luego de 72 horas de tratamiento continúa febril. Se le realiza ecografía mamaria y se encuentra colección de 45 mm en cuadrante supero externo de mama derecha. ¿Cuál es la conducta más adecuada?
+A. Drenaje quirúrgico
+B. Compresas tibias
+C. Extracción vigorosa de leche
+D. Rotación de antibiótico
+Rpta: A
+
+@ Salud Pública / Gestión en Salud
+
+44. El equipo de gestión del centro de salud elabora el ASIS y requiere incorporar un indicador de los determinantes sociales ambientales. ¿Cuál deberá elegir?
+A. Porcentaje de hogares con agua potable
+B. Cobertura de vacunación infantil
+C. Tasa de reingresos hospitalarios
+D. Personal médico por cien mil habitantes
+Rpta: A
+
+@ Clínicas / Neurología
+
+45. Varón de 32 años, ingresa por pérdida de conciencia de forma brusca acompañado de movimientos tónico clónicos generalizados; esposa refiere que desde hace dos días no duerme por problemas familiares y estrés y que nunca ha tenido un cuadro similar. Examen: post ictal. Boca: signos de mordedura de lengua. ¿Cuál es la indicación?
+A. Fenitoína
+B. Conducta expectante
+C. Valproato de sodio
+D. Fenobarbital
+Rpta: B
+
+@ Clínicas / Neumología
+
+46. Varón de 74 años con EPOC moderado (FEV1 50%), acude por disnea marcada, tos con esputo mucoso y tendencia a la somnolencia. Examen: PA: 110/70 mmHg, FC: 92’, FR: 28X’, SatO2: 87%, FiO2: 21%; pulmones: tirajes, roncantes bibasales; neurológico: somnoliento y por momentos agitado. Laboratorio: pH: 7.29, PCO 2: 55 mmHg, PO2: 62 mmHg. ¿Cuál es el hallazgo más importante para manejo intrahospitalario?
+A. Insuficiencia cardíaca
+B. Neumonía atípica
+C. Acidosis respiratoria
+D. Delirio hiperactivo
+Rpta: C
+
+@ Pediatría / Neonatología
+
+47. Recién nacido prematuro de 28 semanas y 1050 gramos de peso se encuentra en la UCIM debido a su prematurez; durante la primera semana requirió múltiples extracciones sanguíneas para monitorización. A los 10 días, presenta palidez, taquicardia y una hemoglobina de 8.0 g/dL, lo que lleva al equipo médico a considerar una transfusión. ¿Qué medida inicial tiene mayor impacto en disminuir la probabilidad de requerir una transfusión en este paciente?
+A. Administrar eritropoyetina para estimular la producción de glóbulos rojos
+B. Considerar la transfusión inmediata para corregir la anemia sintomática
+C. Restringir toma de muestras de sangre para exámenes de laboratorio
+D. Iniciar suplementación con hierro intravenoso para mejorar la síntesis de hemoglobina
+Rpta: C
+
+@ Ciencias Básicas / Embriología
+
+48. ¿Cuál es el sitio más frecuente de implantación del blastocisto?
+A. Cérvix uterino
+B. Segmento inferior del útero
+C. Cuerno uterino
+D. Fondo uterino
+Rpta: D
+
+@ Cirugía / Cirugía General
+
+49. Mujer de 75 años es trasladada al servicio de emergencia, porque desde hace 4 días presenta dolor abdominal a pedrominio de fosa ilíaca izquierda, vómitos, alta térmica y rectorragia. Antecedente: estreñimiento crónico. Examen: pálida, PA: 90/60 mmHg, FC: 100X’, FR: 30X’. Abdomen: distendido, RHA (-); a la palpación dolor abdominal generalizado, rebote (+); TR: dedo de guante con sangre. ¿Cuál es el diagnóstico más probable?
+A. Enfermedad de Crohn
+B. Apendicitis aguda
+C. Diverticulitis aguda
+D. Colitis infecciosa
+Rpta: C
+
+@ Cirugía / Urología
+
+50. Niño de 10 años, acude por dolor testicular derecho súbito desde hace 3 horas, acompañado de náusea. Examen: testículo en posición alta, edematoso muy doloroso a la palpación. Doppler testicular: disminución del flujo arterial en el testículo comprometido. ¿Cuál es el diagnóstico?
+A. Orquitis
+B. Varicocele
+C. Epididimitis
+D. Torsión testicular
+Rpta: D
+
+51. Mujer de 58 años con antecedentes de litiasis renal recurrente, presenta fiebre de 39.2 °C, vómitos y dolor lumbar izquierdo de 48 horas de evolución. Examen: PA: 90/60 mmHg, FC: 120X’, dolor en fosa lumbar izquierda. Leucocitosis. Tomografía abdomino pélvica: litiasis obstructiva en uréter proximal izquierdo, dilatación del sistema pielocalicial y absceso perimétrico. ¿Cuál es la intervención inicial más adecuada?
+A. Derivación urinaria urgente con catéter doble J y nefrostomía percutánea
+B. Litotricia extracorpórea y seguimiento con antibióticos
+C. Drenaje quirúrgico del absceso sin derivación urinaria
+D. Antibióticos de amplio espectro y nefrectomía diferida
+Rpta: A
+
+@ Cirugía / Cirugía General
+
+52. Varón de 25 años post laparotomía por apendicitis complicada y peritonitis generalizada; al cuarto día post operatorio presenta distensión abdominal, náusea y vómitos. Examen: abdomen distendido y doloroso, RHA: ausentes, SNG: 1000 ML de líquido verdoso. Electrolitos normales. ¿Cuál es el diagnóstico más probable?
+A. Íleo paralítico
+B. Perforación intestinal
+C. Obstrucción por bridas
+D. Síndrome de Ogilvie
+Rpta: A
+
+@ Salud Pública / Gestión en Salud
+
+53. Según la norma técnica peruana para el manejo de la anemia en lactantes; si la suspensión del suplemento de hierro es mayor a 3 meses, debe…
+A. Reiniciar la indicación hasta completar el esquema previamente indicado.
+B. Continuar el tratamiento hasta los 2 años.
+C. Iniciar un nuevo esquema, previa evaluación de hemoglobina.
+D. Continuar el tratamiento por 6 meses.
+Rpta: C
+
+@ Clínicas / Psiquiatría
+
+54. Varón de 52 años, alcohólico crónico, presenta cefalea, temblor; se agrega desorientación, agitación y alucinaciones visuales, traído a emergencia por convulsiones tónico clónico generalizadas. Último episodio de ingesta de alcohol hace 2 días. ¿Cuál es el tratamiento de elección?
+A. Tiamina
+B. Dextrosa 33%
+C. Diazepam
+D. Fenitoína
+Rpta: C
+
+@ Cirugía / Cirugía General
+
+55. Mujer de 30 años que durante una apendicectomía se encuentra una tumoración de menos de 2 cm en la punta del apéndice. No se observa muestras de extensión abdominal extra apendicular. ¿Cuál es la conducta indicada?
+A. Ileostomía
+B. Hemicolectomía derecha
+C. Apendicectomía
+D. Colectomía ascendente
+Rpta: C
+
+@ Cirugía / Cirugía Pediátrica
+
+56. RN a término con dificultad respiratoria, sialorrea y asfixia con la primera alimentación oral. La sonda nasogástrica no progresa más allá de 10 cm. Rx: sonda enrollada en el esófago superior, presencia de aire en estómago e intestinos. ¿Cuál es el diagnóstico?
+A. Estenosis pilórica
+B. Fístula traqueoesofágica
+C. Aprecia esofágica con fístula traqueoesofágica
+D. Anillo vascular presente
+Rpta: C
+
+@ Gineco-Obstetricia / Obstetricia
+
+57. Primigesta de 37 semanas, sin controles prenatales, acude por presentar dolor tipo contracción esporádico. examen: AU: 32 cm, DPP: LCF: 150 X’; Tacto vaginal: D: 0 B: 30% AP: -4. Laboratorio: VIH + y carga viral en 2000 copias/mL. ¿Cuál es la conducta más adecuada para la vía de parto?
+A. Inducción a las 39 semanas
+B. Parto vaginal espontáneo
+C. Cesárea programada
+D. Parto instrumentado
+Rpta: C
+
+@ Clínicas / Gastroenterología
+
+58. Mujer de 45 años usuaria crónica de AINES por osteoartritis, acude por hematemesis y melena activa. examen: PA: 80/50 mmHg, FC: 112 X’, FR: 22 X’. Palidez marcada de piel y mucosas. Luego de administrar el bolo de omeprazol se decide continuar con infusión del mismo medicamento. ¿Cuál es la velocidad de infusión del omeprazol en mg/h?
+A. 4
+B. 10
+C. 6
+D. 8
+Rpta: D
+
+@ Gineco-Obstetricia / Ginecología
+
+59. Mujer de 57 años, acude para solicitar terapia de reemplazo hormonal, presenta bochornos dos veces al día. FUR hace 10 años. ¿Cuál es la conducta a seguir?
+A. Estrógeno más progesterona
+B. Medidas higiénico dietéticas
+C. Estrógenos vía oral
+D. Estrógenos parenterales
+Rpta: B
+
+@ Clínicas / Dermatología
+
+60. Adolescente de 12 años, traído por madre, quien refiere que hace dos meses presenta manchas blancas en cara. Examen: máculas hipocrómicas redondeadas, algunas eritematosas, bordes no definidos, descamación escasa en cara y tórax. ¿Cuál es el diagnóstico?
+A. Pitiriasis alba
+B. Tiña versicolor
+C. Dermatitis seborreica
+D. Vitíligo
+Rpta: A
+
+@ Clínicas / Infectología
+
+61. Adulto de 28 años con resultado de dos baciloscopias negativas, con alta probabilidad de TB clínica activa; según criterio médico. ¿Cuál es la conducta a seguir según marco normativo nacional?
+A. PPD y cultivo
+B. Alta y control anual
+C. PDR m y cultivo
+D. Iniciar tratamiento
+Rpta: D
+
+@ Clínicas / Cardiología
+
+62. Varón de 65 años con antecedente de hipertensión arterial, acude por cefalea intensa convulsiones y edema de papila. Examen: PA: 190/120 mmHg. ¿Cuál es el medicamento inicial a usar?
+A. Hidralazina
+B. Labetalol
+C. Nitroglicerina
+D. Nitroprusiato
+Rpta: B
+
+@ Clínicas / Hematología
+
+63. Mujer de 64 años, operada de gastrectomía parcial hace 2 años, acude por anorexia, diarrea, pérdida de peso, parestesia en MMII y marcha atáxica. Examen: palidez marcada y presencia de glositis y lengua depapilada. Laboratorio: hemoglobina de 7.5 g/dL, VCM: 110 fL y presencia de polisegmentación de neutrófilos. ¿Cuál es el tratamiento de elección?
+A. Niacina
+B. Tiamina
+C. Riboflavina
+D. Cobalamina
+Rpta: D
+
+@ Clínicas / Psiquiatría
+
+64. Mujer de 23 años es llevada a consulta por presentar desde hace dos años conducta extrovertida excesiva, impulsividad y estado de ánimo expansivo y a veces irritable que alterna con episodios de apatía, indiferencia y pérdida de capacidad de sentir placer. ¿Cuál es el medicamento básico para el tratamiento de esta patología?
+A. Litio
+B. Mirtazapina
+C. Lorazepam
+D. Paroxetina
+Rpta: A
+
+@ Gineco-Obstetricia / Ginecología
+
+65. Mujer de 32 años, acude por dolor en fosa ilíaca derecha desde hace tres días que se ha ido intensificando. Antecedentes de hidrosonografía hace 10 días. Examen: T°: 37 °C, FC: 80X’. Tacto vaginal: dolor a la movilización de cérvix, se evidencia flujo vaginal con mal olor. Eco TV útero de 7 cm, presencia de líquido en fondo de saco. ¿Cuál es el manejo más adecuado?
+A. Clindamicina + gentamicina
+B. Doxiciclina + ceftriaxona + metronidazol
+C. Ceftriaxona+ doxiciclina + gentamicina
+D. Doxiciclina + azitromicina
+Rpta: B
+
+@ Gineco-Obstetricia / Obstetricia
+
+66. Tercigesta de 33 semanas, cesáreada anterior dos veces; acude por sangrado vaginal indoloro. Examen: AU: 30cm, SPP: LCD, LCF 144X’. Ecografía obstétrica: gestación única activa con ponderado fetal en percentil 60. Placenta cubre la totalidad del OCI y presenta además lagunas vasculares, adelgazamiento miometrio retoplacentario y vasos puente. ¿Cuál es el diagnóstico más probable?
+A. Rotura de vasa previa
+B. Hematoma retroplacentario
+C. Espectro de atletismo placentario
+D. Rotura uterina
+Rpta: C
+
+@ Ciencias Básicas / Farmacología
+
+67. Mujer de 32 años que presenta ataxia y temblor de manos. Antecedente: epilepsia tratada con fármaco que aumenta los niveles de GABA e inhibe los canales del calcio tipo T. Examen: petequias. Laboratorio: hiperamonemia. ¿Qué medicamento se ha utilizado?
+A. Fenitoína
+B. Etosuximida
+C. Valproato
+D. Gabapentina
+Rpta: C
+
+@ Gineco-Obstetricia / Ginecología
+
+68. Mujer de 24 años con presencia de irregularidades menstruales desde hace dos años, hirsutismo leve, IMC: 20. Glucosa en ayunas: 80 mg/dL. ¿Cuál es el tratamiento más adecuado?
+A. Finasteride
+B. Metformina
+C. Espironolactona
+D. Anticonceptivos orales combinados
+Rpta: D
+
+@ Pediatría / Pediatría
+
+69. Preescolar de 4 años, contacto de familiar con TB pulmonar acude a control presentando un resultado de PPD de 12 mm. Asintomático. Antecedentes: inmunizaciones completas. Examen físico normal. Rx de tórax sin hallazgos. ¿Cuál es el diagnóstico?
+A. Enfermedad por Mycobacterium tuberculosis
+B. Exposición a Micobacterium tuberculosis
+C. Infección por Mycobacterium tuberculosis
+D. Reacción cruzada a BCG
+Rpta: C
+
+@ Ciencias Básicas / Bioquímica
+
+70. Obrero de 30 años llega a emergencia después de haber sido rescatado de incendio; presenta estridor laríngeo, tos y dificultades respiratoria. La oximetría muestra SatO2: 90%, pero la gasometría arterial revela una presión parcial de oxígeno (PaO2) normal. ¿Cuál es la causa de estos hallazgos?
+A. Reduce la capacidad de hemoglobina para captar oxígeno por modificación en su estructura
+B. Interfiere con la liberación de oxígeno de la hemoglobina a los tejidos
+C. Se une a la hemoglobina formando carboxihemoglobina
+D. Se disuelve pobremente en el plasma sanguíneo reduciendo el oxígeno disuelto
+Rpta: C
+
+@ Gineco-Obstetricia / Ginecología
+
+71. ¿Cuál es el mecanismo fisiológico por el cual se puede presentar hipertensión arterial en la postmenopausia?
+A. Reducción a la actividad del sistema renina-angiotensina
+B. Cambios en la sensibilidad barorreceptora
+C. Pérdida del efecto protector del estrógeno
+D. Aumento de la resistencia vascular periférica
+Rpta: C
+
+@ Pediatría / Neonatología
+
+72. Recién nacido de 10 días, es traído al control. Examen: FC: 100X’, FR: 50X’, T°: 37.2 °C. Tórax: MV pasa bien en AHT, abdomen: RHA presentes; cordón umbilical: presente, húmedo con secreción amarillenta mal oliente y eritema periumbical. Hemograma: leucocitos: 10,000/µL, Hto: 42%, abastonados 0. ¿Cuál es el diagnóstico más probable?
+A. Onfalitis
+B. Peritonitis
+C. Onfalocele
+D. Celulitis
+Rpta: A
+
+@ Clínicas / Infectología
+
+73. Joven procedente de área rural andina presenta una úlcera cutánea grande e indolora con bordes elevados e indurados. Se observan amastigotes dentro de los macrófagos en una biopsia de la lesión. ¿Cuál es el agente causal más probable?
+A. Trypanosoma cruzi
+B. Leishmanía braziliensis
+C. Leishmania donovani
+D. Mycobacterium leprae
+Rpta: B
+
+@ Ciencias Básicas / Bioquímica
+
+74. ¿Cuál es la hormona responsable de aumentar la producción hepática de glucosa durante un ayuno prolongado de 24 horas?
+A. Leptina
+B. Insulina
+C. Somatostatina
+D. Glucagon
+Rpta: D
+
+@ Clínicas / Infectología
+
+75. Mujer de 65 años, diabética con ERC en terapia dialítica hace 4 años, desde hace un mes presenta dorsalgia y fiebre; en la última semana se agrega debilidad en miembros inferiores y dificultad para la micción. ¿Cuál es el diagnóstico más probable?
+A. Osteomielitis vertebral
+B. Metástasis ósea
+C. Paraparesia espástica
+D. Espóndiloartrosis
+Rpta: A
+
+@ Pediatría / Neonatología
+
+76. Lactante de 40 días, es traído a emergencias por dificultad respiratoria. Antecedente: EG: 32 semanas; parto cesáreo, con oxigenoterapia durante 32 días. Examen: FR: 65X’, FC: 110X’. Tórax: sibilantes en AHT y triajes IC. ¿Cuál es el diagnóstico?
+A. Neumonía intrahospitalaria
+B. Displasia broncopulmonar
+C. Bronquiolitis obliterante
+D. Síndrome obstructivo bronquial
+Rpta: B
+
+@ Cirugía / Cirugía de Trauma
+
+77. Varón de 46 años, hace una hora sufre impacto de proyectil de arma de fuego en abdomen. Examen: AP: 60/40 mmHg, FC’ 100X’. Pálido. Tórax: MV normal. Cardiovascular: RC disminuidos de intensidad. Abdomen: distendido, orificio en mesogastrio, RHA disminuidos, signo de rebote (+). ¿Cuál es la indicación inmediata?
+A. FAST
+B. Exploración de la herida
+C. Laparotomía exploratoria
+D. Laparoscopia diagnóstica
+Rpta: C
+
+@ Clínicas / Gastroenterología
+
+78. Varón de 70 años, acude a consulta, porque hace 8 meses presenta dolor epigástrico constante que no mejora a la ingesta de alimentos, llenura precoz y melena. Examen: MEN, REH, adenopatía supraclavicular izquierda. Abdomen: se palpa masa dolorosa en epigastrio. Laboratorio: Hb: 8 g/dL. ¿Cuál es el diagnóstico más probable?
+A. Úlcera duodenal
+B. Linfoma gástrico
+C. NM gástrico
+D. Tumor de Pancoast
+Rpta: C
+
+@ Clínicas / Infectología
+
+79. Varón de 35 años, residente de Quillabamba, Cusco (valle tropical), es admitido con fiebre alta intermitente, esplenomegalia y anemia severa de progresión rápida; refiere haber recibido múltiples picaduras de insectos al amanecer y anochecer. El frotis de sangre periférica muestra la presencia de parásito en eritrocitos. ¿Cuál es la característica inmunológica del huésped crucial para el desarrollo de paroxismos febriles?
+A. Liberación de T killer contra eritrocitos parasitados
+B. Inducción de autoanticuerpos contra eritrocitos
+C. Formación de hipnozoitos hepáticos
+D. Liberación de citoquinas proinflamatorias
+Rpta: D
+
+@ Pediatría / Neonatología
+
+80. Recién nacido de 6 días, es traído a emergencia por presentar enrojecimiento, calor local, secreción purulenta y mal olor en la base del cordón umbilical, pobre succión y sueño incrementado. Examen: eritema periumbilical de 2 cm con induración e incremento de volumen; neurológico: succión irregular e hipoactividad. ¿Cuál es la conducta más adecuada?
+A. Administrar antibióticos tópicos y realizar seguimiento ambulatorio estrecho
+B. Hospitalizar al neonato e iniciar tratamiento antibiótico intravenoso de amplio espectro
+C. Realizar hemocultivo y esperar resultados para iniciar antibioticoterapia
+D. Iniciar tratamiento antibiótico intramuscular y evaluar respuesta en 48 horas
+Rpta: B
+
+@ Salud Pública / Estadística
+
+81. Un estudio sobre incidencia de anemia entre gestantes expuestas y no expuestas a la dieta “A”, demostró una diferencia con un valor de p < 0.05. si los niveles de hemoglobina en ambos grupos no presentan diferencia. ¿Cuál es el tipo de error?
+A. 1-a
+B. II
+C. I
+D. 1-p
+Rpta: B
+
+@ Clínicas / Cardiología
+
+82. Varón de 25 años, ingresa a sala de urgencia por presentar palpitaciones y dolor precordial. Examen: PA: 110/60 mmHg. FC: 155 X’. FR: 20 X’. SatO2: 97%. EKG: compatible con taquicardia de reentrada nodal auriculoventricular. ¿Cuál es el tratamiento de elección?
+A. Labetalol
+B. Adenosina
+C. Cardioversión eléctrica
+D. Amiodarona
+Rpta: B
+
+@ Cirugía / Cirugía Pediátrica
+
+83. RN masculino de 12 horas, presenta vómitos biliosos sin distensión abdominal. Antecedente: nacido por gestación con polihidramnios. Rx abdominal: “doble burbuja” sin aire distal. ¿Cuál es el diagnóstico?
+A. Vólvulo intestinal
+B. Íleo meconial
+C. Atresia duodenal
+D. Mal rotación intestinal
+Rpta: C
+
+@ Clínicas / Endocrinología
+
+84. En pacientes con acromegalia secundarios a adenomas que secretan GH. ¿Cuál es el tratamiento inicial?
+A. Pegvisomant
+B. Ablación quirúrgica
+C. Cabergolina
+D. Octreótide
+Rpta: B
+
+@ Pediatría / Pediatría
+
+85. Niño de 2 años, presenta hace dos días tos seca a predominio nocturno. Antecedente: bronquiolitis a los 5 meses y síndrome obstructivo bronquial recurrente; hermano asmático y en su casa conviven con dos perros y un gato. examen FC: 32X’, SatO2: 96%, T°: 37 °C; tórax: taquipnea, tirajes IC, desbalance toracoabdominal, sibilantes espiratorios en AHT. ¿Cuál es la acción inicial más apropiada?
+A. Solicitar Rx de tórax urgente
+B. Administrar broncodilatadores
+C. Administrar corticoides sistémicos
+D. Administrar antileucotrienos
+Rpta: B
+
+@ Pediatría / Neonatología
+
+86. La conjuntivitis neonatal es una infección ocular que puede tener graves consecuencias para el recién nacido. ¿Cuál es la vía de infección más frecuente?
+A. Diseminación de gérmenes desde las mucosas de las vías respiratorias superiores
+B. Transmisión de gérmenes por las manos
+C. Contacto directo con secreciones respiratorias de familiares
+D. Parto vaginal
+Rpta: D
+
+@ Clínicas / Cardiología
+
+87. Varón de 54 años, hipertenso y fumador, refiere dolor torácico tipo opresivo retroesternal que aumenta con el esfuerzo y se irradia a brazo y mandíbula, mejorando con reposo. Antecedente familiar de IAM en su padre a los 54 años. ¿Cuál es la conducta inicial a seguir?
+A. Solicitar péptido natriurético
+B. Realizar angiotem
+C. Programar ergometría
+D. Realizar electrocardiograma
+Rpta: D
+
+@ Clínicas / Infectología
+
+88. Varón de 75 años, procedente de una residencia de ancianos presenta sepsis de origen urinario. Hemocultivos urocultivo muestran E. Coli productora de betalactamasas de espectro ampliado; antibiograma pendiente. ¿Cuál es el antibiótico mejor indicado?
+A. Cefotaxima
+B. Ertapenem
+C. Ceftriaxona
+D. Aztreonam
+Rpta: B
+
+@ Ciencias Básicas / Anatomía Humana
+
+89. Varón de 27 años, acude a consulta por visión doble y caída de párpado derecho. Examen: se evidencia pupila derecha dilatada con incapacidad para mover el ojo hacia el lado nasal. ¿Cuál es el par craneal comprometido?
+A. VI
+B. III
+C. I
+D. IV
+Rpta: B
+
+@ Clínicas / Infectología
+
+90. Varón de 80 años, hace dos semanas presenta cefalea, náusea, vómito y luego se agrega somnolencia y convulsiones. Tomografía cerebral signos de atrofia cortical. punción lumbar: leucocitos 200/µL, hipoglucorraquia y presencia de bacilos gram positivos. ¿Cuál es el tratamiento de elección?
+A. Ceftriaxona
+B. Oxacilina
+C. Aciclovir
+D. Ampicilina
+Rpta: D
+
+@ Gineco-Obstetricia / Ginecología Oncológica
+
+91. Mujer de 21 años, solicita información sobre screening para cáncer de cuello uterino; que no manifiesta sus antecedentes sexuales. ¿Cuál es la indicación?
+A. Citología cervical
+B. Test de cobas
+C. Prueba conjunta
+D. Observación
+Rpta: A
+
+@ Pediatría / Pediatría
+
+92. Lactante de 9 meses, desde hace 3 días presenta fiebre y vómitos frecuentes. Examen: T°: 39 °C, piel caliente, poco elástica. Laboratorio: leucocitos 20,000/µL, abastonados: 700/µL; examen de orina: nitrito positivo y 100 leucocitos/campo. ¿Cuál es la conducta más adecuada?
+A. Hospitalizar para hidratación y antibiótico terapia parenteral
+B. Administrar antibiótico terapia parenteral
+C. Realizar ecografía renal para descartar absceso
+D. Iniciar hidratación por vía oral e indicar antibiótico terapia oral
+Rpta: A
+
+@ Clínicas / Psiquiatría
+
+93. Mujer de 19 años, acude por sensación de miedo, sudoración, palpitaciones, dolor torácico y sensación de temor; refiere que desde hace más de un mes presenta este episodio y le preocupa mucho. ¿Cuál es el trastorno más probable?
+A. De ansiedad generalizada
+B. Obsesivo compulsivo
+C. De angustia
+D. Fóbico
+Rpta: C
+
+@ Clínicas / Infectología
+
+94. Escolar de 8 años, presenta desde hace 5 días fiebre, hiporexia, náusea, malestar general y dolor abdominal. Antecedente: vivienda sin servicios básicos. Examen: MEG, REH, FC: 80X’, T°: 38.8 °C. Peso: 35Kg. Piel: caliente, seca. Abdomen: RHA incrementados, blando, hepatoesplenomegalia y doloroso a la palpación en mesogastrio. Laboratorio: leucopenia. ¿Cuál es el diagnóstico más probable?
+A. Fiebre tifoidea
+B. Brucelosis
+C. Dengue
+D. Paludismo
+Rpta: A
+
+95. Niño de 6 años, procedente de la Sierra, es traído por madre quien refiere que hace más de un mes presenta dolor abdominal, náusea y deposiciones sanguinolentas. Antecedente: vivienda rústica en el campo; crianza de cerdos. Examen: peso: 18 kg. Abdomen: RHA +++, blando, doloroso a la palpación e hipogastrio. ¿Cuál es el agente etiológico más probable?
+A. Balantidium coli
+B. Cryptosporidium
+C. Giardia lamblia
+D. Cyclospora
+Rpta: A
+
+@ Ciencias Básicas / Bioquímica
+
+96. Mujer de 18 años acude por debilidad muscular progresiva y constipación. Toma diuréticos para perder peso. EKG: aplanamiento de la onda T y aparición de la onda U. ¿Cuál es el efecto esperado en el potencial de acción de las neuronas motoras?
+A. Prolonga la duración del potencial de acción, dificultando la despolarización repetida
+B. Disminuye la excitabilidad neuronal por hiperpolarización
+C. Genera una repolarización más lenta debido a la disminución de la conductancia de K+
+D. Aumenta el umbral necesario para la generación del potencial de acción
+Rpta: B
+
+@ Clínicas / Nefrología
+
+97. ¿Qué efecto inmediato se espera en la filtración glomerular, al administrar un fármaco que inhiba la angiotensina II?
+A. Aumento de la presión oncótica capilar
+B. Disminución por vasodilatación de la arteriola eferente
+C. Sin cambios, la TFG depende de la presión hidrostática
+D. Aumento por vasoconstricción de la arteriola eferente
+Rpta: B
+
+@ Cirugía / Cirugía de Trauma
+
+98. Varón de 43 años, llevado a urgencias porque sufrió hace 30 minutos impacto de timón en el tórax por accidente de tránsito. Presenta disnea intensa, dolor torácico izquierdo, taquipnea. Examen: PA: 80/40 mmHg, FC: 100X’, FR: 36X’; cianosis distal, movimiento paradojal de la pared torácica. RX: múltiples fracturas costales izquierdas. ¿Cuál es la conducta más adecuada?
+A. Ventilación no invasiva
+B. Colocación de catéter central
+C. Fijación costal quirúrgica
+D. Intubación orotraqueal
+Rpta: D
+
+@ Clínicas / Endocrinología
+
+99. Mujer de 56 años con DM tipo 2 acude por polidipsia, poliurea. Examen: IMC: 32. Laboratorio: HbA1C 10.8%. Glucosa basal 280 mg/dL. ¿Cuál es la conducta a seguir?
+A. Iniciar sulfonilureas
+B. Cambio de estilo de vida y control HbA1C
+C. Solicitar prueba de tolerancia a la glucosa oral
+D. Iniciar insulinoterapia
+Rpta: D
+
+@ Clínicas / Cardiología
+
+100. Mujer de 47 años, hipertensa mal controlada, acude porque hace 20 minutos presenta dolor precordial opresivo con irradiación abrazo izquierdo. EKG muestra supra desnivel del ST en todas las derivadas precordiales. En un escenario ideal. ¿Cuál es el tratamiento de elección?
+A. Fibrinolisis
+B. Intervención coronaria
+C. Oxigenoterapia
+D. Doble antiagregación
+Rpta: B

@@ -12,6 +12,25 @@ python3 tools/limpiar-ocr.py --aplicar      # arregla erratas tipicas del escane
 El importador **nunca escribe si hay un solo error**. Primero corre sin
 `--aplicar`, lee el reporte, arregla lo que marque y recien despues aplica.
 
+## Si lo que tienes es un PDF
+
+`tools/pdf-a-fuente.py` saca el texto y las claves de los cuadernillos
+resueltos en PDF y los deja casi listos:
+
+```bash
+pip install pymupdf
+python3 tools/pdf-a-fuente.py fuentes/2025-B.pdf --anio 2025 --prueba B > fuentes/2025-B.txt
+```
+
+Deja el archivo con una sola cabecera `@ REVISAR / REVISAR`: el PDF no dice a
+que especialidad pertenece cada pregunta, eso hay que ponerlo a mano. Avisa
+por pantalla que preguntas quedaron sin clave o con un numero raro de
+alternativas, para revisarlas contra el PDF antes de importar.
+
+Con el cuadernillo de 2025 saco las 100 preguntas y las 100 claves; solo dos
+alternativas necesitaron arreglo a mano. Como llega a las claves y por que el
+texto sale doble esta explicado en la cabecera del propio script.
+
 ## El formato
 
 Un archivo `.txt` por prueba. Llamalo por el año y la prueba: `2025-A.txt`.
