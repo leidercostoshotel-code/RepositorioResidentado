@@ -2211,7 +2211,24 @@ function fbCargar(){
     import(FB_SDK+'firebase-firestore-lite.js').catch(()=>import(FB_SDK+'firebase-firestore.js'))
   ]).then(([a,au,fs])=>{
     const app=a.initializeApp(FB_CFG);
-    fbApi={au,fs,auth:au.getAuth(app),db:fs.getFirestore(app)};
+    /* getAuth() guardaria la sesion en IndexedDB primero, y en el celular
+       eso se rompe: cuando Android congela la pestaña (una videollamada de
+       fondo basta) cierra el almacen a media operacion y Firebase falla con
+       "Database is closing". Los navegadores incrustados de otras apps y el
+       modo incognito dan problemas parecidos.
+
+       Se pide localStorage primero, que es lo que ya usa toda la app y
+       aguanta ese trato. IndexedDB queda de respaldo y la memoria como
+       ultimo recurso: en ese caso la sesion dura lo que dure la pestaña,
+       pero se entra igual.
+
+       initializeAuth no trae resolvedor de popup por omision, a diferencia
+       de getAuth: hay que pasarlo o signInWithPopup no funcionaria. */
+    const auth=au.initializeAuth(app,{
+      persistence:[au.browserLocalPersistence,au.indexedDBLocalPersistence,au.inMemoryPersistence],
+      popupRedirectResolver:au.browserPopupRedirectResolver
+    });
+    fbApi={au,fs,auth,db:fs.getFirestore(app)};
     return fbApi;
   }).catch(e=>{fbCarga=null;throw e;});
   return fbCarga;
@@ -2274,17 +2291,27 @@ const NUBE_FALLO={
   'auth/user-not-found':'No hay ninguna cuenta con ese correo. Toca "Crear cuenta".',
   'auth/too-many-requests':'Demasiados intentos seguidos. Espera unos minutos y vuelve a probar.',
   'permission-denied':'Firestore rechazo la operacion. Revisa que las reglas de firebase/firestore.rules esten publicadas.',
-  'unavailable':'Firestore no responde ahora. Se reintenta solo mas adelante.'
+  'unavailable':'Firestore no responde ahora. Se reintenta solo mas adelante.',
+  /* El navegador cerro el almacen donde vive la sesion. Pasa cuando el
+     celular congela la pestaña (una videollamada de fondo basta), en modo
+     incognito, o dentro del navegador de otra app. Van en minusculas
+     porque se comparan contra el mensaje del error en minusculas. */
+  'database is closing':'El navegador cerro el almacenamiento de la sesion. Suele pasar si el celular dejo la pagina en segundo plano. Vuelve a tocar el boton con la app en primer plano.',
+  'indexeddb':'El navegador no dejo guardar la sesion. Si estas en modo incognito o abriste la app desde otra app, abrela en Chrome o Safari normal.',
+  'web-storage':'El navegador tiene bloqueado el almacenamiento. Permite las cookies y los datos de sitio, o sal del modo incognito.'
 };
 function nubeStat(cls,txt){
   const el=document.getElementById('nbStat');
   el.className='aistat'+(cls?' '+cls:'');
   document.getElementById('nbStatTxt').textContent=txt;
 }
+/* Se busca en el codigo Y en el texto del error: los fallos de
+   almacenamiento del navegador llegan sin codigo, solo con mensaje. */
 function nubeMsg(e){
-  const c=(e&&(e.code||e.message))||'';
-  for(const k in NUBE_FALLO)if(c.indexOf(k)>=0)return NUBE_FALLO[k];
-  return 'No se pudo conectar con la nube ('+(c||'error desconocido')+'). Tu progreso local esta intacto.';
+  const code=(e&&e.code)||'',texto=(e&&e.message)||'';
+  const heno=(code+' '+texto).toLowerCase();
+  for(const k in NUBE_FALLO)if(heno.indexOf(k)>=0)return NUBE_FALLO[k];
+  return 'No se pudo conectar con la nube ('+(code||texto||'error desconocido')+'). Tu progreso local esta intacto.';
 }
 function fechaCorta(ms){
   try{return new Date(ms).toLocaleString('es-PE',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
