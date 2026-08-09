@@ -162,7 +162,10 @@ select:focus{outline:none;border-color:var(--gold-deep)}
 .tag{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;padding:4px 9px;border-radius:5px;letter-spacing:.02em}
 .tag.sp{background:rgba(212,175,55,.12);color:var(--gold-soft);border:1px solid rgba(212,175,55,.25)}
 .tag.ar{background:rgba(255,255,255,.04);color:var(--ink-dim);border:1px solid var(--line2)}
-.tag.yr{background:rgba(255,255,255,.04);color:var(--ink-mut);border:1px solid var(--line2)}
+/* El año del examen no es un dato de relleno: el estudiante quiere saber de
+   que examen salio la pregunta que tiene delante. Va con la tinta principal,
+   no con la apagada, para que se lea de un vistazo. */
+.tag.yr{background:rgba(255,255,255,.06);color:var(--ink);border:1px solid var(--line2);font-weight:600}
 .tag.nuevo{background:rgba(63,184,131,.12);color:#7fe0b4;border:1px solid rgba(63,184,131,.3)}
 .tag.repaso{background:rgba(126,168,224,.12);color:#9dc0ee;border:1px solid rgba(126,168,224,.32)}
 .qtext{font-size:19px;line-height:1.58;font-weight:400;color:#f2f6fb;margin-bottom:22px;letter-spacing:-.003em;
@@ -1813,7 +1816,7 @@ function renderQ(){
   document.getElementById('pFill').style.width=((S.i)/(S.qs.length)*100)+'%';
   document.getElementById('tSp').textContent=q.sp;
   document.getElementById('tAr').textContent=q.area;
-  document.getElementById('tYr').textContent=q.y?('RM '+q.y):'RM s/f';
+  document.getElementById('tYr').textContent=q.y?('Examen '+q.y):'Ano no registrado';
   const pv=S.prev&&S.prev[S.i],tag=document.getElementById('tSrs');
   if(!S.smart){tag.style.display='none';}
   else{
@@ -1983,7 +1986,7 @@ function renderReview(wrongOnly){
     html+='<div class="rvans">';
     if(!correct)html+='<div class="ln"><span class="ll">Tu resp.</span><span class="yr">'+escapeHtml(yourTxt)+'</span></div>';
     html+='<div class="ln"><span class="ll">Correcta</span><span class="cr">'+escapeHtml(corrTxt)+'</span></div>';
-    html+='<div class="ln"><span class="ll">Fuente</span><span style="color:var(--ink-mut)">'+q.sp+' &middot; RM '+(q.y||'s/f')+'</span></div>';
+    html+='<div class="ln"><span class="ll">Fuente</span><span style="color:var(--ink-dim)">'+q.sp+' &middot; '+(q.y?('Examen '+q.y):'ano no registrado')+'</span></div>';
     html+='</div>';
     html+='<div class="fbk-act" style="padding:0 16px 14px"><button class="mini ai rv-ai" data-i="'+i+'">&#10024; Explicame por que</button></div>';
     html+='<div class="aiout" style="margin:0 16px 14px"></div>';
