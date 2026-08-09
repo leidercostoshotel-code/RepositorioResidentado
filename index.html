@@ -467,7 +467,13 @@ body.sinred #toast{bottom:calc(26px + 40px)}
 .aicfg .warn{background:rgba(224,102,102,.09);border:1px solid rgba(224,102,102,.28);border-radius:10px;padding:11px 13px;
   font-size:12.5px;line-height:1.5;color:#f2b8b8;margin-bottom:16px}
 .aicfg .warn b{color:#ffd0d0}
-.aicfg input[type=password],.aicfg input[type=text]{width:100%;background:var(--panel2);border:1px solid var(--line2);
+.nbsep{display:flex;align-items:center;gap:12px;margin:18px 0 16px;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-mut);font-weight:600}
+.nbsep::before,.nbsep::after{content:"";flex:1;height:1px;background:var(--line)}
+.nblink{margin-top:14px;font-size:12.5px;color:var(--gold-soft);background:none;border:0;padding:0;
+  text-decoration:underline;text-underline-offset:3px}
+.nblink:hover{color:var(--gold)}
+.aicfg input[type=password],.aicfg input[type=text],.aicfg input[type=email]{width:100%;background:var(--panel2);border:1px solid var(--line2);
   color:var(--ink);padding:12px 14px;border-radius:9px;font-size:14px;font-family:'IBM Plex Mono',monospace}
 .aicfg input:focus{outline:none;border-color:var(--gold-deep)}
 .bkinfo{background:rgba(13,28,48,.78);border:1px solid var(--line);border-radius:10px;padding:12px 14px;
@@ -522,7 +528,8 @@ details.howto a{color:var(--gold-soft)}
   .fbk-act{padding:0 14px 13px}
   .aiout{margin:0 14px 14px}
   .aicfg{padding:16px 14px}
-  .aicfg input[type=password],.aicfg input[type=text]{font-size:16px}
+  /* 16px o menos hace que iOS haga zoom al enfocar el campo */
+  .aicfg input[type=password],.aicfg input[type=text],.aicfg input[type=email]{font-size:16px}
   .lk.xp{display:none}
   .fbtog .fbl{display:none}
   .fbtog{padding:7px 9px}
@@ -704,13 +711,36 @@ details.howto a{color:var(--gold-soft)}
     <div class="shead"><span class="en">07</span><h2 class="serif">Tu cuenta en la nube</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div style="font-size:13px;color:var(--ink-dim);line-height:1.55;margin-bottom:16px">
-        Opcional. Si entras con tu cuenta de Google, tu progreso se guarda en Firebase y te sigue
+        Opcional. Si entras con tu cuenta, tu progreso se guarda en Firebase y te sigue
         entre el celular y la computadora. Sin cuenta la app funciona igual de completa,
         solo que el avance vive unicamente en este navegador.
       </div>
       <div class="bkinfo" id="nbInfo">&mdash;</div>
-      <div class="aiacts" id="nbFuera">
-        <button class="go" id="nbEntrar">Entrar con Google</button>
+      <div id="nbFuera">
+        <div class="aiacts">
+          <button class="go" id="nbEntrar">Entrar con Google</button>
+        </div>
+        <div class="nbsep"><span>o con tu correo</span></div>
+        <!-- novalidate: la validacion nativa solo frena al boton de enviar, no al
+             de crear cuenta, y al frenarlo deja en pantalla el aviso anterior.
+             Se valida abajo, igual para los dos caminos. -->
+        <form id="nbForm" novalidate>
+          <div class="row2">
+            <div class="field">
+              <label class="flabel" for="nbMail">Correo</label>
+              <input type="email" id="nbMail" placeholder="tucorreo@ejemplo.com" autocomplete="email" spellcheck="false" autocapitalize="none">
+            </div>
+            <div class="field">
+              <label class="flabel" for="nbPass">Contrase&ntilde;a</label>
+              <input type="password" id="nbPass" placeholder="minimo 6 caracteres" autocomplete="current-password">
+            </div>
+          </div>
+          <div class="aiacts">
+            <button type="submit" class="go" id="nbMailIn">Entrar</button>
+            <button type="button" id="nbMailNew">Crear cuenta</button>
+          </div>
+        </form>
+        <button type="button" class="nblink" id="nbReset">Olvide mi contrase&ntilde;a</button>
       </div>
       <div class="aiacts" id="nbDentro" style="display:none">
         <button class="go" id="nbSync">&#8635; Sincronizar ahora</button>
@@ -721,6 +751,7 @@ details.howto a{color:var(--gold-soft)}
       <details class="howto">
         <summary>Que se guarda y como se combina</summary>
         <ol>
+          <li>Puedes entrar con <b>Google</b> o con <b>correo y contraseña</b>, lo que prefieras. Si abriste la pagina desde WhatsApp u otra app, usa el correo: Google no permite su ingreso en esos navegadores.</li>
           <li>Se guarda solo tu <b>progreso</b>: memoria de repasos, dias de actividad, XP y logros. Ni las preguntas ni ninguna clave de IA salen de tu navegador.</li>
           <li>Al entrar en un equipo nuevo, lo que traes se <b>combina</b> con lo que ya habia: en cada pregunta gana el repaso mas reciente, asi que no se pisa nada.</li>
           <li>Las <b>reglas de Firestore</b> hacen que cada quien solo pueda leer y escribir su propio documento.</li>
@@ -2228,9 +2259,20 @@ function fusionar(a,b){
 
 const NUBE_FALLO={
   'auth/unauthorized-domain':'Este dominio no esta autorizado en Firebase. Agregalo en Authentication → Settings → Authorized domains.',
-  'auth/operation-not-allowed':'El ingreso con Google no esta habilitado en el proyecto de Firebase.',
+  'auth/operation-not-allowed':'Ese metodo de ingreso no esta habilitado en Firebase. Actívalo en Authentication → Metodo de acceso.',
   'auth/network-request-failed':'Sin conexion con Firebase. Tu progreso local esta intacto.',
   'auth/popup-blocked':'El navegador bloqueo la ventana de Google. Permite las ventanas emergentes de este sitio.',
+  /* Correo y contraseña. Firebase ya no distingue "no existe" de "clave
+     mala" (devuelve invalid-credential para ambos) y esta bien: decirlo
+     seria filtrar que correos tienen cuenta. */
+  'auth/invalid-email':'Ese correo no tiene un formato valido.',
+  'auth/missing-password':'Escribe tu contraseña.',
+  'auth/weak-password':'La contraseña necesita al menos 6 caracteres.',
+  'auth/email-already-in-use':'Ese correo ya tiene cuenta. Usa "Entrar" en vez de "Crear cuenta".',
+  'auth/invalid-credential':'Correo o contraseña incorrectos. Si nunca creaste la cuenta, toca "Crear cuenta".',
+  'auth/wrong-password':'Correo o contraseña incorrectos.',
+  'auth/user-not-found':'No hay ninguna cuenta con ese correo. Toca "Crear cuenta".',
+  'auth/too-many-requests':'Demasiados intentos seguidos. Espera unos minutos y vuelve a probar.',
   'permission-denied':'Firestore rechazo la operacion. Revisa que las reglas de firebase/firestore.rules esten publicadas.',
   'unavailable':'Firestore no responde ahora. Se reintenta solo mas adelante.'
 };
@@ -2401,6 +2443,38 @@ document.getElementById('nbEntrar').onclick=async()=>{
     nubeStat('err',navegadorIncrustado()?AVISO_INCRUSTADO:nubeMsg(e));
   }
 };
+/* Ingreso con correo y contraseña. A diferencia del de Google no abre
+   ventana emergente ni sale de la pagina, asi que funciona tambien en los
+   navegadores incrustados de otras apps, donde Google se niega. */
+async function nubeCorreo(accion){
+  const correo=document.getElementById('nbMail').value.trim();
+  const clave=document.getElementById('nbPass').value;
+  if(!correo)return nubeStat('err','Escribe tu correo.');
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(correo))
+    return nubeStat('err','Ese correo no tiene un formato valido.');
+  if(accion!=='reset'&&clave.length<6)
+    return nubeStat('err','La contraseña necesita al menos 6 caracteres.');
+
+  nubeStat('',accion==='crear'?'Creando tu cuenta...'
+            :accion==='reset'?'Enviando el correo...':'Entrando...');
+  let api;
+  try{api=await fbCargar();}
+  catch(e){return nubeStat('err','No se pudo cargar Firebase. Revisa tu conexion; tu progreso local esta intacto.');}
+  nubeVigila(api);
+  try{
+    if(accion==='reset'){
+      await api.au.sendPasswordResetEmail(api.auth,correo);
+      return nubeStat('ok','Te envie un correo para restablecer la contraseña. Revisa tambien la carpeta de spam.');
+    }
+    if(accion==='crear')await api.au.createUserWithEmailAndPassword(api.auth,correo,clave);
+    else await api.au.signInWithEmailAndPassword(api.auth,correo,clave);
+    document.getElementById('nbPass').value='';   /* no dejarla escrita en pantalla */
+  }catch(e){nubeStat('err',nubeMsg(e));}
+}
+document.getElementById('nbForm').onsubmit=e=>{e.preventDefault();nubeCorreo('entrar');};
+document.getElementById('nbMailNew').onclick=()=>nubeCorreo('crear');
+document.getElementById('nbReset').onclick=()=>nubeCorreo('reset');
+
 document.getElementById('nbSync').onclick=()=>nubeSincroniza(true);
 document.getElementById('nbSalir').onclick=async()=>{
   if(!fbApi)return;

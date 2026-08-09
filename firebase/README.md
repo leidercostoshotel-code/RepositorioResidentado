@@ -26,9 +26,18 @@ const FB_CFG={ apiKey:"AIza…", authDomain:"examen-residentado.firebaseapp.com"
 
 ## Pasos en la consola
 
-**1. Habilita el ingreso con Google**
+**1. Habilita los metodos de ingreso**
 
-[Authentication → Sign-in method](https://console.firebase.google.com/project/examen-residentado/authentication/providers) → **Google** → Habilitar → Guardar.
+[Authentication → Sign-in method](https://console.firebase.google.com/project/examen-residentado/authentication/providers) → habilita **Google** y **Correo electrónico/contraseña**.
+
+La app ofrece los dos y son intercambiables: el mismo progreso, distinta puerta de entrada.
+
+| Método | Cuándo conviene |
+|---|---|
+| **Google** | Un toque, sin contraseña que recordar. Es lo normal en computadora |
+| **Correo y contraseña** | Funciona **en todas partes**, incluido el navegador interno de WhatsApp o Instagram, donde Google rechaza el ingreso por política propia |
+
+Ese último punto no es menor: si le pasas el enlace de la app a alguien por WhatsApp y lo abre desde ahí, el botón de Google no le va a servir. El correo sí.
 
 **2. Autoriza el dominio de tu sitio**
 
@@ -96,7 +105,9 @@ Nulo en la práctica. La capa gratuita de Firestore da 50 000 lecturas y 20 000 
 | Aviso en la app | Qué hacer |
 |---|---|
 | "Este dominio no esta autorizado" | Paso 2: agregar el dominio en Authorized domains |
-| "El ingreso con Google no esta habilitado" | Paso 1: habilitar el proveedor |
+| "Ese metodo de ingreso no esta habilitado" | Paso 1: habilitar el proveedor en la consola |
+| "Correo o contraseña incorrectos" | Si nunca creaste la cuenta, usa **Crear cuenta** en vez de **Entrar** |
+| "Google no permite iniciar sesion ahi" | Abriste la app desde otra app. Usa el correo, o ábrela en Chrome o Safari |
 | "Firestore rechazo la operacion" | Paso 4: publicar las reglas |
 | "No se pudo cargar Firebase" | Sin conexión. El progreso local queda intacto |
 
