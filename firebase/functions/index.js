@@ -1,24 +1,35 @@
 /**
  * Proxy de Claude para el banco de preguntas de Residentado Medico.
  *
- * Que hace: recibe la peticion del navegador, le agrega la API key de Anthropic
- * (que vive solo aqui, como secreto de Firebase) y devuelve la respuesta.
- * Asi la clave nunca llega al codigo publico de index.html.
+ * Que hace: recibe la peticion del navegador, comprueba que quien pide tiene
+ * licencia activa en su aparato, le agrega la API key de Anthropic (que vive
+ * solo aqui, como secreto de Firebase) y devuelve la respuesta. Asi la clave
+ * nunca llega al codigo publico de index.html.
+ *
+ * La licencia no es un adorno: cada llamada gasta dinero de verdad. La lista
+ * de origenes permitidos no basta, porque la cabecera Origin la pone el
+ * cliente y se falsea con un curl. Lo que no se falsea es el token de sesion,
+ * que lo firma Firebase.
  *
  * Despliegue: ver ../README.md
  */
 
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
+const { comprobar, responderDenegado } = require("./licencia");
+
+/* La entrega del banco vive en su propio archivo; se reexporta desde aqui
+   para que quede desplegada junto con el proxy. */
+exports.banco = require("./banco").banco;
 
 const ANTHROPIC_API_KEY = defineSecret("ANTHROPIC_API_KEY");
 
-/* Dominios autorizados a usar la funcion.
-   Cambia estos valores por los tuyos antes de desplegar. */
+/* Dominios autorizados a usar la funcion. Es una barrera de cortesia contra
+   el uso desde otra pagina, no una de seguridad: la de verdad es la licencia. */
 const ORIGENES_PERMITIDOS = [
-  "https://leidercostoshotel-code.github.io",
   "https://examen-residentado.web.app",
   "https://examen-residentado.firebaseapp.com",
+  "https://leidercostoshotel-code.github.io",
   "http://localhost:5000",
   "http://127.0.0.1:5500",
 ];
@@ -59,7 +70,7 @@ function aplicarCors(req, res) {
     res.set("Vary", "Origin");
   }
   res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.set("Access-Control-Allow-Headers", "content-type");
+  res.set("Access-Control-Allow-Headers", "content-type, authorization");
   res.set("Access-Control-Max-Age", "3600");
   return !origen || ORIGENES_PERMITIDOS.includes(origen);
 }
@@ -76,6 +87,15 @@ exports.explicar = onRequest(
     const ip = req.headers["x-forwarded-for"]?.split(",")[0]?.trim() || req.ip || "desconocida";
     if (limitado(ip)) {
       return res.status(429).json({ error: { message: "Demasiadas consultas seguidas. Espera un minuto." } });
+    }
+
+    /* Sin licencia activa en este aparato no se gasta un centavo. No se
+       reclama el aparato desde aqui: eso lo hace la funcion del banco, que es
+       la puerta de entrada. Aqui solo se comprueba. */
+    try {
+      await comprobar(req, { reclamar: false });
+    } catch (e) {
+      return responderDenegado(res, e);
     }
 
     const cuerpo = req.body || {};

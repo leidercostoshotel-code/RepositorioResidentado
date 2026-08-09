@@ -1,6 +1,6 @@
 {
   "name": "residentado-tutor-ia",
-  "description": "Proxy de Claude para el banco de preguntas de Residentado Medico",
+  "description": "Funciones de Residentado Medico: entrega del banco con licencia y proxy de Claude",
   "main": "index.js",
   "private": true,
   "engines": {
@@ -12,6 +12,7 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
-    "firebase-functions": "^6.0.1"
+    "firebase-functions": "^6.0.1",
+    "firebase-admin": "^13.0.0"
   }
 }

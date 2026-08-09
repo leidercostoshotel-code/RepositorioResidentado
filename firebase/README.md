@@ -7,6 +7,11 @@ El proyecto conectado es **`examen-residentado`**. Firebase cumple dos papeles d
 | **Cuenta en la nube** (Auth + Firestore) | Que el progreso del estudiante lo siga entre el celular y la computadora | Activarla en la consola. Gratis, entra en la capa gratuita |
 | **Hosting** | Publicar la app en `examen-residentado.web.app` | Un comando. Gratis |
 | **Tutor IA** (Cloud Function) | Guardar la clave de Anthropic fuera del navegador | Plan Blaze y desplegar la función |
+| **Licencias** (Cloud Function + Firestore) | Vender el acceso: el banco solo baja a quien tiene licencia activa, y solo en su aparato | Ver **[LICENCIAS.md](LICENCIAS.md)** |
+
+> **Para dejarlo todo dentro de Firebase y cerrar el acceso, sigue
+> [MUDANZA.md](MUDANZA.md) paso a paso.** Va en orden y hasta el paso 6 no se
+> rompe nada para quien ya usa la app.
 
 Las tres son independientes: puedes activar una sin las otras. Sin ninguna, la app funciona completa en modo local.
 
