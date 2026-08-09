@@ -1,5 +1,19 @@
 # Como agregar un examen nuevo al banco
 
+## De donde salio el examen 2025
+
+`2025-A.txt` viene del cuadernillo resuelto del **Examen Unico Nacional al
+Residentado Medico del 06 de julio de 2025, Prueba A**, compilado y resuelto
+por el **Dr. Victor Ramos** con el apoyo de la Dra. Lizbet Pacovilca, el Dr.
+Jose Surco y el Dr. Ubert Catari.
+
+Las preguntas son del examen oficial del CONAREME; la compilacion y las claves
+son trabajo de ellos. Aqui se guarda solo el texto de las preguntas, no el
+documento: el PDF no se redistribuye desde este repositorio.
+
+Una alternativa se corrigio a mano: la C de la pregunta 61 decia "PDR m y
+cultivo" y la "m" suelta es una errata del documento de origen.
+
 Aqui van los examenes en texto plano antes de entrar al banco. El importador
 los lee, los valida y los agrega a `index.html`.
 
