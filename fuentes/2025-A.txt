@@ -538,7 +538,7 @@ Rpta: A
 61. Adulto de 28 años con resultado de dos baciloscopias negativas, con alta probabilidad de TB clínica activa; según criterio médico. ¿Cuál es la conducta a seguir según marco normativo nacional?
 A. PPD y cultivo
 B. Alta y control anual
-C. PDR m y cultivo
+C. PDR y cultivo
 D. Iniciar tratamiento
 Rpta: D
 
