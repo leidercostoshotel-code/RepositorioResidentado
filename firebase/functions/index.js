@@ -11,6 +11,10 @@
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 
+/* La entrega del banco vive en su propio archivo; se reexporta desde aqui
+   para que quede desplegada junto con el proxy. */
+exports.banco = require("./banco").banco;
+
 const ANTHROPIC_API_KEY = defineSecret("ANTHROPIC_API_KEY");
 
 /* Dominios autorizados a usar la funcion.

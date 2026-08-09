@@ -1,8 +1,20 @@
 rules_version = '2';
 
-/* Cada estudiante alcanza unicamente su propio documento de progreso.
-   Sin sesion iniciada no se lee ni se escribe nada, y cualquier otra
-   coleccion queda cerrada por omision. */
+/* Quien puede tocar que.
+
+   usuarios/{uid}   el progreso de cada estudiante: solo el suyo.
+   licencias/{correo}  quien tiene derecho a usar la app. El titular la lee y
+                    puede reclamar un dispositivo si esta libre, nada mas: no
+                    puede activarse, ni cambiar el vencimiento, ni soltar el
+                    dispositivo para pasarselo a otro. Eso se hace desde la
+                    consola de Firebase, es decir, solo el dueño.
+   banco/{...}      las preguntas. Cerrado a cal y canto para el cliente: las
+                    entrega la funcion "banco", que si puede comprobar el
+                    dispositivo porque lo recibe en la peticion. Las reglas no
+                    pueden hacerlo en una lectura, y por eso no basta con
+                    ellas para atar una cuenta a un aparato.
+
+   Todo lo que no este declarado aqui se rechaza. */
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -11,7 +23,41 @@ service cloud.firestore {
                          && request.auth.uid == uid;
     }
 
-    /* Todo lo que no este declarado arriba se rechaza. */
+    match /licencias/{correo} {
+      function esSuya() {
+        return request.auth != null
+               && request.auth.token.email_verified == true
+               && request.auth.token.email.lower() == correo;
+      }
+      function libre() {
+        return !('dispositivo' in resource.data)
+               || resource.data.dispositivo == null
+               || resource.data.dispositivo == '';
+      }
+      /* El titular ve su propia licencia: la app necesita saber si esta
+         activa, cuando vence y si el aparato es el registrado. */
+      allow read: if esSuya();
+
+      /* Reclamar el dispositivo. Solo se permite si el campo esta libre, y
+         solo puede tocar ese campo y la marca de ultimo acceso. Una vez
+         reclamado ya no hay forma de cambiarlo desde la app. */
+      allow update: if esSuya()
+                    && libre()
+                    && request.resource.data.diff(resource.data)
+                         .affectedKeys().hasOnly(['dispositivo', 'visto'])
+                    && request.resource.data.dispositivo is string
+                    && request.resource.data.dispositivo.size() >= 16
+                    && request.resource.data.dispositivo.size() <= 64;
+
+      /* Crear o borrar licencias no se hace desde la app. */
+      allow create, delete: if false;
+    }
+
+    /* Las preguntas no se leen directamente ni con sesion iniciada. */
+    match /banco/{documento} {
+      allow read, write: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

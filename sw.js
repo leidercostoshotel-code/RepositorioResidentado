@@ -74,7 +74,10 @@ self.addEventListener("fetch", (e) => {
      nombran aparte para que ningun cambio futuro las arrastre por descuido. */
   if (
     url.hostname === "api.anthropic.com" ||
-    url.pathname.includes("cloudfunctions.net") ||
+    /* Estaba mirando el pathname, donde "cloudfunctions.net" no aparece
+       nunca: va en el nombre del servidor. La condicion no se cumplia jamas
+       y las llamadas a las funciones caian en la regla general. */
+    url.hostname.endsWith(".cloudfunctions.net") ||
     url.hostname.endsWith(".run.app") ||
     url.hostname.endsWith(".googleapis.com") ||
     url.hostname.endsWith(".firebaseapp.com")
