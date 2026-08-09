@@ -1276,6 +1276,20 @@ function renderSpSelect(){
   s.value=cfg.sp;
   s.onchange=()=>{cfg.sp=s.value;updateAvail();};
 }
+/* Los rangos del selector de anios se escriben solos a partir del banco.
+   Estaban puestos a mano y al entrar el examen 2025 empezaron a mentir: los
+   filtros si lo incluian (son por "mayor o igual"), pero la etiqueta seguia
+   diciendo 2024. Asi no vuelve a pasar el proximo anio. */
+function pintaAnios(){
+  let max=0,min=Infinity;
+  for(const q of ALL){if(!q.y)continue;if(q.y>max)max=q.y;if(q.y<min)min=q.y;}
+  if(!max)return;
+  const textos={all:'Todos los anios ('+min+'-'+max+')',
+                '2020':'Recientes · 2020-'+max,
+                '2015':'Ultimos '+(max-2014)+' · 2015-'+max};
+  for(const o of document.getElementById('yearSelect').options)
+    if(textos[o.value])o.textContent=textos[o.value];
+}
 function poolFor(){
   let pool=ALL;
   if(cfg.area!=='all')pool=pool.filter(q=>q.area===cfg.area);
@@ -2372,7 +2386,7 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='Escape')gridAbre();
 });
 
-podarDias();renderAreaChips();renderSpSelect();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);resumePinta();
+podarDias();renderAreaChips();renderSpSelect();pintaAnios();renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);resumePinta();
 
 /* ===================== RESPALDO DE PROGRESO =====================
    Un archivo JSON con todo el estado: memoria de repasos, dias, XP y logros.
