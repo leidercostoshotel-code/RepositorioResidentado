@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Residentado">
-<meta name="description" content="Banco de preguntas de examenes nacionales de residentado medico (CONAREME) con repeticion espaciada y retroalimentacion explicada.">
+<meta name="description" content="Banco de preguntas de exámenes nacionales de residentado médico (CONAREME) con repetición espaciada y retroalimentación explicada.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Las fuentes se cargan sin bloquear el renderizado: la app abre con las
@@ -624,8 +624,8 @@ details.howto a{color:var(--gold-soft)}
       <h1 class="title serif">Residentado Médico</h1>
     </div>
     <div class="tagline">
-      <span>Banco de preguntas de examenes nacionales</span><span class="dot"></span>
-      <span>2000&ndash;2024</span><span class="dot"></span>
+      <span>Banco de preguntas de exámenes nacionales</span><span class="dot"></span>
+      <span id="rangoAnios">&mdash;</span><span class="dot"></span>
       <span class="pillcount" id="totalCount">&mdash;</span>
     </div>
   </div></div>
@@ -644,8 +644,8 @@ details.howto a{color:var(--gold-soft)}
     </div>
 
     <div class="kstrip" id="lifeStrip">
-      <div class="kcell"><div class="kl">Preguntas resueltas</div><div class="kv mono" id="lfSeen">0</div><div class="ks">en total, historico</div></div>
-      <div class="kcell"><div class="kl">Precision global</div><div class="kv g mono" id="lfAcc">&mdash;</div><div class="ks" id="lfAccSub">aun sin datos</div></div>
+      <div class="kcell"><div class="kl">Preguntas resueltas</div><div class="kv mono" id="lfSeen">0</div><div class="ks">en total, histórico</div></div>
+      <div class="kcell"><div class="kl">Precisión global</div><div class="kv g mono" id="lfAcc">&mdash;</div><div class="ks" id="lfAccSub">aún sin datos</div></div>
       <div class="kcell"><div class="kl">Especialidad fuerte</div><div class="kv" id="lfBest" style="font-size:17px;line-height:1.2">&mdash;</div><div class="ks" id="lfBestSub">resuelve para ver</div></div>
       <div class="kcell"><div class="kl">Mejor racha</div><div class="kv g mono" id="lfStreak">0</div><div class="ks">respuestas seguidas</div></div>
     </div>
@@ -659,7 +659,7 @@ details.howto a{color:var(--gold-soft)}
       </div>
     </div>
 
-    <div class="shead"><span class="en">01</span><h2 class="serif">Tu dia</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">01</span><h2 class="serif">Tu día</h2><span class="rule"></span></div>
     <div class="dayrow">
       <div class="ring" id="metaRing">
         <svg viewBox="0 0 74 74" aria-hidden="true">
@@ -678,43 +678,43 @@ details.howto a{color:var(--gold-soft)}
       </div>
       <div class="dayfire off" id="fireBox">
         <div class="fn" id="fireN">0</div>
-        <div class="fl">dias seguidos</div>
+        <div class="fl">días seguidos</div>
       </div>
     </div>
     <div class="subpanel">
       <div class="heat" id="heatGrid"></div>
       <div class="heatleg">
-        <span id="heatNote">Ultimas 13 semanas</span><span style="flex:1"></span>
-        <span>menos</span><i class="heatd"></i><i class="heatd l1"></i><i class="heatd l2"></i><i class="heatd l3"></i><i class="heatd l4"></i><span>mas</span>
+        <span id="heatNote">Últimas 13 semanas</span><span style="flex:1"></span>
+        <span>menos</span><i class="heatd"></i><i class="heatd l1"></i><i class="heatd l2"></i><i class="heatd l3"></i><i class="heatd l4"></i><span>más</span>
       </div>
     </div>
 
     <div class="shead"><span class="en">02</span><h2 class="serif">Estado de tu memoria</h2><span class="rule"></span></div>
     <div class="memgrid">
       <div class="memcell due"><div class="ml">Por repasar hoy</div><div class="mv mono" id="mDue">0</div><div class="ms">tocan ahora</div></div>
-      <div class="memcell lrn"><div class="ml">Aprendiendo</div><div class="mv mono" id="mLrn">0</div><div class="ms">aun no se afianzan</div></div>
-      <div class="memcell dom"><div class="ml">Dominadas</div><div class="mv mono" id="mDom">0</div><div class="ms">intervalo &gt;= 21 dias</div></div>
+      <div class="memcell lrn"><div class="ml">Aprendiendo</div><div class="mv mono" id="mLrn">0</div><div class="ms">aún no se afianzan</div></div>
+      <div class="memcell dom"><div class="ml">Dominadas</div><div class="mv mono" id="mDom">0</div><div class="ms">intervalo &gt;= 21 días</div></div>
       <div class="memcell new"><div class="ml">Sin ver</div><div class="mv mono" id="mNew">0</div><div class="ms">del banco completo</div></div>
     </div>
     <div class="subpanel">
       <div class="membar" id="memBar"><i></i></div>
-      <div class="memnote" id="mNote">Empieza una sesion inteligente para que el sistema aprenda que te cuesta.</div>
+      <div class="memnote" id="mNote">Empieza una sesión inteligente para que el sistema aprenda que te cuesta.</div>
     </div>
 
     <div class="shead"><span class="en">03</span><h2 class="serif">Configura tu simulacro</h2><span class="rule"></span></div>
     <div class="panel"><div class="cfg">
       <div class="field">
-        <label class="flabel">Tipo de sesion</label>
+        <label class="flabel">Tipo de sesión</label>
         <div class="seg" id="kindSeg">
           <button data-kind="smart" class="on">&#129504; Inteligente</button>
-          <button data-kind="free">Practica libre</button>
+          <button data-kind="free">Práctica libre</button>
         </div>
-        <div class="fhint" id="kindHint">El sistema elige las preguntas: primero lo vencido, luego tus areas debiles, y 30% nuevas.</div>
+        <div class="fhint" id="kindHint">El sistema elige las preguntas: primero lo vencido, luego tus áreas débiles, y 30% nuevas.</div>
       </div>
 
       <div id="freeBox" style="display:none">
       <div class="field">
-        <label class="flabel">Area</label>
+        <label class="flabel">Área</label>
         <div class="chips" id="areaChips"></div>
       </div>
       <div class="field">
@@ -723,11 +723,11 @@ details.howto a{color:var(--gold-soft)}
       </div>
       <div class="row2">
         <div class="field">
-          <label class="flabel">Anios</label>
+          <label class="flabel">Años</label>
           <select id="yearSelect">
-            <option value="all">Todos los anios (2000-2024)</option>
+            <option value="all">Todos los años (2000-2024)</option>
             <option value="2020">Recientes &middot; 2020-2024</option>
-            <option value="2015">Ultimos 10 &middot; 2015-2024</option>
+            <option value="2015">Últimos 10 &middot; 2015-2024</option>
             <option value="2010">2010-2019</option>
             <option value="2000">Antiguos &middot; 2000-2009</option>
           </select>
@@ -736,7 +736,7 @@ details.howto a{color:var(--gold-soft)}
           <label class="flabel">Orden</label>
           <div class="seg" id="orderSeg">
             <button data-order="random" class="on">Aleatorio</button>
-            <button data-order="year">Por anio</button>
+            <button data-order="year">Por año</button>
           </div>
         </div>
       </div>
@@ -754,7 +754,7 @@ details.howto a{color:var(--gold-soft)}
           </select>
         </div>
         <div class="field">
-          <label class="flabel">Retroalimentacion</label>
+          <label class="flabel">Retroalimentación</label>
           <div class="seg" id="modeSeg">
             <button data-mode="practice" class="on">Al instante</button>
             <button data-mode="exam">Al final</button>
@@ -763,10 +763,10 @@ details.howto a{color:var(--gold-soft)}
         </div>
       </div>
       <button class="start" id="startBtn">Iniciar simulacro &rarr;</button>
-      <div class="availnote">Disponibles con esta seleccion: <b id="availNum">&mdash;</b></div>
+      <div class="availnote">Disponibles con esta selección: <b id="availNum">&mdash;</b></div>
     </div></div>
 
-    <div class="shead"><span class="en">04</span><h2 class="serif">Areas del banco</h2><span class="rule"></span></div>
+    <div class="shead"><span class="en">04</span><h2 class="serif">Áreas del banco</h2><span class="rule"></span></div>
     <div class="agrid" id="areaGrid"></div>
 
     <div class="shead"><span class="en">05</span><h2 class="serif">Logros</h2><span class="rule"></span>
@@ -777,7 +777,7 @@ details.howto a{color:var(--gold-soft)}
     <div class="shead"><span class="en">06</span><h2 class="serif">Respaldo de tu progreso</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div style="font-size:13px;color:var(--ink-dim);line-height:1.55;margin-bottom:16px">
-        Tu avance vive en este navegador. Si cambias de equipo, borras datos o usas modo incognito, se pierde.
+        Tu avance vive en este navegador. Si cambias de equipo, borras datos o usas modo incógnito, se pierde.
         Descarga un respaldo cada cierto tiempo y guardalo donde quieras.
       </div>
       <div class="bkinfo" id="bkInfo">&mdash;</div>
@@ -813,7 +813,7 @@ details.howto a{color:var(--gold-soft)}
             </div>
             <div class="field">
               <label class="flabel" for="nbPass">Contrase&ntilde;a</label>
-              <input type="password" id="nbPass" placeholder="minimo 6 caracteres" autocomplete="current-password">
+              <input type="password" id="nbPass" placeholder="mínimo 6 caracteres" autocomplete="current-password">
             </div>
           </div>
           <div class="aiacts">
@@ -825,18 +825,18 @@ details.howto a{color:var(--gold-soft)}
       </div>
       <div class="aiacts" id="nbDentro" style="display:none">
         <button class="go" id="nbSync">&#8635; Sincronizar ahora</button>
-        <button id="nbSalir">Cerrar sesion</button>
+        <button id="nbSalir">Cerrar sesión</button>
       </div>
       <div class="aistat" id="nbStat"><span class="dot2"></span><span id="nbStatTxt">Sin cuenta &mdash; tu progreso vive solo en este navegador.</span></div>
 
       <details class="howto">
         <summary>Que se guarda y como se combina</summary>
         <ol>
-          <li>Puedes entrar con <b>Google</b> o con <b>correo y contraseña</b>, lo que prefieras. Si abriste la pagina desde WhatsApp u otra app, usa el correo: Google no permite su ingreso en esos navegadores.</li>
-          <li>Se guarda solo tu <b>progreso</b>: memoria de repasos, dias de actividad, XP y logros. Ni las preguntas ni ninguna clave de IA salen de tu navegador.</li>
-          <li>Al entrar en un equipo nuevo, lo que traes se <b>combina</b> con lo que ya habia: en cada pregunta gana el repaso mas reciente, asi que no se pisa nada.</li>
+          <li>Puedes entrar con <b>Google</b> o con <b>correo y contraseña</b>, lo que prefieras. Si abriste la página desde WhatsApp u otra app, usa el correo: Google no permite su ingreso en esos navegadores.</li>
+          <li>Se guarda solo tu <b>progreso</b>: memoria de repasos, días de actividad, XP y logros. Ni las preguntas ni ninguna clave de IA salen de tu navegador.</li>
+          <li>Al entrar en un equipo nuevo, lo que traes se <b>combina</b> con lo que ya había: en cada pregunta gana el repaso más reciente, así que no se pisa nada.</li>
           <li>Las <b>reglas de Firestore</b> hacen que cada quien solo pueda leer y escribir su propio documento.</li>
-          <li>Sin conexion la app sigue entera; al volver la señal se sincroniza sola.</li>
+          <li>Sin conexión la app sigue entera; al volver la señal se sincroniza sola.</li>
         </ol>
       </details>
     </div></div>
@@ -844,7 +844,7 @@ details.howto a{color:var(--gold-soft)}
     <div class="shead"><span class="en">08</span><h2 class="serif">Tutor con IA</h2><span class="rule"></span></div>
     <div class="panel"><div class="aicfg">
       <div class="field">
-        <label class="flabel">Modo de conexion</label>
+        <label class="flabel">Modo de conexión</label>
         <div class="seg" id="aiModeSeg">
           <button data-aimode="proxy" class="on">Servidor propio</button>
           <button data-aimode="direct">Clave personal</button>
@@ -865,7 +865,7 @@ details.howto a{color:var(--gold-soft)}
       <div id="aiDirectBox" style="display:none">
         <div class="warn">
           <b>Advertencia:</b> tu clave se guarda solo en este navegador (localStorage) y viaja directo a api.anthropic.com.
-          No la uses en una computadora compartida y nunca la pegues en el codigo del repositorio.
+          No la uses en una computadora compartida y nunca la pegues en el código del repositorio.
         </div>
         <div class="field">
           <label class="flabel">Tu API key de Anthropic</label>
@@ -876,44 +876,44 @@ details.howto a{color:var(--gold-soft)}
       <div class="field" style="margin-top:18px">
         <label class="flabel">Modelo</label>
         <select id="aiModel">
-          <option value="claude-haiku-4-5">Claude Haiku 4.5 &middot; rapido y economico</option>
-          <option value="claude-sonnet-5">Claude Sonnet 5 &middot; explicaciones mas profundas</option>
+          <option value="claude-haiku-4-5">Claude Haiku 4.5 &middot; rápido y económico</option>
+          <option value="claude-sonnet-5">Claude Sonnet 5 &middot; explicaciones más profundas</option>
         </select>
       </div>
 
       <div class="field" style="margin-top:18px">
-        <label class="flabel">Cuando aparece la explicacion</label>
+        <label class="flabel">Cuando aparece la explicación</label>
         <div class="seg" id="aiAutoSeg">
           <button data-auto="wrong" class="on">Si fallo</button>
           <button data-auto="always">Siempre</button>
           <button data-auto="manual">Al tocar</button>
         </div>
-        <div class="fhint" id="aiAutoHint">Sale sola cuando te equivocas. En las que aciertas queda el boton por si quieres profundizar.</div>
+        <div class="fhint" id="aiAutoHint">Sale sola cuando te equivocas. En las que aciertas queda el botón por si quieres profundizar.</div>
       </div>
 
       <div class="aistat" id="aiStat"><span class="dot2"></span><span id="aiStatTxt">Sin configurar &mdash; el modo local sigue funcionando.</span></div>
 
       <div class="aiacts">
         <button class="go" id="aiSave">Guardar y probar</button>
-        <button id="aiClear">Borrar configuracion</button>
+        <button id="aiClear">Borrar configuración</button>
       </div>
 
       <details class="howto">
-        <summary>Como conseguir cada opcion</summary>
+        <summary>Como conseguir cada opción</summary>
         <ol>
-          <li><b>Servidor propio (Firebase):</b> despliega la funcion incluida en <code>firebase/</code>. Requiere plan Blaze, pero el uso tipico entra en la capa gratuita.</li>
-          <li><b>Clave personal:</b> entra a <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">platform.claude.com/settings/keys</a>, agrega saldo en Billing, crea una API key y pegala arriba. Ojo: la API se paga aparte de la suscripcion de claude.ai.</li>
-          <li>Sin ninguna de las dos, el simulacro sigue dando retroalimentacion detallada en modo local.</li>
+          <li><b>Servidor propio (Firebase):</b> despliega la función incluida en <code>firebase/</code>. Requiere plan Blaze, pero el uso típico entra en la capa gratuita.</li>
+          <li><b>Clave personal:</b> entra a <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener">platform.claude.com/settings/keys</a>, agrega saldo en Billing, crea una API key y pegala arriba. Ojo: la API se paga aparte de la suscripción de claude.ai.</li>
+          <li>Sin ninguna de las dos, el simulacro sigue dando retroalimentación detallada en modo local.</li>
         </ol>
       </details>
     </div></div>
   </div>
 
   <div class="foot"><div class="wrap">
-    Sesion inteligente: el sistema elige que preguntarte segun lo que fallaste y cuando lo fallaste.<br>
-    Retroalimentacion al instante: explicacion apenas marcas. Al final: como el examen real.<br>
-    Puedes cambiarla en cualquier momento con el boton de la barra superior.<br>
-    Preguntas de examenes CONAREME &middot; las claves provienen del compendio original.
+    Sesión inteligente: el sistema elige que preguntarte según lo que fallaste y cuando lo fallaste.<br>
+    Retroalimentación al instante: explicación apenas marcas. Al final: como el examen real.<br>
+    Puedes cambiarla en cualquier momento con el botón de la barra superior.<br>
+    Preguntas de exámenes CONAREME &middot; las claves provienen del compendio original.
   </div></div>
 </section>
 
@@ -925,7 +925,7 @@ details.howto a{color:var(--gold-soft)}
            abre la cuadricula sin ocupar un boton extra en una barra ya llena. -->
       <button class="qpos" id="qposBtn" aria-expanded="false" aria-controls="qgrid"
               title="Ver todas las preguntas">Pregunta <b id="qNow">1</b> / <span id="qTot">20</span> <i class="cv">&#9662;</i></button>
-      <button class="xbtn fbtog" id="fbToggle" title="Cambiar cuando ves la retroalimentacion">
+      <button class="xbtn fbtog" id="fbToggle" title="Cambiar cuando ves la retroalimentación">
         <span class="fbi">&#128161;</span><span class="fbl">Al instante</span>
       </button>
       <span class="spacer"></span>
@@ -933,7 +933,7 @@ details.howto a{color:var(--gold-soft)}
         <span class="lk combo" id="lkCombo" title="Combo" style="display:none">&#128293; <b id="lkComboN">0</b></span>
         <span class="lk ok" title="Correctas">&#10003; <b id="lkOk">0</b></span>
         <span class="lk bad" title="Incorrectas">&#10007; <b id="lkBad">0</b></span>
-        <span class="lk xp mono" id="lkXp" title="XP de la sesion">+0</span>
+        <span class="lk xp mono" id="lkXp" title="XP de la sesión">+0</span>
         <span class="lk time mono" id="lkTime">00:00</span>
       </div>
     </div>
@@ -960,7 +960,7 @@ details.howto a{color:var(--gold-soft)}
       <span class="tag yr" id="tYr">&mdash;</span>
       <span class="tag nuevo" id="tSrs" style="display:none">&mdash;</span>
       <button class="tag marcar" id="markBtn" aria-pressed="false"
-              title="Marcar para volver despues">&#9873; Marcar</button>
+              title="Marcar para volver después">&#9873; Marcar</button>
     </div>
     <div class="qtext" id="qText">&mdash;</div>
     <div class="opts" id="opts"></div>
@@ -994,7 +994,7 @@ details.howto a{color:var(--gold-soft)}
     <div class="rhead">
       <div class="rverd" id="rVerd">Simulacro completado</div>
       <div class="rscore serif"><span id="rScore">0</span><span class="of" id="rOf">/0</span></div>
-      <div class="racc">Precision <b id="rAcc">0%</b></div>
+      <div class="racc">Precisión <b id="rAcc">0%</b></div>
     </div>
     <div class="rkpi">
       <div class="rk"><div class="rkl">Correctas</div><div class="rkv" style="color:var(--ok)" id="rOk">0</div></div>
@@ -1004,7 +1004,7 @@ details.howto a{color:var(--gold-soft)}
     </div>
     <div class="shead"><span class="en">&#10022;</span><h2 class="serif">Rendimiento por especialidad</h2><span class="rule"></span></div>
     <div class="bd" id="bdList"></div>
-    <div class="shead"><span class="en">&#10022;</span><h2 class="serif">Revision de preguntas</h2><span class="rule"></span>
+    <div class="shead"><span class="en">&#10022;</span><h2 class="serif">Revisión de preguntas</h2><span class="rule"></span>
       <button class="chip rev-toggle" id="filterWrong">Solo falladas</button>
     </div>
     <div class="review" id="reviewList"></div>
@@ -1116,8 +1116,8 @@ function srsEstado(){
 }
 function fmtDias(d){
   if(d<=0)return'ahora';
-  if(d===1)return'manana';
-  if(d<30)return'en '+d+' dias';
+  if(d===1)return'mañana';
+  if(d<30)return'en '+d+' días';
   const m=Math.round(d/30);return'en '+m+(m===1?' mes':' meses');
 }
 /* Que tan floja esta una especialidad: 1 = nunca acierta, 0 = siempre. */
@@ -1164,7 +1164,7 @@ const LEVELS=[
   {xp:2300,  n:'Residente R2',        m:'\u{1F52C}'},
   {xp:3500,  n:'Residente R3',        m:'\u{1F489}'},
   {xp:5200,  n:'Jefe de Residentes',  m:'\u{1F396}'},
-  {xp:7500,  n:'Medico Asistente',    m:'\u{1F3E5}'},
+  {xp:7500,  n:'Médico Asistente',    m:'\u{1F3E5}'},
   {xp:10500, n:'Especialista',        m:'\u{1F451}'}
 ];
 function levelOf(xp){
@@ -1182,7 +1182,7 @@ function renderLevel(){
   document.getElementById('lvFill').style.width=L.pct+'%';
   document.getElementById('lvSub').textContent=L.next
     ? nf(STATS.xp)+' XP · faltan '+nf(L.toNext)+' para '+L.next.n
-    : nf(STATS.xp)+' XP · nivel maximo alcanzado';
+    : nf(STATS.xp)+' XP · nivel máximo alcanzado';
 }
 
 /* ===================== LOGROS ===================== */
@@ -1193,16 +1193,16 @@ const BADGES=[
   {id:'quin',   i:'\u{1F5FF}', t:'Maratonista',      d:'500 preguntas resueltas',    f:s=>s.lifeSeen>=500},
   {id:'mil',    i:'\u{1F30B}', t:'Imparable',        d:'1000 preguntas resueltas',   f:s=>s.lifeSeen>=1000},
   {id:'st10',   i:'\u{1F525}', t:'En racha',         d:'10 aciertos seguidos',       f:s=>s.bestStreak>=10},
-  {id:'st25',   i:'\u{26A1}',  t:'Racha electrica',  d:'25 aciertos seguidos',       f:s=>s.bestStreak>=25},
+  {id:'st25',   i:'\u{26A1}',  t:'Racha eléctrica',  d:'25 aciertos seguidos',       f:s=>s.bestStreak>=25},
   {id:'st50',   i:'\u{2604}',  t:'Racha estelar',    d:'50 aciertos seguidos',       f:s=>s.bestStreak>=50},
-  {id:'acc70',  i:'\u{1F3AF}', t:'Punteria',         d:'70% global (min. 50 preg.)', f:s=>s.lifeSeen>=50&&s.lifeOk/s.lifeSeen>=.70},
+  {id:'acc70',  i:'\u{1F3AF}', t:'Puntería',         d:'70% global (min. 50 preg.)', f:s=>s.lifeSeen>=50&&s.lifeOk/s.lifeSeen>=.70},
   {id:'acc85',  i:'\u{1F3C6}', t:'Elite',            d:'85% global (min. 100 preg.)',f:s=>s.lifeSeen>=100&&s.lifeOk/s.lifeSeen>=.85},
   {id:'perf',   i:'\u{2B50}',  t:'Simulacro perfecto',d:'100% en un simulacro',      f:s=>s.perfect>=1},
   {id:'ex10',   i:'\u{1F396}', t:'Constancia',       d:'10 simulacros completados',  f:s=>s.exams>=10},
-  {id:'d3',     i:'\u{1F331}', t:'Semilla',          d:'3 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=3},
-  {id:'d7',     i:'\u{1F4C5}', t:'Semana completa',  d:'7 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=7},
-  {id:'d30',    i:'\u{1F5D3}', t:'Mes de disciplina',d:'30 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=30},
-  {id:'d100',   i:'\u{1F48E}', t:'Cien dias',        d:'100 dias seguidos con la meta',f:s=>(s.rachaMax||0)>=100}
+  {id:'d3',     i:'\u{1F331}', t:'Semilla',          d:'3 días seguidos con la meta',f:s=>(s.rachaMax||0)>=3},
+  {id:'d7',     i:'\u{1F4C5}', t:'Semana completa',  d:'7 días seguidos con la meta',f:s=>(s.rachaMax||0)>=7},
+  {id:'d30',    i:'\u{1F5D3}', t:'Mes de disciplina',d:'30 días seguidos con la meta',f:s=>(s.rachaMax||0)>=30},
+  {id:'d100',   i:'\u{1F48E}', t:'Cien días',        d:'100 días seguidos con la meta',f:s=>(s.rachaMax||0)>=100}
 ];
 function checkBadges(){
   const nuevos=[];
@@ -1262,7 +1262,7 @@ const ACOUNT=areaCounts();
 function renderAreaChips(){
   const box=document.getElementById('areaChips');box.innerHTML='';
   const mk=(val,label)=>{const b=document.createElement('button');b.className='chip'+(cfg.area===val?' sel':'');b.textContent=label;b.onclick=()=>{cfg.area=val;cfg.sp='all';renderAreaChips();renderSpSelect();updateAvail();};box.appendChild(b);};
-  mk('all','Todas las areas');
+  mk('all','Todas las áreas');
   for(const a of AREAS)mk(a,a);
 }
 function renderSpSelect(){
@@ -1284,9 +1284,10 @@ function pintaAnios(){
   let max=0,min=Infinity;
   for(const q of ALL){if(!q.y)continue;if(q.y>max)max=q.y;if(q.y<min)min=q.y;}
   if(!max)return;
-  const textos={all:'Todos los anios ('+min+'-'+max+')',
+  document.getElementById('rangoAnios').textContent=min+'–'+max;
+  const textos={all:'Todos los años ('+min+'-'+max+')',
                 '2020':'Recientes · 2020-'+max,
-                '2015':'Ultimos '+(max-2014)+' · 2015-'+max};
+                '2015':'Últimos '+(max-2014)+' · 2015-'+max};
   for(const o of document.getElementById('yearSelect').options)
     if(textos[o.value])o.textContent=textos[o.value];
 }
@@ -1304,8 +1305,8 @@ function poolFor(){
   return pool;
 }
 const KIND_HINT={
-  smart:'El sistema elige las preguntas: primero lo vencido, luego tus areas debiles, y 30% nuevas.',
-  free:'Tu eliges area, especialidad, anios y orden. No alimenta la agenda de repasos con prioridad.'
+  smart:'El sistema elige las preguntas: primero lo vencido, luego tus áreas débiles, y 30% nuevas.',
+  free:'Tu eliges área, especialidad, años y orden. No alimenta la agenda de repasos con prioridad.'
 };
 function setKind(k){
   cfg.kind=k;
@@ -1324,7 +1325,7 @@ function updateAvail(){
     const rep=Math.min(e.repasar,Math.max(0,n-Math.round(n*0.3)));
     el.innerHTML=rep
       ? nf(rep)+' de repaso + '+nf(n-rep)+' nuevas'
-      : nf(n)+' preguntas nuevas de tus areas mas flojas';
+      : nf(n)+' preguntas nuevas de tus áreas más flojas';
   }else{
     el.textContent=nf(poolFor().length)+' preguntas';
   }
@@ -1350,7 +1351,7 @@ function renderLifetime(){
   document.getElementById('lfSeen').textContent=nf(STATS.lifeSeen);
   const acc=STATS.lifeSeen?Math.round(STATS.lifeOk/STATS.lifeSeen*100):null;
   document.getElementById('lfAcc').textContent=acc===null?'—':acc+'%';
-  document.getElementById('lfAccSub').textContent=STATS.lifeSeen?nf(STATS.lifeOk)+' de '+nf(STATS.lifeSeen)+' correctas':'aun sin datos';
+  document.getElementById('lfAccSub').textContent=STATS.lifeSeen?nf(STATS.lifeOk)+' de '+nf(STATS.lifeSeen)+' correctas':'aún sin datos';
   document.getElementById('lfStreak').textContent=STATS.bestStreak;
   let best=null;for(const sp in STATS.bySp){const s=STATS.bySp[sp];if(s.seen>=5){const p=s.ok/s.seen;if(!best||p>best.p)best={sp,p,seen:s.seen};}}
   document.getElementById('lfBest').textContent=best?best.sp:'—';
@@ -1373,22 +1374,22 @@ function renderDia(){
   const fb=document.getElementById('fireBox');
   fb.classList.toggle('off',!racha);
   fb.querySelector('.fn').textContent=racha;
-  fb.querySelector('.fl').textContent=racha===1?'dia seguido':'dias seguidos';
+  fb.querySelector('.fl').textContent=racha===1?'día seguido':'días seguidos';
 
   const t=document.getElementById('dayTitle'),s=document.getElementById('daySub');
   if(hoy.n>=meta){
     t.textContent='\u{1F525} Meta de hoy cumplida';
     s.innerHTML='Llevas <b>'+hoy.n+'</b> preguntas hoy, '+hoy.ok+' correctas. '+
-      (racha>1?'Tu racha va en <b>'+racha+' dias</b>: vuelve manana para no cortarla.'
-              :'Manana sumas el segundo dia.');
+      (racha>1?'Tu racha va en <b>'+racha+' días</b>: vuelve mañana para no cortarla.'
+              :'Mañana sumas el segundo día.');
   }else if(hoy.n){
     t.textContent='Vas '+hechas+' de '+meta;
-    s.innerHTML='Te faltan <b>'+(meta-hechas)+'</b> '+((meta-hechas)===1?'pregunta':'preguntas')+' para cerrar el dia'+
+    s.innerHTML='Te faltan <b>'+(meta-hechas)+'</b> '+((meta-hechas)===1?'pregunta':'preguntas')+' para cerrar el día'+
       (racha?' y mantener tu racha de <b>'+racha+'</b>.':'.');
   }else{
-    t.textContent=racha?'Tu racha esta en juego':'Empieza tu meta de hoy';
+    t.textContent=racha?'Tu racha está en juego':'Empieza tu meta de hoy';
     s.innerHTML=racha
-      ? 'Llevas <b>'+racha+'</b> '+(racha===1?'dia':'dias')+' seguidos. Resuelve <b>'+meta+'</b> preguntas hoy para no perderla.'
+      ? 'Llevas <b>'+racha+'</b> '+(racha===1?'día':'días')+' seguidos. Resuelve <b>'+meta+'</b> preguntas hoy para no perderla.'
       : 'Resuelve <b>'+meta+'</b> preguntas para encender tu racha.';
   }
 
@@ -1431,8 +1432,8 @@ function renderHeat(){
     box.appendChild(col);
   }
   document.getElementById('heatNote').textContent=activos
-    ? activos+' '+(activos===1?'dia activo':'dias activos')+' en 13 semanas · mejor racha: '+(STATS.rachaMax||0)
-    : 'Ultimas 13 semanas';
+    ? activos+' '+(activos===1?'día activo':'días activos')+' en 13 semanas · mejor racha: '+(STATS.rachaMax||0)
+    : 'Últimas 13 semanas';
 }
 
 /* Tablero de memoria: cuantas preguntas tocan hoy, cuantas se estan afianzando,
@@ -1452,12 +1453,12 @@ function renderMemoria(){
   const vistas=TOTAL-e.sinVer;
   const n=document.getElementById('mNote');
   if(!vistas){
-    n.textContent='Empieza una sesion inteligente para que el sistema aprenda que te cuesta.';
+    n.textContent='Empieza una sesión inteligente para que el sistema aprenda que te cuesta.';
   }else if(e.repasar){
     n.innerHTML='Tienes <b>'+nf(e.repasar)+'</b> '+(e.repasar===1?'pregunta':'preguntas')+
-      ' esperando repaso. La sesion inteligente empieza por ahi.';
+      ' esperando repaso. La sesión inteligente empieza por ahí.';
   }else{
-    n.innerHTML='Repaso al dia. La proxima sesion traera preguntas nuevas de tus areas mas flojas. '+
+    n.innerHTML='Repaso al día. La próxima sesión traerá preguntas nuevas de tus áreas más flojas. '+
       'Llevas <b>'+nf(vistas)+'</b> de '+nf(TOTAL)+' preguntas trabajadas.';
   }
 }
@@ -1482,7 +1483,7 @@ function paintFbToggle(){
   b.querySelector('.fbi').textContent=instant?'\u{1F4A1}':'\u{1F512}';
   b.querySelector('.fbl').textContent=instant?'Al instante':'Al final';
   b.title=instant
-    ?'Ahora ves la explicacion al marcar. Toca para guardarla hasta el final.'
+    ?'Ahora ves la explicación al marcar. Toca para guardarla hasta el final.'
     :'Ahora las explicaciones salen al terminar. Toca para verlas al instante.';
 }
 document.getElementById('fbToggle').onclick=()=>{
@@ -1491,7 +1492,7 @@ document.getElementById('fbToggle').onclick=()=>{
   paintFbToggle();
   renderQ();
   toast(S.mode==='practice'?'\u{1F4A1}':'\u{1F512}',
-        S.mode==='practice'?'Retroalimentacion al instante':'Retroalimentacion al final');
+        S.mode==='practice'?'Retroalimentación al instante':'Retroalimentación al final');
 };
 document.querySelectorAll('#orderSeg button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#orderSeg button').forEach(x=>x.classList.remove('on'));b.classList.add('on');cfg.order=b.dataset.order;});
 document.getElementById('yearSelect').onchange=e=>{cfg.year=e.target.value;updateAvail();};
@@ -1502,74 +1503,74 @@ const OK_MSG=[
   ['\u{1F389}','Excelente','Respuesta correcta. Ese es el razonamiento que buscabas.'],
   ['\u{2705}','Muy bien','Respuesta correcta. Identificaste la clave del caso.'],
   ['\u{1F44F}','Impecable','Respuesta correcta. Dominas este concepto.'],
-  ['\u{1F9E0}','Perfecto','Respuesta correcta. Buen criterio clinico.'],
+  ['\u{1F9E0}','Perfecto','Respuesta correcta. Buen criterio clínico.'],
   ['\u{1F31F}','Correcto','Bien resuelto. Sigue con ese ritmo.'],
-  ['\u{1F4AA}','Asi se hace','Respuesta correcta. Vas construyendo dominio.']
+  ['\u{1F4AA}','Así se hace','Respuesta correcta. Vas construyendo dominio.']
 ];
 const OK_STREAK=[
   ['\u{1F525}','Racha encendida','Van {n} seguidas sin fallar. No la sueltes.'],
-  ['\u{26A1}','Imparable','{n} correctas al hilo. Estas en zona de examen.'],
-  ['\u{1F680}','En modo residente','{n} seguidas. Este es el nivel que necesitas el dia D.']
+  ['\u{26A1}','Imparable','{n} correctas al hilo. Estás en zona de examen.'],
+  ['\u{1F680}','En modo residente','{n} seguidas. Este es el nivel que necesitas el día D.']
 ];
 const BAD_MSG=[
-  ['\u{26A0}','Cuidado, tuviste un error','Revisa el razonamiento antes de seguir: aqui es donde se gana el puntaje.'],
-  ['\u{1F6D1}','Ojo con esta','Fallaste esta pregunta. Analizala ahora y no la vuelves a fallar.'],
-  ['\u{1F50E}','Error detectado','No pasa nada: cada error corregido vale mas que un acierto de suerte.'],
+  ['\u{26A0}','Cuidado, tuviste un error','Revisa el razonamiento antes de seguir: aquí es donde se gana el puntaje.'],
+  ['\u{1F6D1}','Ojo con esta','Fallaste esta pregunta. Analízala ahora y no la vuelves a fallar.'],
+  ['\u{1F50E}','Error detectado','No pasa nada: cada error corregido vale más que un acierto de suerte.'],
   ['\u{1F4DD}','Anota esta','Te equivocaste. Marcala mentalmente, suele repetirse en el examen.'],
-  ['\u{1F9ED}','Te desviaste','La opcion correcta era otra. Ubica que dato del enunciado te llevo por mal camino.']
+  ['\u{1F9ED}','Te desviaste','La opción correcta era otra. Ubica que dato del enunciado te llevo por mal camino.']
 ];
-const BAD_STREAK=['\u{1F6A8}','Alto ahi','Llevas {n} errores seguidos. Baja el ritmo y lee el enunciado dos veces.'];
+const BAD_STREAK=['\u{1F6A8}','Alto ahí','Llevas {n} errores seguidos. Baja el ritmo y lee el enunciado dos veces.'];
 
 /* Pistas clinicas de alto rendimiento: se activan por palabra clave del enunciado o de la clave. */
 const PISTAS=[
- {k:['pulso paradojico'],t:'El <b>pulso paradojico</b> (caida >10 mmHg de la presion sistolica en inspiracion) orienta a taponamiento cardiaco, pericarditis constrictiva o crisis asmatica severa.'},
- {k:['taponamiento'],t:'<b>Triada de Beck</b> del taponamiento cardiaco: hipotension, ingurgitacion yugular y ruidos cardiacos apagados.'},
- {k:['digoxina','digitalico'],t:'La <b>digoxina</b> inhibe la Na+/K+-ATPasa: sube el Na+ intracelular, disminuye el intercambio Na+/Ca2+ y aumenta el Ca2+ citosolico (inotropismo positivo).'},
- {k:['clonidina'],t:'La <b>clonidina</b> es agonista alfa-2 adrenergico central: reduce el tono simpatico. Su retiro brusco causa hipertension de rebote.'},
+ {k:['pulso paradojico'],t:'El <b>pulso paradójico</b> (caída >10 mmHg de la presión sistólica en inspiración) orienta a taponamiento cardiaco, pericarditis constrictiva o crisis asmática severa.'},
+ {k:['taponamiento'],t:'<b>Tríada de Beck</b> del taponamiento cardiaco: hipotensión, ingurgitación yugular y ruidos cardiacos apagados.'},
+ {k:['digoxina','digitalico'],t:'La <b>digoxina</b> inhibe la Na+/K+-ATPasa: sube el Na+ intracelular, disminuye el intercambio Na+/Ca2+ y aumenta el Ca2+ citosólico (inotropismo positivo).'},
+ {k:['clonidina'],t:'La <b>clonidina</b> es agonista alfa-2 adrenérgico central: reduce el tono simpático. Su retiro brusco causa hipertensión de rebote.'},
  {k:['atenolol','metoprolol','bisoprolol'],t:'<b>Atenolol, metoprolol y bisoprolol</b> son betabloqueadores cardioselectivos beta-1 a dosis convencionales; propranolol, nadolol y timolol son no selectivos.'},
- {k:['diuretico de asa','diureticos del asa','furosemida'],t:'Los <b>diureticos de asa</b> inhiben el cotransportador Na-K-2Cl en la rama ascendente gruesa del asa de Henle. Efectos: hipokalemia, hipomagnesemia y ototoxicidad.'},
- {k:['enalapril','captopril','inhibidor de la enzima convertidora'],t:'Los <b>IECA</b> inhiben la enzima convertidora de angiotensina. La tos seca se debe a acumulacion de bradicinina; contraindicados en embarazo y estenosis bilateral de arteria renal.'},
+ {k:['diuretico de asa','diureticos del asa','furosemida'],t:'Los <b>diuréticos de asa</b> inhiben el cotransportador Na-K-2Cl en la rama ascendente gruesa del asa de Henle. Efectos: hipokalemia, hipomagnesemia y ototoxicidad.'},
+ {k:['enalapril','captopril','inhibidor de la enzima convertidora'],t:'Los <b>IECA</b> inhiben la enzima convertidora de angiotensina. La tos seca se debe a acumulación de bradicinina; contraindicados en embarazo y estenosis bilateral de arteria renal.'},
  {k:['losartan','valsartan','receptor at1','receptores at'],t:'Los <b>ARA II</b> bloquean selectivamente el receptor AT1 de angiotensina II; no producen tos porque no afectan la bradicinina.'},
- {k:['oxido nitrico','oxido nitroso'],t:'El <b>oxido nitrico</b> endotelial activa la guanilato ciclasa, eleva el GMPc y produce relajacion del musculo liso vascular: vasodilatacion.'},
- {k:['prostaciclina'],t:'La <b>prostaciclina (PGI2)</b> endotelial es vasodilatadora e inhibe la agregacion plaquetaria; el tromboxano A2 plaquetario hace exactamente lo contrario.'},
+ {k:['oxido nitrico','oxido nitroso'],t:'El <b>óxido nítrico</b> endotelial activa la guanilato ciclasa, eleva el GMPc y produce relajación del músculo liso vascular: vasodilatación.'},
+ {k:['prostaciclina'],t:'La <b>prostaciclina (PGI2)</b> endotelial es vasodilatadora e inhibe la agregación plaquetaria; el tromboxano A2 plaquetario hace exactamente lo contrario.'},
  {k:['tromboxano'],t:'El <b>tromboxano A2</b> es vasoconstrictor y proagregante; la aspirina lo bloquea inhibiendo irreversiblemente la COX-1 plaquetaria.'},
- {k:['warfarina','cumarinico'],t:'La <b>warfarina</b> inhibe la vitamina K epoxido reductasa (factores II, VII, IX, X, proteinas C y S). Se controla con INR.'},
- {k:['heparina'],t:'La <b>heparina no fraccionada</b> potencia a la antitrombina III y se controla con TTPa; su antidoto es el sulfato de protamina.'},
- {k:['aspirina','acido acetilsalicilico'],t:'La <b>aspirina</b> inhibe irreversiblemente la COX-1 plaquetaria; el efecto antiagregante dura toda la vida de la plaqueta (7-10 dias).'},
+ {k:['warfarina','cumarinico'],t:'La <b>warfarina</b> inhibe la vitamina K epoxido reductasa (factores II, VII, IX, X, proteínas C y S). Se controla con INR.'},
+ {k:['heparina'],t:'La <b>heparina no fraccionada</b> potencia a la antitrombina III y se controla con TTPa; su antídoto es el sulfato de protamina.'},
+ {k:['aspirina','acido acetilsalicilico'],t:'La <b>aspirina</b> inhibe irreversiblemente la COX-1 plaquetaria; el efecto antiagregante dura toda la vida de la plaqueta (7-10 días).'},
  {k:['onda t picuda','hiperkalemia','hiperpotasemia'],t:'La <b>hiperkalemia</b> da ondas T picudas, luego ensanchamiento del QRS y ritmo sinusoidal. Tratamiento urgente: gluconato de calcio, insulina + glucosa, beta-2 inhalados.'},
- {k:['hipokalemia','hipopotasemia'],t:'La <b>hipokalemia</b> produce aplanamiento de la onda T y aparicion de onda U.'},
- {k:['hiponatremia'],t:'En <b>hiponatremia</b> lo primero es evaluar la osmolaridad plasmatica y el estado del volumen extracelular. La correccion debe ser lenta por riesgo de mielinolisis pontina.'},
- {k:['cetoacidosis'],t:'La <b>cetoacidosis diabetica</b> cursa con hiperglucemia, acidosis metabolica con anion gap elevado y cetonemia. Tratamiento: hidratacion, insulina y reposicion de potasio.'},
- {k:['hemoglobina glicosilada','hba1c'],t:'La <b>HbA1c</b> refleja el control glucemico de los ultimos 2-3 meses; un valor mayor o igual a 6.5% es criterio diagnostico de diabetes.'},
- {k:['tsh'],t:'Recuerda la logica tiroidea: <b>TSH alta con T4 libre baja</b> es hipotiroidismo primario; TSH baja con T4 libre alta es hipertiroidismo primario.'},
- {k:['cushing'],t:'El <b>sindrome de Cushing</b> se tamiza con cortisol libre urinario de 24 h, cortisol salival nocturno o supresion con 1 mg de dexametasona.'},
- {k:['addison','insuficiencia suprarrenal'],t:'La <b>insuficiencia suprarrenal primaria</b> da hiperpigmentacion, hiponatremia, hiperkalemia e hipotension. Se confirma con cortisol basal y test de ACTH.'},
- {k:['curb'],t:'El <b>CURB-65</b> (confusion, urea, frecuencia respiratoria, presion arterial, edad mayor o igual a 65) define la necesidad de hospitalizacion en neumonia comunitaria.'},
- {k:['criterios de light','derrame pleural'],t:'Los <b>criterios de Light</b> distinguen exudado de trasudado usando las relaciones de proteinas y LDH entre liquido pleural y suero.'},
- {k:['baciloscopia','tuberculosis'],t:'En <b>tuberculosis pulmonar</b>, el diagnostico inicial es baciloscopia de esputo; el esquema sensible estandar usa isoniacida, rifampicina, pirazinamida y etambutol.'},
- {k:['mcburney','blumberg','rovsing','apendicitis'],t:'La <b>apendicitis aguda</b> es un diagnostico clinico: dolor migratorio a fosa iliaca derecha, McBurney positivo, Blumberg y Rovsing.'},
- {k:['murphy','colecistitis'],t:'El <b>signo de Murphy</b> (interrupcion inspiratoria por dolor a la palpacion subcostal derecha) orienta a colecistitis aguda; se confirma con ecografia.'},
- {k:['pancreatitis','lipasa','amilasa'],t:'En <b>pancreatitis aguda</b>, la lipasa es mas especifica que la amilasa; la gravedad se estima con criterios de Ranson o APACHE II.'},
- {k:['preeclampsia'],t:'<b>Preeclampsia</b>: presion arterial mayor o igual a 140/90 despues de las 20 semanas mas proteinuria o criterios de severidad (dano de organo blanco).'},
- {k:['eclampsia','sulfato de magnesio'],t:'El <b>sulfato de magnesio</b> es el farmaco de eleccion para prevenir y tratar convulsiones en eclampsia. Vigila reflejo rotuliano, diuresis y frecuencia respiratoria.'},
- {k:['leopold'],t:'Las <b>maniobras de Leopold</b> determinan situacion, presentacion, posicion y grado de encajamiento del feto.'},
+ {k:['hipokalemia','hipopotasemia'],t:'La <b>hipokalemia</b> produce aplanamiento de la onda T y aparición de onda U.'},
+ {k:['hiponatremia'],t:'En <b>hiponatremia</b> lo primero es evaluar la osmolaridad plasmática y el estado del volumen extracelular. La corrección debe ser lenta por riesgo de mielinolisis pontina.'},
+ {k:['cetoacidosis'],t:'La <b>cetoacidosis diabética</b> cursa con hiperglucemia, acidosis metabólica con anión gap elevado y cetonemia. Tratamiento: hidratación, insulina y reposición de potasio.'},
+ {k:['hemoglobina glicosilada','hba1c'],t:'La <b>HbA1c</b> refleja el control glucémico de los últimos 2-3 meses; un valor mayor o igual a 6.5% es criterio diagnóstico de diabetes.'},
+ {k:['tsh'],t:'Recuerda la lógica tiroidea: <b>TSH alta con T4 libre baja</b> es hipotiroidismo primario; TSH baja con T4 libre alta es hipertiroidismo primario.'},
+ {k:['cushing'],t:'El <b>sindrome de Cushing</b> se tamiza con cortisol libre urinario de 24 h, cortisol salival nocturno o supresión con 1 mg de dexametasona.'},
+ {k:['addison','insuficiencia suprarrenal'],t:'La <b>insuficiencia suprarrenal primaria</b> da hiperpigmentación, hiponatremia, hiperkalemia e hipotensión. Se confirma con cortisol basal y test de ACTH.'},
+ {k:['curb'],t:'El <b>CURB-65</b> (confusión, urea, frecuencia respiratoria, presión arterial, edad mayor o igual a 65) define la necesidad de hospitalización en neumonía comunitaria.'},
+ {k:['criterios de light','derrame pleural'],t:'Los <b>criterios de Light</b> distinguen exudado de trasudado usando las relaciones de proteínas y LDH entre liquido pleural y suero.'},
+ {k:['baciloscopia','tuberculosis'],t:'En <b>tuberculosis pulmonar</b>, el diagnóstico inicial es baciloscopia de esputo; el esquema sensible estandar usa isoniacida, rifampicina, pirazinamida y etambutol.'},
+ {k:['mcburney','blumberg','rovsing','apendicitis'],t:'La <b>apendicitis aguda</b> es un diagnóstico clínico: dolor migratorio a fosa iliaca derecha, McBurney positivo, Blumberg y Rovsing.'},
+ {k:['murphy','colecistitis'],t:'El <b>signo de Murphy</b> (interrupción inspiratoria por dolor a la palpación subcostal derecha) orienta a colecistitis aguda; se confirma con ecografía.'},
+ {k:['pancreatitis','lipasa','amilasa'],t:'En <b>pancreatitis aguda</b>, la lipasa es más específica que la amilasa; la gravedad se estima con criterios de Ranson o APACHE II.'},
+ {k:['preeclampsia'],t:'<b>Preeclampsia</b>: presión arterial mayor o igual a 140/90 después de las 20 semanas más proteinuria o criterios de severidad (daño de órgano blanco).'},
+ {k:['eclampsia','sulfato de magnesio'],t:'El <b>sulfato de magnesio</b> es el farmaco de elección para prevenir y tratar convulsiones en eclampsia. Vigila reflejo rotuliano, diuresis y frecuencia respiratoria.'},
+ {k:['leopold'],t:'Las <b>maniobras de Leopold</b> determinan situación, presentación, posición y grado de encajamiento del feto.'},
  {k:['apgar'],t:'El <b>test de Apgar</b> evalua frecuencia cardiaca, esfuerzo respiratorio, tono muscular, irritabilidad refleja y color al minuto y a los 5 minutos.'},
- {k:['kernig','brudzinski','meningitis'],t:'Signos meningeos de <b>Kernig y Brudzinski</b>; ante sospecha de meningitis bacteriana no retrases el antibiotico esperando la puncion lumbar.'},
- {k:['glasgow'],t:'La <b>escala de Glasgow</b> suma respuesta ocular (4), verbal (5) y motora (6); 8 o menos indica indicacion de proteccion de via aerea.'},
- {k:['qsofa','sepsis','shock septico'],t:'El <b>qSOFA</b> usa frecuencia respiratoria mayor o igual a 22, alteracion del sensorio y presion sistolica menor o igual a 100 mmHg como marcador de mal pronostico en sepsis.'},
- {k:['ferropenica','ferritina'],t:'La <b>anemia ferropenica</b> es microcitica e hipocromica, con ferritina baja y capacidad total de fijacion de hierro elevada.'},
- {k:['megaloblastica','vitamina b12','acido folico'],t:'La <b>anemia megaloblastica</b> es macrocitica; el deficit de B12 agrega compromiso neurologico, el de folato no.'},
- {k:['sindrome nefrotico'],t:'<b>Sindrome nefrotico</b>: proteinuria mayor a 3.5 g/24 h, hipoalbuminemia, edema e hiperlipidemia. El nefritico se define por hematuria, HTA y oliguria.'},
- {k:['sindrome nefritico'],t:'<b>Sindrome nefritico</b>: hematuria con cilindros hematicos, hipertension, edema y oliguria.'},
+ {k:['kernig','brudzinski','meningitis'],t:'Signos meningeos de <b>Kernig y Brudzinski</b>; ante sospecha de meningitis bacteriana no retrases el antibiotico esperando la punción lumbar.'},
+ {k:['glasgow'],t:'La <b>escala de Glasgow</b> suma respuesta ocular (4), verbal (5) y motora (6); 8 o menos indica indicación de protección de via aerea.'},
+ {k:['qsofa','sepsis','shock septico'],t:'El <b>qSOFA</b> usa frecuencia respiratoria mayor o igual a 22, alteración del sensorio y presión sistólica menor o igual a 100 mmHg como marcador de mal pronóstico en sepsis.'},
+ {k:['ferropenica','ferritina'],t:'La <b>anemia ferropénica</b> es microcítica e hipocrómica, con ferritina baja y capacidad total de fijación de hierro elevada.'},
+ {k:['megaloblastica','vitamina b12','acido folico'],t:'La <b>anemia megaloblástica</b> es macrocítica; el deficit de B12 agrega compromiso neurológico, el de folato no.'},
+ {k:['sindrome nefrotico'],t:'<b>Sindrome nefrótico</b>: proteinuria mayor a 3.5 g/24 h, hipoalbuminemia, edema e hiperlipidemia. El nefrítico se define por hematuria, HTA y oliguria.'},
+ {k:['sindrome nefritico'],t:'<b>Sindrome nefrítico</b>: hematuria con cilindros hematicos, hipertensión, edema y oliguria.'},
  {k:['fena','prerrenal'],t:'En falla renal aguda, una <b>FeNa menor a 1%</b> orienta a causa prerrenal; mayor a 2% sugiere necrosis tubular aguda.'},
- {k:['aminoglucosido','gentamicina','amikacina'],t:'Los <b>aminoglucosidos</b> son nefrotoxicos y ototoxicos; requieren ajuste por funcion renal.'},
+ {k:['aminoglucosido','gentamicina','amikacina'],t:'Los <b>aminoglucosidos</b> son nefrotoxicos y ototoxicos; requieren ajuste por función renal.'},
  {k:['incidencia','prevalencia'],t:'<b>Incidencia</b> son casos nuevos en un periodo; <b>prevalencia</b> son casos totales existentes en un momento dado.'},
- {k:['sensibilidad','especificidad'],t:'La <b>sensibilidad</b> detecta enfermos (util para descartar cuando es negativa); la <b>especificidad</b> identifica sanos (util para confirmar cuando es positiva).'},
+ {k:['sensibilidad','especificidad'],t:'La <b>sensibilidad</b> detecta enfermos (útil para descartar cuando es negativa); la <b>especificidad</b> identifica sanos (útil para confirmar cuando es positiva).'},
  {k:['valor predictivo'],t:'Los <b>valores predictivos</b> dependen de la prevalencia; la sensibilidad y la especificidad no.'},
- {k:['casos y controles','odds ratio'],t:'Los estudios de <b>casos y controles</b> son retrospectivos y su medida de asociacion es el odds ratio.'},
+ {k:['casos y controles','odds ratio'],t:'Los estudios de <b>casos y controles</b> son retrospectivos y su medida de asociación es el odds ratio.'},
  {k:['cohorte','riesgo relativo'],t:'Los estudios de <b>cohorte</b> son longitudinales y permiten calcular incidencia y riesgo relativo.'},
- {k:['sesgo'],t:'Los <b>sesgos</b> son errores sistematicos: de seleccion, de informacion y de confusion. El azar produce error aleatorio, no sesgo.'},
- {k:['ensayo clinico','aleatorizado'],t:'El <b>ensayo clinico aleatorizado</b> es el diseno con mayor fuerza de evidencia para evaluar intervenciones.'}
+ {k:['sesgo'],t:'Los <b>sesgos</b> son errores sistemáticos: de selección, de información y de confusión. El azar produce error aleatorio, no sesgo.'},
+ {k:['ensayo clinico','aleatorizado'],t:'El <b>ensayo clínico aleatorizado</b> es el diseño con mayor fuerza de evidencia para evaluar intervenciones.'}
 ];
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function pistasFor(q){
@@ -1609,11 +1610,11 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
 
   h+='<div class="fbk-block"><h4>\u{1F4A1} Por que</h4><p>';
   if(correcto){
-    h+='Elegiste <b>'+q.c+'</b>, que es la clave oficial de esta pregunta del examen de '+esc(String(q.y||'ano no registrado'))+
+    h+='Elegiste <b>'+q.c+'</b>, que es la clave oficial de esta pregunta del examen de '+esc(String(q.y||'año no registrado'))+
        ' en <b>'+esc(q.sp)+'</b>. El enunciado apuntaba a este concepto; conservalo como patron de reconocimiento.';
   }else{
-    h+='La clave oficial es <b>'+q.c+'</b>. Tu opcion <b>'+marcada+'</b> es un distractor tipico: suele elegirse cuando se pasa por alto un dato del enunciado. '+
-       'Vuelve a leer la pregunta y subraya el termino que hace unica a la respuesta correcta.';
+    h+='La clave oficial es <b>'+q.c+'</b>. Tu opción <b>'+marcada+'</b> es un distractor típico: suele elegirse cuando se pasa por alto un dato del enunciado. '+
+       'Vuelve a leer la pregunta y subraya el termino que hace única a la respuesta correcta.';
   }
   h+='</p>';
   const desc=q.o.filter(o=>o[0]!==q.c);
@@ -1632,16 +1633,16 @@ function buildFeedback(q,marcada,correcto,streak,errStreak,xpGanado){
   if(st&&st.seen>=4){
     const p=Math.round(st.ok/st.seen*100);
     h+='<div class="fbk-block"><h4>\u{1F4C8} Tu historial en '+esc(q.sp)+'</h4><p>Llevas <b>'+st.ok+' de '+st.seen+'</b> correctas ('+p+'%). '+
-       (p>=75?'Es una de tus areas fuertes, mantenla con repasos cortos.'
-             :p>=50?'Vas nivelado. Un bloque enfocado en esta especialidad te subiria rapido el puntaje.'
-                   :'Esta es una de tus areas debiles: vale la pena dedicarle un simulacro completo.')+'</p></div>';
+       (p>=75?'Es una de tus áreas fuertes, mantenla con repasos cortos.'
+             :p>=50?'Vas nivelado. Un bloque enfocado en esta especialidad te subiría rápido el puntaje.'
+                   :'Esta es una de tus áreas débiles: vale la pena dedicarle un simulacro completo.')+'</p></div>';
   }
 
   const sr=S&&S.srs&&S.srs[S.i];
   if(sr){
-    h+='<div class="fbk-block"><h4>\u{1F501} Proxima revision</h4><p>'+
+    h+='<div class="fbk-block"><h4>\u{1F501} Próxima revisión</h4><p>'+
        (sr.i===0
-         ? 'Esta pregunta vuelve <b>en tu proxima sesion</b>: mientras falles, insiste.'
+         ? 'Esta pregunta vuelve <b>en tu próxima sesión</b>: mientras falles, insiste.'
          : 'La vuelves a ver <b>'+fmtDias(sr.i)+'</b>. Si aciertas otra vez, el intervalo se alarga solo.')+
        ' <span style="color:var(--ink-mut)">La has visto '+sr.n+' '+(sr.n===1?'vez':'veces')+
        ', con '+sr.k+' '+(sr.k===1?'acierto':'aciertos')+'.</span></p></div>';
@@ -1707,7 +1708,7 @@ function haceCuanto(t){
   const h=Math.round(m/60);
   if(h<24)return'hace '+h+' h';
   const d=Math.round(h/24);
-  return'hace '+d+(d>1?' dias':' dia');
+  return'hace '+d+(d>1?' días':' día');
 }
 function resumePinta(){
   const d=sesionLee(),box=document.getElementById('resumeBox');
@@ -1794,7 +1795,7 @@ document.getElementById('resumeGo').onclick=()=>{
   toast('\u{26A0}\u{FE0F}','Ese simulacro ya no se puede retomar');
 };
 document.getElementById('resumeDrop').onclick=()=>{
-  if(!confirm('Descartar el simulacro sin terminar?\n\nLo que ya respondiste sigue contando en tus estadisticas, pero no podras retomarlo.'))return;
+  if(!confirm('Descartar el simulacro sin terminar?\n\nLo que ya respondiste sigue contando en tus estadísticas, pero no podrás retomarlo.'))return;
   sesionBorra();resumePinta();
 };
 
@@ -1830,7 +1831,7 @@ function renderQ(){
   document.getElementById('pFill').style.width=((S.i)/(S.qs.length)*100)+'%';
   document.getElementById('tSp').textContent=q.sp;
   document.getElementById('tAr').textContent=q.area;
-  document.getElementById('tYr').textContent=q.y?('Examen '+q.y):'Ano no registrado';
+  document.getElementById('tYr').textContent=q.y?('Examen '+q.y):'Año no registrado';
   const pv=S.prev&&S.prev[S.i],tag=document.getElementById('tSrs');
   if(!S.smart){tag.style.display='none';}
   else{
@@ -1937,7 +1938,7 @@ function finish(){
   const sin=S.ans.filter(a=>a===null).length;
   if(sin){
     const entregar=confirm('Te faltan '+sin+(sin>1?' preguntas':' pregunta')+' por responder.\n\n'+
-      'Aceptar: entregar asi.\nCancelar: ir a la primera sin responder.');
+      'Aceptar: entregar así.\nCancelar: ir a la primera sin responder.');
     if(!entregar){
       const j=S.ans.indexOf(null);
       if(j>=0){S.i=j;renderQ();}
@@ -1971,7 +1972,7 @@ function renderResults(){
   if(acc>=90)verd='Rendimiento excelente';else if(acc>=75)verd='Buen dominio';else if(acc>=60)verd='Vas por buen camino';else if(acc>=40)verd='Necesita refuerzo';
   document.getElementById('rVerd').textContent=verd;
   const accEl=document.getElementById('rAcc').parentNode;
-  accEl.innerHTML='Precision <b id="rAcc">'+acc+'%</b> &middot; <b style="color:var(--gold-soft)">+'+((S.xp||0)+(S.bonus||0))+' XP</b>';
+  accEl.innerHTML='Precisión <b id="rAcc">'+acc+'%</b> &middot; <b style="color:var(--gold-soft)">+'+((S.xp||0)+(S.bonus||0))+' XP</b>';
   const bySp={};
   S.qs.forEach((q,i)=>{const b=bySp[q.sp]||(bySp[q.sp]={n:0,ok:0});b.n++;if(S.ans[i]===q.c)b.ok++;});
   const rows=Object.entries(bySp).sort((a,b)=>b[1].n-a[1].n);
@@ -2000,7 +2001,7 @@ function renderReview(wrongOnly){
     html+='<div class="rvans">';
     if(!correct)html+='<div class="ln"><span class="ll">Tu resp.</span><span class="yr">'+escapeHtml(yourTxt)+'</span></div>';
     html+='<div class="ln"><span class="ll">Correcta</span><span class="cr">'+escapeHtml(corrTxt)+'</span></div>';
-    html+='<div class="ln"><span class="ll">Fuente</span><span style="color:var(--ink-dim)">'+q.sp+' &middot; '+(q.y?('Examen '+q.y):'ano no registrado')+'</span></div>';
+    html+='<div class="ln"><span class="ll">Fuente</span><span style="color:var(--ink-dim)">'+q.sp+' &middot; '+(q.y?('Examen '+q.y):'año no registrado')+'</span></div>';
     html+='</div>';
     html+='<div class="fbk-act" style="padding:0 16px 14px"><button class="mini ai rv-ai" data-i="'+i+'">&#10024; Explicame por que</button></div>';
     html+='<div class="aiout" style="margin:0 16px 14px"></div>';
@@ -2036,7 +2037,7 @@ document.getElementById('startBtn').onclick=()=>{
     startQuiz(pool,true);
   }else{
     const pool=poolFor();
-    if(pool.length<1){alert('No hay preguntas con esa seleccion. Ajusta los filtros.');return;}
+    if(pool.length<1){alert('No hay preguntas con esa selección. Ajusta los filtros.');return;}
     startQuiz(pool);
   }
   window.scrollTo(0,0);
@@ -2050,9 +2051,9 @@ let AI={mode:'proxy',url:'',key:'',model:'claude-haiku-4-5',auto:'wrong'};
 try{Object.assign(AI,JSON.parse(localStorage.getItem(AILS))||{});}catch(e){}
 
 const AUTO_HINT={
-  wrong:'Sale sola cuando te equivocas. En las que aciertas queda el boton por si quieres profundizar.',
-  always:'Sale sola en todas las preguntas. Consume mas saldo: una peticion por pregunta.',
-  manual:'Solo aparece cuando tocas el boton. Es la opcion que menos gasta.'
+  wrong:'Sale sola cuando te equivocas. En las que aciertas queda el botón por si quieres profundizar.',
+  always:'Sale sola en todas las preguntas. Consume más saldo: una petición por pregunta.',
+  manual:'Solo aparece cuando tocas el botón. Es la opción que menos gasta.'
 };
 
 function aiReady(){return AI.mode==='proxy'?!!AI.url:!!AI.key;}
@@ -2065,8 +2066,8 @@ function aiPaintCfg(){
   document.querySelectorAll('#aiModeSeg button').forEach(b=>b.classList.toggle('on',b.dataset.aimode===AI.mode));
   document.getElementById('aiProxyBox').style.display=AI.mode==='proxy'?'':'none';
   document.getElementById('aiDirectBox').style.display=AI.mode==='direct'?'':'none';
-  const auto=AI.auto==='always'?'automatica en todas'
-            :AI.auto==='wrong'?'automatica al fallar':'manual';
+  const auto=AI.auto==='always'?'automática en todas'
+            :AI.auto==='wrong'?'automática al fallar':'manual';
   if(aiApagado){
     const info=AI_FALLO[aiApagado]||AI_FALLO.otro;
     aiStat('err',info.t+'. Trabajando en modo local; toca "Guardar y probar" para reintentar.');
@@ -2090,34 +2091,34 @@ function aiSaveCfg(){
 
 /* El formato es estricto porque la interfaz lo interpreta para maquetarlo:
    cada etiqueta abre su propio bloque y cada distractor va en su renglon. */
-const AI_SYSTEM='Eres un tutor medico peruano que prepara postulantes al examen de residentado (CONAREME). '+
-  'Explicas preguntas de opcion multiple ya respondidas. Responde SIEMPRE en espanol, en maximo 200 palabras, '+
+const AI_SYSTEM='Eres un tutor médico peruano que prepara postulantes al examen de residentado (CONAREME). '+
+  'Explicas preguntas de opción multiple ya respondidas. Responde SIEMPRE en espanol, en máximo 200 palabras, '+
   'con este formato exacto y en este orden:\n\n'+
-  '**Por que es correcta:** una o dos frases sobre la opcion clave.\n\n'+
+  '**Por que es correcta:** una o dos frases sobre la opción clave.\n\n'+
   '**Por que fallan las otras:**\n'+
   'A) motivo brevisimo\n'+
   'B) motivo brevisimo\n\n'+
-  '**Para recordar:** una regla nemotecnica, criterio diagnostico o dato de alto rendimiento.\n\n'+
-  'Reglas de formato, importantes porque la aplicacion interpreta tu respuesta:\n'+
-  '- Cada una de las tres etiquetas va al inicio de su propia linea.\n'+
-  '- Bajo "Por que fallan las otras" escribe UNA LINEA POR DISTRACTOR, empezando por su letra '+
-  'seguida de un parentesis. No juntes varios distractores en un mismo parrafo.\n'+
+  '**Para recordar:** una regla nemotécnica, criterio diagnóstico o dato de alto rendimiento.\n\n'+
+  'Reglas de formato, importantes porque la aplicación interpreta tu respuesta:\n'+
+  '- Cada una de las tres etiquetas va al inicio de su propia línea.\n'+
+  '- Bajo "Por que fallan las otras" escribe UNA LÍNEA POR DISTRACTOR, empezando por su letra '+
+  'seguida de un parentesis. No juntes varios distractores en un mismo párrafo.\n'+
   '- Omite la alternativa correcta de esa lista.\n'+
   '- No uses encabezados con almohadilla, ni listas anidadas, ni tablas.\n\n'+
-  'No inventes datos que no puedas sostener. Si la clave oficial parece discutible o la pregunta esta mal transcrita, dilo en una linea.';
+  'No inventes datos que no puedas sostener. Si la clave oficial parece discutible o la pregunta está mal transcrita, dilo en una línea.';
 
 function aiPrompt(q,marcada){
-  return 'Especialidad: '+q.sp+' ('+q.area+'). Examen de residentado '+(q.y||'sin ano')+'.\n\n'+
+  return 'Especialidad: '+q.sp+' ('+q.area+'). Examen de residentado '+(q.y||'sin año')+'.\n\n'+
     'Pregunta: '+q.q+'\n\n'+
     'Alternativas:\n'+q.o.map(o=>o[0]+') '+o[1]).join('\n')+'\n\n'+
     'Clave oficial: '+q.c+'\n'+
-    'El estudiante marco: '+(marcada||'no respondio')+(marcada&&marcada!==q.c?' (incorrecta)':marcada?' (correcta)':'')+'\n\n'+
+    'El estudiante marco: '+(marcada||'no respondió')+(marcada&&marcada!==q.c?' (incorrecta)':marcada?' (correcta)':'')+'\n\n'+
     'Explica siguiendo el formato indicado.';
 }
 
 /* Clasifica el fallo para decidir si se apaga la IA o solo se salta esta pregunta.
    'saldo', 'clave' y 'permiso' son permanentes: no tiene sentido reintentar
-   pregunta tras pregunta. 'limite' y 'caida' son pasajeros. */
+   pregunta tras pregunta. 'límite' y 'caída' son pasajeros. */
 function aiError(status,msg,forzar){
   let code=forzar||'otro';
   const m=(msg||'').toLowerCase();
@@ -2126,8 +2127,8 @@ function aiError(status,msg,forzar){
     else if(status===400&&/credit|balance/.test(m))code='saldo';
     else if(status===401)code='clave';
     else if(status===403)code='permiso';
-    else if(status===429)code='limite';
-    else if(status>=500)code='caida';
+    else if(status===429)code='límite';
+    else if(status>=500)code='caída';
   }
   const e=new Error(msg||('HTTP '+status));
   e.code=code;e.status=status;
@@ -2136,17 +2137,17 @@ function aiError(status,msg,forzar){
 const AI_FALLO={
   saldo:{t:'Se agoto el saldo de la API',
          d:'Recarga en platform.claude.com para volver a tener explicaciones con IA.'},
-  clave:{t:'La clave no es valida',
-         d:'Revisala en Inicio, seccion Tutor con IA.'},
+  clave:{t:'La clave no es válida',
+         d:'Revisala en Inicio, sección Tutor con IA.'},
   permiso:{t:'La clave no tiene permiso',
          d:'Verifica el estado de tu cuenta en platform.claude.com.'},
   limite:{t:'Demasiadas consultas seguidas',
-         d:'Espera un momento y vuelve a tocar el boton.'},
+         d:'Espera un momento y vuelve a tocar el botón.'},
   caida:{t:'El servicio no responde',
          d:'Es temporal. Intenta de nuevo en un rato.'},
-  refusal:{t:'El modelo no respondio esta pregunta',
+  refusal:{t:'El modelo no respondió esta pregunta',
          d:'Ocurre en temas que sus filtros restringen.'},
-  otro:{t:'No se pudo obtener la explicacion',d:''}
+  otro:{t:'No se pudo obtener la explicación',d:''}
 };
 /* Se apaga sola para el resto de la sesion cuando el error es permanente.
    Se limpia al recargar la pagina o al probar la conexion de nuevo. */
@@ -2165,7 +2166,7 @@ async function aiExplain(q,marcada){
     res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{
       'content-type':'application/json',
       'x-api-key':AI.key,
-      'anthropic-version':'2023-06-01',
+      'anthropic-versión':'2023-06-01',
       'anthropic-dangerous-direct-browser-access':'true'
     },body:JSON.stringify(body)});
   }
@@ -2174,9 +2175,9 @@ async function aiExplain(q,marcada){
     throw aiError(res.status,d);
   }
   const data=await res.json();
-  if(data.stop_reason==='refusal')throw aiError(0,'El modelo declino responder esta pregunta.','refusal');
+  if(data.stop_reason==='refusal')throw aiError(0,'El modelo declinó responder esta pregunta.','refusal');
   const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('\n').trim();
-  if(!txt)throw new Error('Respuesta vacia del modelo.');
+  if(!txt)throw new Error('Respuesta vacía del modelo.');
   return txt;
 }
 
@@ -2204,7 +2205,7 @@ function paintLocal(out,code,btn,pie){
   out.className='aiout show local';
   out.innerHTML='<div class="aihead">\u{1F4D6} Modo local</div>'+
     '<div class="aibody"><p><b>'+esc(info.t)+'.</b> '+esc(info.d)+'</p>'+
-    '<p style="color:var(--ink-dim)">El analisis de arriba sigue completo: la clave, las opciones '+
+    '<p style="color:var(--ink-dim)">El análisis de arriba sigue completo: la clave, las opciones '+
     'descartadas y el dato de repaso salen del banco local y no dependen de internet.</p></div>'+
     (pie?'<div class="aifoot">'+esc(pie)+'</div>':'');
   if(btn){btn.disabled=true;btn.innerHTML='\u{1F4D6} Modo local';}
@@ -2290,8 +2291,8 @@ function paintAi(out,txt){
 async function runAi(q,marcada,btn,out,clave){
   if(!aiReady()){
     out.className='aiout show';
-    out.innerHTML='<div class="aihead">Tutor IA</div><div class="aierr">Aun no configuras el tutor. '+
-      'Ve al inicio, seccion <b>Tutor con IA</b>, y elige servidor propio (Firebase) o tu clave personal.</div>';
+    out.innerHTML='<div class="aihead">Tutor IA</div><div class="aierr">Aún no configuras el tutor. '+
+      'Ve al inicio, sección <b>Tutor con IA</b>, y elige servidor propio (Firebase) o tu clave personal.</div>';
     return;
   }
   if(clave!=null&&S&&S.aiCache&&S.aiCache[clave]){
@@ -2317,7 +2318,7 @@ async function runAi(q,marcada,btn,out,clave){
     const permanente=code==='saldo'||code==='clave'||code==='permiso';
     if(permanente){
       aiApagado=code;aiPaintCfg();
-      paintLocal(out,code,btn,'La IA queda en pausa hasta que recargues la pagina o vuelvas a probar la conexion en Inicio.');
+      paintLocal(out,code,btn,'La IA queda en pausa hasta que recargues la página o vuelvas a probar la conexión en Inicio.');
     }else{
       paintLocal(out,code,null);
       if(btn){btn.disabled=false;btn.innerHTML=old;}
@@ -2342,13 +2343,13 @@ document.querySelectorAll('#aiAutoSeg button').forEach(b=>b.onclick=()=>{
 document.getElementById('aiSave').onclick=async function(){
   aiSaveCfg();
   aiApagado=null;   /* reintento limpio: quiza ya recargaron saldo */
-  if(!aiReady()){aiStat('err',AI.mode==='proxy'?'Falta la URL de la funcion.':'Falta la API key.');return;}
-  aiStat('','Probando conexion…');
+  if(!aiReady()){aiStat('err',AI.mode==='proxy'?'Falta la URL de la función.':'Falta la API key.');return;}
+  aiStat('','Probando conexión…');
   this.disabled=true;
   try{
-    await aiExplain({q:'Prueba de conexion.',o:[['A','Opcion A'],['B','Opcion B']],c:'A',sp:'General',area:'General',y:2024},'A');
+    await aiExplain({q:'Prueba de conexión.',o:[['A','Opción A'],['B','Opción B']],c:'A',sp:'General',area:'General',y:2024},'A');
     aiPaintCfg();
-    aiStat('ok','Conexion correcta. Tutor IA activo con '+AI.model+'.');
+    aiStat('ok','Conexión correcta. Tutor IA activo con '+AI.model+'.');
   }catch(e){
     const code=e.code||'otro';
     if(code==='saldo'||code==='clave'||code==='permiso')aiApagado=code;
@@ -2397,7 +2398,7 @@ function bkResumen(){
   const dias=Object.keys(STATS.dias||{}).length;
   document.getElementById('bkInfo').innerHTML=
     '<b>'+nf(STATS.lifeSeen||0)+'</b> respuestas · <b>'+nf(vistas)+'</b> preguntas con memoria · '+
-    '<b>'+nf(dias)+'</b> dias registrados · <b>'+nf(STATS.xp||0)+'</b> XP · '+
+    '<b>'+nf(dias)+'</b> días registrados · <b>'+nf(STATS.xp||0)+'</b> XP · '+
     (STATS.badges||[]).length+' logros';
 }
 function bkStat(cls,txt){
@@ -2423,15 +2424,15 @@ document.getElementById('bkFile').onchange=function(){
   const fr=new FileReader();
   fr.onload=()=>{
     let d;
-    try{d=JSON.parse(fr.result);}catch(e){return bkStat('err','El archivo no es un respaldo valido.');}
+    try{d=JSON.parse(fr.result);}catch(e){return bkStat('err','El archivo no es un respaldo válido.');}
     if(!d||d.app!=='residentado-conareme'||!d.stats||typeof d.stats!=='object')
-      return bkStat('err','El archivo no corresponde a esta aplicacion.');
+      return bkStat('err','El archivo no corresponde a esta aplicación.');
     const n=d.stats;
-    if(typeof n.lifeSeen!=='number')return bkStat('err','El respaldo esta incompleto.');
+    if(typeof n.lifeSeen!=='number')return bkStat('err','El respaldo está incompleto.');
     const resumen=nf(n.lifeSeen)+' respuestas, '+Object.keys(n.srs||{}).length+' preguntas con memoria y '+
       nf(n.xp||0)+' XP, del '+String(d.fecha||'').slice(0,10);
     if(!confirm('Vas a reemplazar tu progreso actual por el del respaldo:\n\n'+resumen+
-                '\n\nEsto no se puede deshacer. Continuar?'))return bkStat('','Restauracion cancelada.');
+                '\n\nEsto no se puede deshacer. Continuar?'))return bkStat('','Restauración cancelada.');
     STATS=Object.assign(blankStats(),n);
     if(!Array.isArray(STATS.badges))STATS.badges=[];
     if(!STATS.srs||typeof STATS.srs!=='object')STATS.srs={};
@@ -2550,14 +2551,14 @@ function fusionar(a,b){
 }
 
 const NUBE_FALLO={
-  'auth/unauthorized-domain':'Este dominio no esta autorizado en Firebase. Agregalo en Authentication → Settings → Authorized domains.',
-  'auth/operation-not-allowed':'Ese metodo de ingreso no esta habilitado en Firebase. Actívalo en Authentication → Metodo de acceso.',
-  'auth/network-request-failed':'Sin conexion con Firebase. Tu progreso local esta intacto.',
+  'auth/unauthorized-domain':'Este dominio no está autorizado en Firebase. Agrégalo en Authentication → Settings → Authorized domains.',
+  'auth/operation-not-allowed':'Ese método de ingreso no está habilitado en Firebase. Actívalo en Authentication → Método de acceso.',
+  'auth/network-request-failed':'Sin conexión con Firebase. Tu progreso local está intacto.',
   'auth/popup-blocked':'El navegador bloqueo la ventana de Google. Permite las ventanas emergentes de este sitio.',
   /* Correo y contraseña. Firebase ya no distingue "no existe" de "clave
      mala" (devuelve invalid-credential para ambos) y esta bien: decirlo
      seria filtrar que correos tienen cuenta. */
-  'auth/invalid-email':'Ese correo no tiene un formato valido.',
+  'auth/invalid-email':'Ese correo no tiene un formato válido.',
   'auth/missing-password':'Escribe tu contraseña.',
   'auth/weak-password':'La contraseña necesita al menos 6 caracteres.',
   'auth/email-already-in-use':'Ese correo ya tiene cuenta. Usa "Entrar" en vez de "Crear cuenta".',
@@ -2565,15 +2566,15 @@ const NUBE_FALLO={
   'auth/wrong-password':'Correo o contraseña incorrectos.',
   'auth/user-not-found':'No hay ninguna cuenta con ese correo. Toca "Crear cuenta".',
   'auth/too-many-requests':'Demasiados intentos seguidos. Espera unos minutos y vuelve a probar.',
-  'permission-denied':'Firestore rechazo la operacion. Revisa que las reglas de firebase/firestore.rules esten publicadas.',
-  'unavailable':'Firestore no responde ahora. Se reintenta solo mas adelante.',
+  'permission-denied':'Firestore rechazo la operación. Revisa que las reglas de firebase/firestore.rules esten publicadas.',
+  'unavailable':'Firestore no responde ahora. Se reintenta solo más adelante.',
   /* El navegador cerro el almacen donde vive la sesion. Pasa cuando el
      celular congela la pestaña (una videollamada de fondo basta), en modo
      incognito, o dentro del navegador de otra app. Van en minusculas
      porque se comparan contra el mensaje del error en minusculas. */
-  'database is closing':'El navegador cerro el almacenamiento de la sesion. Suele pasar si el celular dejo la pagina en segundo plano. Vuelve a tocar el boton con la app en primer plano.',
-  'indexeddb':'El navegador no dejo guardar la sesion. Si estas en modo incognito o abriste la app desde otra app, abrela en Chrome o Safari normal.',
-  'web-storage':'El navegador tiene bloqueado el almacenamiento. Permite las cookies y los datos de sitio, o sal del modo incognito.'
+  'database is closing':'El navegador cerró el almacenamiento de la sesión. Suele pasar si el celular dejó la página en segundo plano. Vuelve a tocar el botón con la app en primer plano.',
+  'indexeddb':'El navegador no dejó guardar la sesión. Si estás en modo incógnito o abriste la app desde otra app, ábrela en Chrome o Safari normal.',
+  'web-storage':'El navegador tiene bloqueado el almacenamiento. Permite las cookies y los datos de sitio, o sal del modo incógnito.'
 };
 function nubeStat(cls,txt){
   const el=document.getElementById('nbStat');
@@ -2586,7 +2587,7 @@ function nubeMsg(e){
   const code=(e&&e.code)||'',texto=(e&&e.message)||'';
   const heno=(code+' '+texto).toLowerCase();
   for(const k in NUBE_FALLO)if(heno.indexOf(k)>=0)return NUBE_FALLO[k];
-  return 'No se pudo conectar con la nube ('+(code||texto||'error desconocido')+'). Tu progreso local esta intacto.';
+  return 'No se pudo conectar con la nube ('+(code||texto||'error desconocido')+'). Tu progreso local está intacto.';
 }
 function fechaCorta(ms){
   try{return new Date(ms).toLocaleString('es-PE',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
@@ -2598,10 +2599,10 @@ function nubePinta(){
   document.getElementById('nbFuera').style.display=u?'none':'';
   document.getElementById('nbDentro').style.display=u?'':'none';
   document.getElementById('nbInfo').innerHTML=u
-    ? 'Sesion de <b>'+esc(u.email||u.displayName||'tu cuenta')+'</b> · '+
-      (NUBE.ultima?'ultima sincronizacion el <b>'+esc(fechaCorta(NUBE.ultima))+'</b>':'aun sin sincronizar')
+    ? 'Sesión de <b>'+esc(u.email||u.displayName||'tu cuenta')+'</b> · '+
+      (NUBE.ultima?'última sincronización el <b>'+esc(fechaCorta(NUBE.ultima))+'</b>':'aún sin sincronizar')
     : (NUBE.correo
-        ? 'Ultima cuenta usada: <b>'+esc(NUBE.correo)+'</b>. Entra otra vez para seguir sincronizando.'
+        ? 'Última cuenta usada: <b>'+esc(NUBE.correo)+'</b>. Entra otra vez para seguir sincronizando.'
         : 'Sin cuenta. Tu progreso vive solo en este navegador.');
 }
 
@@ -2686,14 +2687,14 @@ function nubeVigila(api){
     }else{
       nubeListo=false;
       /* Si se esta yendo a Google por redireccion, la marca tiene que
-         sobrevivir: irse de la pagina dispara este aviso de "sin sesion", y
+         sobrevivir: irse de la pagina dispara este aviso de "sin sesión", y
          borrarla ahi dejaba el ingreso muerto al volver. */
       if(!nubeRedirigiendo){NUBE.activo=false;nubePrefs();}
       nubePinta();
       /* Solo habla cuando de verdad se cerro una sesion. Si nunca la hubo,
          deja el mensaje que ya estaba en pantalla: suele ser el motivo por
          el que el ingreso fallo, y eso importa mas que repetir el estado. */
-      if(salio)nubeStat('','Sesion cerrada. Tu progreso sigue en este navegador.');
+      if(salio)nubeStat('','Sesión cerrada. Tu progreso sigue en este navegador.');
     }
   });
   /* Regreso del ingreso por redireccion, en los moviles donde no abre el
@@ -2714,14 +2715,14 @@ function navegadorIncrustado(){
   const u=navigator.userAgent||'';
   return /FBAN|FBAV|FB_IAB|Instagram|Line\/|MicroMessenger|Twitter|; wv\)/i.test(u);
 }
-const AVISO_INCRUSTADO='Abriste la app desde otra aplicacion (WhatsApp, Instagram...) y Google no permite iniciar sesion ahi. '+
+const AVISO_INCRUSTADO='Abriste la app desde otra aplicación (WhatsApp, Instagram...) y Google no permite iniciar sesión ahí. '+
   'Toca el menu de tres puntos y elige "Abrir en Chrome" o "Abrir en Safari", y vuelve a intentarlo.';
 
 document.getElementById('nbEntrar').onclick=async()=>{
   nubeStat('','Abriendo el ingreso de Google...');
   let api;
   try{api=await fbCargar();}
-  catch(e){return nubeStat('err','No se pudo cargar Firebase. Revisa tu conexion; tu progreso local esta intacto.');}
+  catch(e){return nubeStat('err','No se pudo cargar Firebase. Revisa tu conexión; tu progreso local está intacto.');}
   nubeVigila(api);
   const prov=new api.au.GoogleAuthProvider();
   try{
@@ -2753,7 +2754,7 @@ async function nubeCorreo(accion){
   const clave=document.getElementById('nbPass').value;
   if(!correo)return nubeStat('err','Escribe tu correo.');
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(correo))
-    return nubeStat('err','Ese correo no tiene un formato valido.');
+    return nubeStat('err','Ese correo no tiene un formato válido.');
   if(accion!=='reset'&&clave.length<6)
     return nubeStat('err','La contraseña necesita al menos 6 caracteres.');
 
@@ -2761,12 +2762,12 @@ async function nubeCorreo(accion){
             :accion==='reset'?'Enviando el correo...':'Entrando...');
   let api;
   try{api=await fbCargar();}
-  catch(e){return nubeStat('err','No se pudo cargar Firebase. Revisa tu conexion; tu progreso local esta intacto.');}
+  catch(e){return nubeStat('err','No se pudo cargar Firebase. Revisa tu conexión; tu progreso local está intacto.');}
   nubeVigila(api);
   try{
     if(accion==='reset'){
       await api.au.sendPasswordResetEmail(api.auth,correo);
-      return nubeStat('ok','Te envie un correo para restablecer la contraseña. Revisa tambien la carpeta de spam.');
+      return nubeStat('ok','Te envié un correo para restablecer la contraseña. Revisa también la carpeta de spam.');
     }
     if(accion==='crear')await api.au.createUserWithEmailAndPassword(api.auth,correo,clave);
     else await api.au.signInWithEmailAndPassword(api.auth,correo,clave);
@@ -2780,12 +2781,12 @@ document.getElementById('nbReset').onclick=()=>nubeCorreo('reset');
 document.getElementById('nbSync').onclick=()=>nubeSincroniza(true);
 document.getElementById('nbSalir').onclick=async()=>{
   if(!fbApi)return;
-  if(!confirm('Cerrar sesion? Tu progreso queda guardado en este navegador y en la nube.'))return;
+  if(!confirm('Cerrar sesión? Tu progreso queda guardado en este navegador y en la nube.'))return;
   if(nubeT){clearTimeout(nubeT);nubeT=null;await nubeEmpuja();}
   try{
     await fbApi.au.signOut(fbApi.auth);
     NUBE.ultima=0;nubePrefs();
-    nubeStat('','Sesion cerrada. Tu progreso sigue en este navegador.');
+    nubeStat('','Sesión cerrada. Tu progreso sigue en este navegador.');
   }catch(e){nubeStat('err',nubeMsg(e));}
 };
 
@@ -2794,7 +2795,7 @@ if(NUBE.activo){
   /* Ya uso la nube en este equipo: se restaura la sesion en segundo plano,
      cuando el navegador este libre, para no retrasar la primera pantalla. */
   const arranca=()=>fbCargar().then(nubeVigila)
-    .catch(()=>nubeStat('','Sin conexion con la nube; sigues estudiando con lo local.'));
+    .catch(()=>nubeStat('','Sin conexión con la nube; sigues estudiando con lo local.'));
   'requestIdleCallback' in window?requestIdleCallback(arranca,{timeout:4000}):setTimeout(arranca,1500);
 }
 
@@ -2811,7 +2812,7 @@ if('serviceWorker' in navigator&&location.protocol.startsWith('http')){
         if(!sw)return;
         sw.addEventListener('statechange',()=>{
           if(sw.state==='installed'&&navigator.serviceWorker.controller){
-            toast('\u{1F195}','Nueva version lista · recarga cuando termines');
+            toast('\u{1F195}','Nueva versión lista · recarga cuando termines');
           }
         });
       });
@@ -2826,10 +2827,10 @@ function pintaRed(){
   document.body.classList.toggle('sinred',off);
   const b=document.getElementById('netBar');
   if(b)b.textContent=off
-    ? 'Sin conexion · sigues estudiando con el banco local; el tutor IA vuelve al recuperar señal'
+    ? 'Sin conexión · sigues estudiando con el banco local; el tutor IA vuelve al recuperar señal'
     : '';
 }
-addEventListener('online',()=>{pintaRed();toast('\u{1F4F6}','Conexion recuperada');});
+addEventListener('online',()=>{pintaRed();toast('\u{1F4F6}','Conexión recuperada');});
 addEventListener('offline',pintaRed);
 pintaRed();
 </script>
