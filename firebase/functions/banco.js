@@ -17,14 +17,12 @@
  */
 
 const { onRequest } = require("firebase-functions/v2/https");
-const admin = require("firebase-admin");
-
-if (!admin.apps.length) admin.initializeApp();
+const { comprobar, responderDenegado } = require("./licencia");
 
 const ORIGENES_PERMITIDOS = [
-  "https://leidercostoshotel-code.github.io",
   "https://examen-residentado.web.app",
   "https://examen-residentado.firebaseapp.com",
+  "https://leidercostoshotel-code.github.io",
   "http://localhost:5000",
   "http://127.0.0.1:5500",
 ];
@@ -63,23 +61,6 @@ function aplicarCors(req, res) {
   return !origen || ORIGENES_PERMITIDOS.includes(origen);
 }
 
-/* Motivos separados a proposito: el estudiante tiene que poder distinguir
-   "no me vendieron todavia" de "se me vencio" de "esta en mi otro celular",
-   porque cada uno se resuelve distinto. */
-const MOTIVOS = {
-  sin_sesion: "Inicia sesión para entrar.",
-  sin_correo: "Tu cuenta no tiene un correo verificado. Revisa tu bandeja y confirma el correo.",
-  sin_licencia: "Esta cuenta todavía no tiene acceso. Escríbele al administrador con el correo con el que entraste.",
-  vencida: "Tu acceso venció. Escríbele al administrador para renovarlo.",
-  suspendida: "Tu acceso está suspendido. Escríbele al administrador.",
-  otro_aparato: "Esta cuenta ya está en uso en otro dispositivo. Solo se puede usar en uno.",
-  sin_aparato: "Falta identificar el dispositivo. Recarga la página.",
-};
-
-function fallo(res, codigo, motivo) {
-  return res.status(codigo).json({ error: { motivo, message: MOTIVOS[motivo] || "Acceso denegado." } });
-}
-
 exports.banco = onRequest(
   { region: "us-central1", memory: "512MiB", timeoutSeconds: 60 },
   async (req, res) => {
@@ -94,48 +75,17 @@ exports.banco = onRequest(
       return res.status(429).json({ error: { message: "Demasiadas peticiones seguidas. Espera un minuto." } });
     }
 
-    /* 1. Quien pide. El token lo firma Firebase; el cliente no puede falsearlo. */
-    const cabecera = req.headers.authorization || "";
-    const token = cabecera.startsWith("Bearer ") ? cabecera.slice(7) : "";
-    if (!token) return fallo(res, 401, "sin_sesion");
-
-    let sesion;
+    /* Quien pide, desde donde y con que derecho. La funcion del banco es la
+       puerta de entrada, asi que aqui si se reclama el aparato: el primero
+       que llega se queda con la licencia. */
+    let db;
     try {
-      sesion = await admin.auth().verifyIdToken(token);
+      ({ db } = await comprobar(req, { reclamar: true }));
     } catch (e) {
-      return fallo(res, 401, "sin_sesion");
-    }
-    const correo = (sesion.email || "").toLowerCase();
-    if (!correo || !sesion.email_verified) return fallo(res, 403, "sin_correo");
-
-    /* 2. Desde donde. */
-    const aparato = String((req.body && req.body.aparato) || "");
-    if (aparato.length < 16 || aparato.length > 64) return fallo(res, 400, "sin_aparato");
-
-    /* 3. Tiene licencia. */
-    const db = admin.firestore();
-    const ref = db.collection("licencias").doc(correo);
-    const snap = await ref.get();
-    if (!snap.exists) return fallo(res, 403, "sin_licencia");
-
-    const lic = snap.data() || {};
-    if (lic.activa !== true) return fallo(res, 403, "suspendida");
-    if (lic.vence && lic.vence.toMillis && lic.vence.toMillis() < Date.now()) {
-      return fallo(res, 403, "vencida");
+      return responderDenegado(res, e);
     }
 
-    /* 4. Es su aparato. El primero que entra se queda con la licencia; para
-       soltarla hay que borrar el campo desde la consola. Asi una cuenta
-       comprada no se reparte entre varias personas. */
-    if (!lic.dispositivo) {
-      await ref.update({ dispositivo: aparato, visto: admin.firestore.FieldValue.serverTimestamp() });
-    } else if (lic.dispositivo !== aparato) {
-      return fallo(res, 403, "otro_aparato");
-    } else {
-      await ref.update({ visto: admin.firestore.FieldValue.serverTimestamp() });
-    }
-
-    /* 5. La version. Si el navegador ya tiene esta, no se manda nada. */
+    /* La version. Si el navegador ya tiene esta, no se manda nada. */
     const metaSnap = await db.collection("banco").doc("meta").get();
     const meta = metaSnap.exists ? metaSnap.data() : null;
     if (!meta) return res.status(503).json({ error: { message: "El banco todavía no está publicado." } });
@@ -144,7 +94,7 @@ exports.banco = onRequest(
       return res.status(200).json({ version: meta.version, sinCambios: true });
     }
 
-    /* 6. El banco, armado a partir de sus partes. */
+    /* El banco, armado a partir de sus partes. */
     const partes = await Promise.all(
       meta.partes.map((p) => db.collection("banco").doc(p).get())
     );

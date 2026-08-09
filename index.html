@@ -2350,7 +2350,9 @@ function aiPrompt(q,marcada){
 
 /* Clasifica el fallo para decidir si se apaga la IA o solo se salta esta pregunta.
    'saldo', 'clave' y 'permiso' son permanentes: no tiene sentido reintentar
-   pregunta tras pregunta. 'límite' y 'caída' son pasajeros. */
+   pregunta tras pregunta. 'limite' y 'caida' son pasajeros. Estos codigos son
+   identificadores internos, no texto para nadie: van sin tilde porque asi
+   estan las claves de AI_FALLO. */
 function aiError(status,msg,forzar){
   let code=forzar||'otro';
   const m=(msg||'').toLowerCase();
@@ -2359,8 +2361,8 @@ function aiError(status,msg,forzar){
     else if(status===400&&/credit|balance/.test(m))code='saldo';
     else if(status===401)code='clave';
     else if(status===403)code='permiso';
-    else if(status===429)code='límite';
-    else if(status>=500)code='caída';
+    else if(status===429)code='limite';
+    else if(status>=500)code='caida';
   }
   const e=new Error(msg||('HTTP '+status));
   e.code=code;e.status=status;
@@ -2393,12 +2395,21 @@ async function aiExplain(q,marcada){
 
   let res;
   if(AI.mode==='proxy'){
-    res=await fetch(AI.url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+    /* La funcion cobra en dolares por cada explicacion, asi que exige lo mismo
+       que la puerta: sesion y licencia en este aparato. Sin token no llega. */
+    const cab={'content-type':'application/json'};
+    try{
+      const api=await fbCargar();
+      const u=api.auth.currentUser;
+      if(u)cab.authorization='Bearer '+(await u.getIdToken());
+    }catch(e){}
+    res=await fetch(AI.url,{method:'POST',headers:cab,
+      body:JSON.stringify(Object.assign({aparato:aparatoId()},body))});
   }else{
     res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{
       'content-type':'application/json',
       'x-api-key':AI.key,
-      'anthropic-versión':'2023-06-01',
+      'anthropic-version':'2023-06-01',
       'anthropic-dangerous-direct-browser-access':'true'
     },body:JSON.stringify(body)});
   }

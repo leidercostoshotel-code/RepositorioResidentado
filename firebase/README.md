@@ -9,6 +9,10 @@ El proyecto conectado es **`examen-residentado`**. Firebase cumple dos papeles d
 | **Tutor IA** (Cloud Function) | Guardar la clave de Anthropic fuera del navegador | Plan Blaze y desplegar la función |
 | **Licencias** (Cloud Function + Firestore) | Vender el acceso: el banco solo baja a quien tiene licencia activa, y solo en su aparato | Ver **[LICENCIAS.md](LICENCIAS.md)** |
 
+> **Para dejarlo todo dentro de Firebase y cerrar el acceso, sigue
+> [MUDANZA.md](MUDANZA.md) paso a paso.** Va en orden y hasta el paso 6 no se
+> rompe nada para quien ya usa la app.
+
 Las tres son independientes: puedes activar una sin las otras. Sin ninguna, la app funciona completa en modo local.
 
 Todos los comandos de esta guía se corren **desde la raíz del repositorio**. El proyecto ya viene fijado en `.firebaserc`, así que no hace falta enlazarlo a mano.
