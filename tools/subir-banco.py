@@ -45,7 +45,10 @@ TOPE = 900_000
 
 def leer_banco():
     html = io.open(INDEX, encoding="utf-8").read()
-    m = re.search(r"(const BANK = )(\{.*\})(;)", html)
+    # "let" y no "const" desde que el banco puede llegar de la nube y
+    # reemplazarse en tiempo de ejecucion. Se aceptan los dos para que un
+    # index.html de antes de ese cambio siga funcionando.
+    m = re.search(r"((?:const|let) BANK = )(\{.*\})(;)", html)
     if not m:
         sys.exit("No se encontro el banco dentro de index.html")
     return json.loads(m.group(2))
