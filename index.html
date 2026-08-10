@@ -700,6 +700,7 @@ details.howto a{color:var(--gold-soft)}
         <div class="pquien">Estás dentro como <b id="pQuien">—</b></div>
         <div class="paccs">
           <button class="nbtn" id="pReintentar">Reintentar</button>
+          <button class="plink" id="pReenviar" hidden>Reenviar correo de confirmación</button>
           <button class="plink" id="pSalir">Cerrar sesión</button>
         </div>
       </div>
@@ -3218,6 +3219,7 @@ async function puertaEntra(){
     if(e.motivo==='otro_aparato'||e.motivo==='vencida'||e.motivo==='sin_licencia'||e.motivo==='suspendida'){
       bancoOlvida();
     }
+    document.getElementById('pReenviar').hidden=e.motivo!=='sin_correo';
     pVista(fbApi&&fbApi.auth&&fbApi.auth.currentUser?'cuenta':'entrar','No se pudo abrir tu acceso.');
     pStat('err',e.motivo?e.message:nubeMsg(e));
   }finally{
@@ -3237,8 +3239,19 @@ async function puertaCorreo(accion){
       await api.au.sendPasswordResetEmail(api.auth,correo);
       return pStat('ok','Te envié un correo para restablecer la contraseña. Revisa también la carpeta de spam.');
     }
-    if(accion==='crear')await api.au.createUserWithEmailAndPassword(api.auth,correo,clave);
-    else await api.au.signInWithEmailAndPassword(api.auth,correo,clave);
+    if(accion==='crear'){
+      await api.au.createUserWithEmailAndPassword(api.auth,correo,clave);
+      /* La nube exige correo verificado, y Firebase no manda el aviso solo.
+         Sin esto, quien crea la cuenta con correo y contraseña se queda
+         fuera para siempre sin entender por que. */
+      try{await api.au.sendEmailVerification(api.auth.currentUser);}catch(e){}
+      document.getElementById('pPass').value='';
+      pVista('cuenta','Falta un paso.');
+      document.getElementById('pQuien').textContent=correo;
+      document.getElementById('pReenviar').hidden=false;
+      return pStat('ok','Te envié un correo para confirmar tu cuenta. Ábrelo, toca el enlace y vuelve aquí a tocar "Reintentar".');
+    }
+    await api.au.signInWithEmailAndPassword(api.auth,correo,clave);
     document.getElementById('pPass').value='';
     await puertaEntra();
   }catch(e){pStat('err',nubeMsg(e));}
@@ -3265,7 +3278,26 @@ document.getElementById('pEntrar').onclick=()=>puertaCorreo('entrar');
 document.getElementById('pCrear').onclick=()=>puertaCorreo('crear');
 document.getElementById('pOlvide').onclick=()=>puertaCorreo('reset');
 document.getElementById('pGoogle').onclick=()=>puertaGoogle();
-document.getElementById('pReintentar').onclick=()=>puertaEntra();
+document.getElementById('pReintentar').onclick=async()=>{
+  /* El token guardado sigue diciendo "sin verificar" aunque la persona ya
+     haya tocado el enlace del correo: hay que pedir uno nuevo. */
+  try{
+    const api=await fbCargar();
+    if(api.auth.currentUser){
+      await api.auth.currentUser.reload();
+      await api.auth.currentUser.getIdToken(true);
+    }
+  }catch(e){}
+  puertaEntra();
+};
+document.getElementById('pReenviar').onclick=async()=>{
+  try{
+    const api=await fbCargar();
+    if(!api.auth.currentUser)return pStat('err','Vuelve a entrar con tu correo.');
+    await api.au.sendEmailVerification(api.auth.currentUser);
+    pStat('ok','Te lo reenvié. Revisa también la carpeta de spam.');
+  }catch(e){pStat('err',nubeMsg(e));}
+};
 document.getElementById('pSalir').onclick=async()=>{
   try{
     const api=await fbCargar();
