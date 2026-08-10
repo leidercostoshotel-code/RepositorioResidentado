@@ -5,13 +5,23 @@ Sube el banco de preguntas a Firestore, para que deje de viajar dentro de
 index.html y solo baje a quien tiene licencia.
 
     pip install firebase-admin
-    export GOOGLE_APPLICATION_CREDENTIALS=/ruta/clave-de-servicio.json
     python3 tools/subir-banco.py            # muestra que subiria
     python3 tools/subir-banco.py --aplicar  # lo sube
 
-La clave de servicio se saca de la consola de Firebase, en
-Configuracion del proyecto -> Cuentas de servicio -> Generar nueva clave
-privada. **Esa clave abre el proyecto entero: no va al repositorio.**
+Para que pueda escribir en Firestore hace falta identificarse. Dos caminos:
+
+  a) Desde Cloud Shell o con la CLI de Google instalada, lo mas simple y lo
+     mas seguro, porque no descarga ninguna clave:
+
+         gcloud auth application-default login
+
+  b) Con una clave de servicio, si no hay CLI a mano:
+
+         export GOOGLE_APPLICATION_CREDENTIALS=/ruta/clave.json
+
+     Se saca de la consola de Firebase, en Configuracion del proyecto ->
+     Cuentas de servicio -> Generar nueva clave privada. **Esa clave abre el
+     proyecto entero: no va al repositorio y conviene borrarla al terminar.**
 
 Como queda guardado:
 
@@ -94,19 +104,28 @@ def main():
         print("\n(simulación — usa --aplicar para subirlo)")
         return 0
 
-    if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
-        sys.exit("Falta GOOGLE_APPLICATION_CREDENTIALS con la ruta a la clave de servicio.")
-
     try:
         import firebase_admin
         from firebase_admin import credentials, firestore
     except ImportError:
         sys.exit("Falta firebase-admin. Instalalo con:  pip install firebase-admin")
 
-    if not firebase_admin._apps:
-        firebase_admin.initialize_app(credentials.ApplicationDefault(),
-                                      {"projectId": args.proyecto})
-    db = firestore.client()
+    try:
+        if not firebase_admin._apps:
+            firebase_admin.initialize_app(credentials.ApplicationDefault(),
+                                          {"projectId": args.proyecto})
+        db = firestore.client()
+        # Una lectura barata para que un problema de permisos salga aqui y no
+        # a mitad de la subida.
+        db.collection("banco").document("meta").get()
+    except Exception as e:
+        sys.exit(
+            "No se pudo entrar a Firestore.\n\n"
+            f"  {type(e).__name__}: {e}\n\n"
+            "Identificate de una de estas dos formas y vuelve a intentarlo:\n"
+            "  gcloud auth application-default login\n"
+            "  export GOOGLE_APPLICATION_CREDENTIALS=/ruta/clave.json"
+        )
 
     meta_ref = db.collection("banco").document("meta")
     previo = meta_ref.get()

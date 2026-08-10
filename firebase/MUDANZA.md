@@ -56,15 +56,21 @@ Si eso responde otra cosa, para aquí.
 ## 3. Subir el banco
 
 ```bash
-pip install firebase-admin
-export GOOGLE_APPLICATION_CREDENTIALS=/ruta/clave-de-servicio.json
+pip install --user firebase-admin
+gcloud auth application-default login
 python3 tools/subir-banco.py            # mira lo que va a subir
 python3 tools/subir-banco.py --aplicar
 ```
 
-La clave de servicio: **Configuración del proyecto → Cuentas de servicio →
-Generar nueva clave privada**. Abre el proyecto entero. Guárdala fuera del
-repositorio y no la mandes por WhatsApp.
+`gcloud auth application-default login` te da un enlace: lo abres, eliges tu
+cuenta y pegas de vuelta el código. **No descarga ninguna clave**, y por eso es
+el camino preferible.
+
+Si trabajas desde una máquina sin la CLI de Google, el otro camino es una clave
+de servicio: **Configuración del proyecto → Cuentas de servicio → Generar nueva
+clave privada**, y luego `export GOOGLE_APPLICATION_CREDENTIALS=/ruta/clave.json`.
+Esa clave abre el proyecto entero: guárdala fuera del repositorio, no la mandes
+por WhatsApp y bórrala al terminar.
 
 ---
 
