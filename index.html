@@ -1395,7 +1395,6 @@ const fmtClock=s=>{
           : dd(Math.floor(s/60))+':'+dd(s%60);
 };
 
-document.getElementById('totalCount').textContent=nf(TOTAL)+' preguntas verificadas';
 
 function areaCounts(){const m={};for(const a of AREAS){let c=0;for(const sp in BANK[a])c+=BANK[a][sp].length;m[a]=c;}return m;}
 
@@ -2634,6 +2633,10 @@ document.addEventListener('keydown',e=>{
 /* Se pinta cuando ya hay banco, no al cargar el archivo: sin preguntas no hay
    areas que listar ni rangos de años que calcular. */
 function arrancaApp(){
+  /* El contador va aqui y no en la carga del archivo: cuando el banco llega
+     de la nube, al cargar todavia vale cero y el encabezado se quedaba
+     diciendo "0 preguntas verificadas" con la app llena de preguntas. */
+  document.getElementById('totalCount').textContent=nf(TOTAL)+' preguntas verificadas';
   podarDias();renderAreaChips();renderSpSelect();pintaAnios();pintaOficiales();
   renderAreaGrid();renderLifetime();aiPaintCfg();setKind(cfg.kind);resumePinta();
   show('home');
